@@ -1,0 +1,210 @@
+@import "tailwindcss";
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: #050508;
+    color: #ffffff;
+    font-family: 'Rajdhani', sans-serif;
+    min-height: 100vh;
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #0a0a0f;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #ff003366;
+    border-radius: 2px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #ff0033;
+  }
+}
+
+
+@layer components {
+
+  .glass-panel {
+    @apply bg-black/70 backdrop-blur-md border border-white/5 rounded-xl;
+  }
+
+  .glass-card {
+    @apply bg-black/60 backdrop-blur-sm border border-white/10 rounded-xl;
+    box-shadow:
+      0 4px 24px rgba(0,0,0,0.4),
+      inset 0 1px 0 rgba(255,255,255,0.05);
+  }
+
+  .neon-border-red {
+    border: 1px solid #ff003344;
+    box-shadow: 0 0 8px #ff003322, inset 0 0 8px #ff003311;
+  }
+
+  .neon-border-blue {
+    border: 1px solid #00bfff44;
+    box-shadow: 0 0 8px #00bfff22, inset 0 0 8px #00bfff11;
+  }
+
+
+  .btn-primary {
+    @apply px-6 py-2.5 text-sm font-semibold tracking-widest uppercase;
+    @apply bg-red-600 text-white rounded;
+    @apply transition-all duration-300;
+    @apply hover:scale-105 active:scale-95;
+  }
+
+
+  .btn-secondary {
+    @apply px-6 py-2.5 text-sm font-semibold tracking-widest uppercase;
+    @apply bg-transparent text-cyan-400 rounded;
+    @apply border border-cyan-400/50;
+    @apply transition-all duration-300;
+    @apply hover:bg-cyan-400/10 hover:border-cyan-400 hover:scale-105;
+  }
+
+
+  .btn-ghost {
+    @apply px-6 py-2.5 text-sm font-semibold tracking-widest uppercase;
+    @apply bg-transparent text-white/70 rounded;
+    @apply border border-white/10;
+    @apply transition-all duration-300 hover:border-white/30 hover:text-white hover:bg-white/5;
+  }
+
+
+  .input-field {
+    @apply w-full bg-black/80 border border-white/10 rounded text-white placeholder-white/30;
+    @apply px-4 py-3 text-sm;
+    @apply focus:outline-none focus:border-red-500;
+    @apply transition-all duration-200;
+  }
+
+
+  .label-text {
+    @apply block text-xs tracking-widest uppercase text-white/50 mb-1.5;
+  }
+
+
+  .page-title {
+    @apply text-3xl md:text-4xl font-black tracking-wider uppercase;
+    @apply bg-gradient-to-r from-white via-white to-white/60 bg-clip-text text-transparent;
+  }
+
+
+  .section-title {
+    @apply text-lg font-bold tracking-widest uppercase text-red-500;
+  }
+
+
+  .glow-text-red {
+    color: #ff0033;
+    text-shadow: 0 0 10px #ff003399, 0 0 20px #ff003344;
+  }
+
+  .glow-text-blue {
+    color: #00bfff;
+    text-shadow: 0 0 10px #00bfff99, 0 0 20px #00bfff44;
+  }
+
+
+  .scan-line {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      #ff003333,
+      transparent
+    );
+    animation: scan 8s linear infinite;
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+
+  .grid-bg {
+    background-image:
+      linear-gradient(rgba(255,0,51,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,0,51,0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+
+
+  .corner-bracket::before,
+  .corner-bracket::after {
+    content: "";
+    position: absolute;
+    width: 12px;
+    height: 12px;
+  }
+
+  .corner-bracket::before {
+    top: 0;
+    left: 0;
+    border-top: 2px solid #ff0033;
+    border-left: 2px solid #ff0033;
+  }
+
+  .corner-bracket::after {
+    bottom: 0;
+    right: 0;
+    border-bottom: 2px solid #ff0033;
+    border-right: 2px solid #ff0033;
+  }
+
+}
+
+
+/* ================= TRANSITIONS ================= */
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.slide-up-enter-active {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.slide-up-enter-from {
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+.page-enter-active {
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.page-leave-active {
+  transition: all 0.2s ease;
+}
+
+.page-enter-from {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.page-leave-to {
+  opacity: 0;
+  transform: translateY(-8px);
+}
