@@ -60,7 +60,7 @@
 
 
         <!-- Right side contests -->
-        <div class="flex-1 w-full max-w-lg">
+        <!-- <div class="flex-1 w-full max-w-lg">
 
           <div class="flex items-center gap-2 mb-4">
             <div class="w-2 h-2 bg-neon-red rounded-full animate-pulse"></div>
@@ -101,7 +101,7 @@
 
           </div>
 
-        </div>
+        </div> -->
       </div>
     </div>
 
