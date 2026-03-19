@@ -55,6 +55,7 @@
         </div>
 
         <router-link to="/leaderboard" class="nav-link">Leaderboard</router-link>
+        <router-link to="/rules" class="nav-link">Rules</router-link>
       </div>
 
       <!-- Auth Section -->

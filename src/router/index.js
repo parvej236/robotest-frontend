@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { useAuthStore } from '@/stores/auth'
+import { getActivePinia } from 'pinia'
 
 const routes = [
   { path: '/', component: () => import('@/pages/LandingPage.vue'), meta: { title: 'RoboContest' } },
@@ -12,6 +12,8 @@ const routes = [
   { path: '/contests/:id', component: () => import('@/pages/ContestPage.vue'), meta: { title: 'Contest' } },
   { path: '/contests/:id/join', component: () => import('@/pages/JoinContestPage.vue'), meta: { title: 'Join Contest', auth: true } },
   { path: '/leaderboard', component: () => import('@/pages/LeaderboardPage.vue'), meta: { title: 'Leaderboard' } },
+  { path: '/rules', component: () => import('@/pages/RulesPage.vue'), meta: { title: 'Rules' } },
+
   // Admin routes
   {
     path: '/admin',
@@ -23,6 +25,7 @@ const routes = [
       { path: 'users', component: () => import('@/pages/admin/AdminUsers.vue'), meta: { title: 'Manage Users' } },
     ]
   },
+
   { path: '/:pathMatch(.*)*', redirect: '/' }
 ]
 
@@ -32,9 +35,19 @@ const router = createRouter({
   scrollBehavior: () => ({ top: 0 })
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   document.title = to.meta.title ? `${to.meta.title} | RoboContest` : 'RoboContest'
-  const auth = useAuthStore()
+
+  // Use Pinia store inside guard
+  const pinia = getActivePinia()
+  let auth
+  if (pinia) {
+    const { useAuthStore } = await import('@/stores/auth')
+    auth = useAuthStore(pinia)
+  } else {
+    // fallback if Pinia not ready
+    return next()
+  }
 
   if (to.meta.auth && !auth.isLoggedIn) return next('/login')
   if (to.meta.admin && !auth.isAdmin) return next('/')
