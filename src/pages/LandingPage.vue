@@ -185,114 +185,71 @@ onUnmounted(() => {
 
         <!-- TEXT -->
         <div class="flex-1 max-w-xl">
-
           <div class="flex items-center gap-2 mb-4">
             <div class="w-8 h-px bg-red-500"></div>
-
             <span class="text-xs tracking-[0.3em] text-neon-red uppercase">
               Robotics Contest Platform
             </span>
           </div>
-
-
           <h1 class="text-5xl md:text-6xl xl:text-7xl font-black leading-none mb-4">
             <span class="block text-white">RMEDU</span>
-
-            <span class="block uppercase" style="
-                color:#ff0033;
-                text-shadow:0 0 30px rgba(255,0,51,0.6)
-              ">
+            <span class="block uppercase" style="color:#ff0033; text-shadow:0 0 30px rgba(255,0,51,0.6)">
               Robotics Society
             </span>
           </h1>
-
-
           <div class="text-white/50 text-lg mb-4 max-w-md">
             The ultimate arena for robotics students.
           </div>
-
-
           <div class="text-white font-bold text-lg mb-8">
             Compete . Rank . Dominate.
           </div>
-
-
           <div class="flex gap-3 flex-wrap mb-6">
-
             <router-link to="/contests" class="btn-primary">
               Explore Contests
             </router-link>
-
             <router-link to="/register" class="btn-secondary">
               Join Now
             </router-link>
-
           </div>
-
         </div>
-
       </div>
     </div>
-
-
 
     <!-- CONTEST -->
     <div class="relative z-10 flex-1 px-6 md:px-12 lg:px-20 flex">
 
-      <div class="max-w-7xl mx-auto w-full
-               bg-dark-900/80
-               backdrop-blur-md
-               rounded-lg
-               p-4
-               flex flex-col
-               overflow-hidden">
-
+      <div
+        class="max-w-7xl mx-auto w-full bg-dark-900/80 backdrop-blur-md rounded-lg p-4 flex flex-col overflow-hidden">
         <div class="mb-3 text-neon-red uppercase">
           Live & Open Contests
         </div>
 
-
         <!-- scroll -->
         <div class="flex-1 overflow-y-auto border border-red-700/50 rounded-lg p-3">
-
           <div v-if="loading" class="flex justify-center py-6">
             <LoadingSpinner />
           </div>
-
-
           <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-
             <div v-for="c in activeContests" :key="c.id" class="glass-card p-3 cursor-pointer"
               @click="handleContestClick(c)">
-
               <div class="flex justify-between mb-1">
                 <StatusBadge :status="c.status" size="xs" />
-
                 <span class="text-xs text-white/40">
                   {{ formatDate(c.contestDate) }}
                 </span>
               </div>
-
               <h3 class="text-white text-sm truncate">
                 {{ c.name }}
               </h3>
-
             </div>
-
           </div>
-
         </div>
-
       </div>
-
     </div>
-
-
 
     <!-- FOOTER -->
     <div class="relative z-10 text-center py-1 text-xs text-white/40 mt-auto">
       © 2026 RoboContest Platform — All Rights Reserved
     </div>
-
   </div>
 </template>
