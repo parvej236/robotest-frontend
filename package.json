@@ -12,7 +12,6 @@
     "@motionone/vue": "^10.16.4",
     "@tailwindcss/vite": "^4.2.1",
     "@vueuse/core": "^14.2.1",
-    "axios": "^1.13.6",
     "date-fns": "^4.1.0",
     "motion": "^12.36.0",
     "pinia": "^3.0.4",
