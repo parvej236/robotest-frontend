@@ -7,9 +7,9 @@
       <!-- Header -->
       <div class="text-center mb-8">
         <div class="inline-flex items-center gap-2 mb-4">
-          <div class="w-6 h-px bg-neon-red"></div>
+          <div class="w-6 h-px bg-red-700"></div>
           <span class="text-xs font-display tracking-widest text-neon-red uppercase">Authentication</span>
-          <div class="w-6 h-px bg-neon-red"></div>
+          <div class="w-6 h-px bg-red-700"></div>
         </div>
         <h1 class="font-display text-3xl font-black text-white tracking-wider uppercase">Welcome Back</h1>
         <p class="text-white/40 font-body text-sm mt-2">Enter your credentials to access the arena</p>
@@ -81,7 +81,7 @@
           <!-- Error -->
           <div
             v-if="error"
-            class="flex items-center gap-2 px-3 py-2.5 bg-neon-red/10 border border-neon-red/30 rounded text-neon-red text-xs font-body"
+            class="flex items-center gap-2 px-3 py-2.5 bg-red-700/10 border border-neon-red/30 rounded text-neon-red text-xs font-body"
           >
             <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

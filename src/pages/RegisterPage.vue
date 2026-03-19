@@ -3,9 +3,9 @@
     <div class="w-full max-w-md">
       <div class="text-center mb-8">
         <div class="inline-flex items-center gap-2 mb-4">
-          <div class="w-6 h-px bg-neon-red"></div>
+          <div class="w-6 h-px bg-red-700"></div>
           <span class="text-xs font-display tracking-widest text-neon-red uppercase">Create Account</span>
-          <div class="w-6 h-px bg-neon-red"></div>
+          <div class="w-6 h-px bg-red-700"></div>
         </div>
         <h1 class="font-display text-3xl font-black text-white tracking-wider uppercase">Join the Arena</h1>
         <p class="text-white/40 font-body text-sm mt-2">Create your account and start competing</p>
@@ -47,7 +47,7 @@
                class="text-neon-red text-xs mt-1 font-body">Passwords do not match</p>
           </div>
 
-          <div v-if="errors.length" class="px-3 py-2.5 bg-neon-red/10 border border-neon-red/30 rounded space-y-1">
+          <div v-if="errors.length" class="px-3 py-2.5 bg-red-700/10 border border-neon-red/30 rounded space-y-1">
             <p v-for="e in errors" :key="e" class="text-neon-red text-xs font-body flex items-center gap-1">
               <span>•</span> {{ e }}
             </p>

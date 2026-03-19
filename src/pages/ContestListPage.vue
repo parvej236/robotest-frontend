@@ -4,7 +4,7 @@
       <!-- Header -->
       <div class="mb-8">
         <div class="flex items-center gap-2 mb-2">
-          <div class="w-4 h-px bg-neon-red"></div>
+          <div class="w-4 h-px bg-red-700"></div>
           <span class="text-xs font-display tracking-widest text-neon-red uppercase">Competitions</span>
         </div>
         <h1 class="page-title">All Contests</h1>
@@ -14,7 +14,7 @@
       <div class="flex flex-wrap gap-2 mb-8">
         <button v-for="f in filters" :key="f.value" @click="activeFilter = f.value"
           :class="['px-4 py-1.5 rounded text-xs font-display tracking-wider uppercase transition-all duration-200',
-                   activeFilter === f.value ? 'bg-neon-red text-white shadow-neon-red' : 'bg-white/5 text-white/50 border border-white/10 hover:border-white/20 hover:text-white']">
+                   activeFilter === f.value ? 'bg-red-700 text-white shadow-neon-red' : 'bg-white/5 text-white/50 border border-white/10 hover:border-white/20 hover:text-white']">
           {{ f.label }}
         </button>
         <div class="flex-1"></div>

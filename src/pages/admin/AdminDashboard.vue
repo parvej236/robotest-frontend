@@ -5,12 +5,11 @@
       <div class="mb-8 flex items-center justify-between">
         <div>
           <div class="flex items-center gap-2 mb-1">
-            <div class="w-4 h-px bg-neon-red"></div>
+            <div class="w-4 h-px bg-red-700"></div>
             <span class="text-xs font-display tracking-widest text-neon-red uppercase">System Control</span>
           </div>
           <h1 class="font-display text-2xl font-black text-white uppercase tracking-wider">Admin Dashboard</h1>
         </div>
-        <span class="text-xs font-display text-neon-red border border-neon-red/40 px-3 py-1.5 rounded">ADMIN ACCESS</span>
       </div>
 
       <!-- Stat cards -->
@@ -26,7 +25,7 @@
       <div class="grid md:grid-cols-3 gap-4 mb-8">
         <router-link to="/admin/contests" class="glass-card p-6 hover:neon-border-red transition-all duration-300 group cursor-pointer">
           <div class="flex items-center gap-4">
-            <div class="w-12 h-12 rounded-lg bg-neon-red/10 border border-neon-red/30 flex items-center justify-center text-2xl group-hover:bg-neon-red/20 transition-colors">🏆</div>
+            <div class="w-12 h-12 rounded-lg bg-red-700/10 border border-neon-red/30 flex items-center justify-center text-2xl group-hover:bg-red-700/20 transition-colors">🏆</div>
             <div>
               <h3 class="font-display font-bold text-white">Manage Contests</h3>
               <p class="text-xs text-white/40 font-body mt-0.5">Create, edit & delete contests</p>

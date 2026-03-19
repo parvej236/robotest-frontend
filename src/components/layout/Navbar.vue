@@ -67,8 +67,8 @@
         <template v-else>
           <!-- Admin badge -->
           <router-link v-if="auth.isAdmin" to="/admin"
-            class="text-xs font-display tracking-widest text-neon-red border border-neon-red/40 px-3 py-1 rounded hover:bg-neon-red/10 transition-colors">
-            ADMIN
+            class="text-xs font-display tracking-widest text-neon-red border border-neon-red/40 px-3 py-1 rounded hover:bg-red-700/10 transition-colors">
+            Admin Panel
           </router-link>
 
           <!-- User dropdown -->
@@ -76,7 +76,7 @@
             <button class="flex items-center gap-2 group">
               <div
                 class="w-8 h-8 rounded-full border border-neon-red/50 overflow-hidden bg-dark-700 flex items-center justify-center">
-                <img v-if="auth.avatar" :src="auth.avatar" class="w-full h-full object-cover" />
+                <img v-if="avatarFullUrl" :src="avatarFullUrl" :key="avatarFullUrl" class="w-full h-full object-cover"/>
                 <span v-else class="font-display text-xs text-neon-red font-bold">{{
                   auth.username?.charAt(0)?.toUpperCase() }}</span>
               </div>
@@ -132,11 +132,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { useContestStore } from '@/stores/contest'
 import StatusBadge from '@/components/common/StatusBadge.vue'
+import { BACKEND_URL } from '@/config'
+
 
 const auth = useAuthStore()
 const contestStore = useContestStore()
@@ -148,11 +150,20 @@ const showUserMenu = ref(false)
 const mobileOpen = ref(false)
 const latestContests = ref([])
 
+
+const avatarFullUrl = computed(() => {
+  const path = auth.avatar
+  if (!path) return null
+  if (path.startsWith('http')) return path 
+  return BACKEND_URL + path
+})
+
 const handleScroll = () => { scrolled.value = window.scrollY > 20 }
 onMounted(async () => {
   window.addEventListener('scroll', handleScroll)
   try { latestContests.value = await contestStore.fetchLatestContests() } catch { }
 })
+
 onUnmounted(() => window.removeEventListener('scroll', handleScroll))
 
 function logout() {
