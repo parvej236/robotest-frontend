@@ -41,6 +41,7 @@
             </div>
           </div>
         </router-link>
+
         <router-link to="/contests" class="glass-card p-6 hover:border-white/20 transition-all duration-300 group cursor-pointer">
           <div class="flex items-center gap-4">
             <div class="w-12 h-12 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-2xl group-hover:bg-white/10 transition-colors">📊</div>

@@ -22,7 +22,7 @@ const routes = [
       { path: '', component: () => import('@/pages/admin/AdminDashboard.vue'), meta: { title: 'Admin Dashboard' } },
       { path: 'contests', component: () => import('@/pages/admin/AdminContests.vue'), meta: { title: 'Manage Contests' } },
       { path: 'contests/:id/questions', component: () => import('@/pages/admin/AdminQuestions.vue'), meta: { title: 'Manage Questions' } },
-      { path: 'users', component: () => import('@/pages/admin/AdminUsers.vue'), meta: { title: 'Manage Users' } },
+      { path: 'users', component: () => import('@/pages/admin/AdminUsers.vue'), meta: { title: 'Manage Users' } }
     ]
   },
 
