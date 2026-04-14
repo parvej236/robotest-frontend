@@ -91,7 +91,7 @@
   </div>
 </template>
 
-<script setup>
+<!-- <script setup>
 import { ref } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 
@@ -122,4 +122,68 @@ async function handleRegister() {
     loading.value = false
   }
 }
+</script> -->
+
+<script setup>
+
+import { ref } from 'vue'
+
+import { useAuthStore } from '@/stores/auth'
+
+
+
+const auth = useAuthStore()
+
+const form = ref({ fullName: '', username: '', email: '', password: '', confirmPassword: '' })
+
+const loading = ref(false)
+
+const errors = ref([])
+
+const success = ref(false)
+
+
+
+async function handleRegister() {
+
+errors.value = []
+
+if (form.value.password !== form.value.confirmPassword) {
+
+errors.value = ['Passwords do not match']; return
+
+}
+
+loading.value = true
+
+try {
+
+await auth.register(form.value)
+
+success.value = true
+
+} catch (e) {
+
+const msg = e.response?.data?.message || 'Registration failed'
+
+const data = e.response?.data?.data
+
+if (data && typeof data === 'object') {
+
+errors.value = Object.values(data)
+
+} else {
+
+errors.value = [msg]
+
+}
+
+} finally {
+
+loading.value = false
+
+}
+
+}
+
 </script>
