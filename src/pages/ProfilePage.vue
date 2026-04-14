@@ -2,6 +2,10 @@
 <template>
   <div class="min-h-screen pt-20 px-4 pb-12">
     <div class="max-w-3xl mx-auto">
+          <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
+      <div class="absolute -top-48 -left-48 w-[600px] h-[600px] bg-red-600/10 rounded-full blur-[120px]"></div>
+      <div class="absolute bottom-0 right-0 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[120px]"></div>
+    </div>
       <div class="mb-6">
         <div class="flex items-center gap-2 mb-1">
           <div class="w-4 h-px bg-red-700"></div>

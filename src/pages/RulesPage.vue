@@ -1,6 +1,9 @@
 <template>
     <div class="relative min-h-screen bg-[#050505] text-white/90 font-sans selection:bg-red-500/30 overflow-x-hidden">
-
+    <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
+      <div class="absolute -top-48 -left-48 w-[600px] h-[600px] bg-red-600/10 rounded-full blur-[120px]"></div>
+      <div class="absolute bottom-0 right-0 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[120px]"></div>
+    </div>
         <div class="absolute inset-0 overflow-hidden pointer-events-none">
             <div class="absolute top-0 left-1/4 w-[500px] h-[500px] bg-red-600/5 rounded-full blur-[140px]"></div>
             <div class="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-blue-600/5 rounded-full blur-[140px]"></div>
@@ -11,11 +14,11 @@
             <div v-if="authStore?.isAdmin" class="fixed bottom-8 right-8 z-50 flex gap-4">
                 <button @click="isEditing = !isEditing"
                     class="px-8 py-4 bg-white/5 hover:bg-white/10 text-white font-bold uppercase text-xs tracking-widest rounded-2xl border border-white/10 backdrop-blur-2xl transition-all duration-300 shadow-2xl">
-                    {{ isEditing ? 'Discard Changes' : 'Edit Protocol' }}
+                    {{ isEditing ? 'Discard Changes' : 'Edit Rulebook' }}
                 </button>
                 <button v-if="isEditing" @click="saveChanges" :disabled="saving"
-                    class="px-8 py-4 bg-red-600 hover:bg-red-500 text-white font-bold uppercase text-xs tracking-widest rounded-2xl shadow-xl shadow-red-600/20 transition-all duration-300 disabled:opacity-50">
-                    {{ saving ? 'Syncing...' : 'Deploy Updates' }}
+                    class="px-8 py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold uppercase text-xs tracking-widest rounded-2xl shadow-xl shadow-blue-600/20 transition-all duration-300 disabled:opacity-50">
+                    {{ saving ? 'Syncing...' : 'Save Changes' }}
                 </button>
             </div>
 
@@ -68,14 +71,16 @@
 
                 <div
                     class="lg:col-span-12 p-10 md:p-12 rounded-[40px] bg-gradient-to-br from-green-600/20 via-transparent to-emerald-200/20 border border-white/5 hover:border-red-600/20 transition-all duration-500">
-                    <div class="flex flex-col md:flex-row justify-between items-start gap-6 mb-10">
+                <div class="flex flex-col md:flex-row justify-between items-start gap-8 mb-12">
                         <div>
-                            <h2 class="text-3xl md:text-4xl font-black uppercase tracking-tighter text-white mb-2">Quick
+                            <h2 class="text-4xl md:text-5xl font-black uppercase tracking-tighter text-white mb-2">
                                 CAD</h2>
+                            <span
+                                class="text-sm font-bold text-green-500 tracking-[0.4em] uppercase opacity-80 italic">Quick CAD Speed Modeling Contest</span>
                         </div>
                         <div
-                            class="px-6 py-2 rounded-full border border-emerald-500/20 text-[10px] font-black text-emerald-500 tracking-[0.4em] uppercase bg-emerald-500/5">
-                            Bi-Weekly Contest
+                            class="px-8 py-3 rounded-full border border-green-500/20 text-xs font-black text-green-500 tracking-[0.5em] uppercase bg-green-500/5">
+                            Bi-Weekly
                         </div>
                     </div>
 

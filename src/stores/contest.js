@@ -10,104 +10,93 @@ export const useContestStore = defineStore('contest', () => {
   const latestContests = ref([])
   const loading        = ref(false)
 
-  // ── Fetch all ─────────────────────────────────────────────
+  // ── Public Fetch All ──────────────────────────────────────
   async function fetchAllContests() {
     loading.value = true
     try {
-      const res = await api.get('/contests')
-      // api.get returns ApiResponse: { success, message, data: ContestDto[] }
+      // Pass 'false' to allow guests
+      const res = await api.get('/contests', false)
       contests.value = res.data || []
     } finally {
       loading.value = false
     }
   }
 
-  // ── Fetch active (REGISTRATION_OPEN + RUNNING) ────────────
+  // ── Public Fetch Active ───────────────────────────────────
   async function fetchActiveContests() {
-    const res = await api.get('/contests/active')
+    const res = await api.get('/contests/active', false)
     activeContests.value = res.data || []
     return activeContests.value
   }
 
-  // ── Fetch latest 10 (navbar dropdown) ─────────────────────
+  // ── Public Fetch Latest ───────────────────────────────────
   async function fetchLatestContests() {
-    const res = await api.get('/contests/latest')
+    const res = await api.get('/contests/latest', false)
     latestContests.value = res.data || []
     return latestContests.value
   }
 
-  // ── Fetch single contest ───────────────────────────────────
+  // ── Public Fetch Single ───────────────────────────────────
   async function fetchContest(id) {
-    const res = await api.get(`/contests/${id}`)
-    return res.data   // ContestDto
+    const res = await api.get(`/contests/${id}`, false)
+    return res.data 
   }
 
-  // ── Register for contest ───────────────────────────────────
+  // ── Authenticated Actions ─────────────────────────────────
   async function registerForContest(id) {
-    const res = await api.post(`/contests/${id}/register`, null)
-    return res
+    return await api.post(`/contests/${id}/register`, null)
   }
 
-  // ── Check registration status ──────────────────────────────
   async function isRegistered(id) {
     const res = await api.get(`/contests/${id}/is-registered`)
-    return res.data   // boolean
+    return res.data 
   }
 
-  // ── Get my joined contests ─────────────────────────────────
   async function getMyContests() {
     const res = await api.get('/contests/my-contests')
-    return res.data || []   // ContestDto[]
+    return res.data || []
   }
 
-  // ── Admin: create contest ─────────────────────────────────
-  // IMPORTANT: must return the created ContestDto so AdminContests
-  // can read created.id to show the "Add Questions?" prompt
+  // ── Admin Actions ─────────────────────────────────────────
   async function createContest(payload) {
     const res = await api.post('/contests', payload)
-    return res.data   // ContestDto { id, name, status, ... }
+    return res.data
   }
 
-  // ── Admin: update contest ─────────────────────────────────
   async function updateContest(id, payload) {
     const res = await api.put(`/contests/${id}`, payload)
-    return res.data   // ContestDto
+    return res.data
   }
 
-  // ── Admin: delete contest ─────────────────────────────────
   async function deleteContest(id) {
     await api.delete(`/contests/${id}`)
   }
 
-  // ── Get leaderboard for a contest ─────────────────────────
+  // ── Stats & Submissions ───────────────────────────────────
   async function getLeaderboard(contestId) {
-    const res = await api.get(`/leaderboard/contest/${contestId}`)
-    return res.data || []   // LeaderboardEntryDto[]
+    // Usually leaderboards are public, but I kept default auth here
+    // Change to 'false' if you want anyone to see the leaderboard
+    const res = await api.get(`/leaderboard/contest/${contestId}`, false)
+    return res.data || []
   }
 
-  // ── Get my result for a contest ───────────────────────────
   async function getMyResult(contestId) {
     const res = await api.get(`/leaderboard/contest/${contestId}/my-result`)
-    return res.data   // Result or null
+    return res.data
   }
 
-  // ── Submit answers ────────────────────────────────────────
   async function submitAnswers(contestId, answers) {
-    // answers = Map<questionId, answerString>
     const res = await api.post(`/submissions/contest/${contestId}`, { answers })
     return res
   }
 
-  // ── Get contest questions (during contest) ────────────────
   async function getContestQuestions(contestId) {
     const res = await api.get(`/contests/${contestId}/questions`)
-    return res.data || []   // QuestionDto[]
+    return res.data || []
   }
 
   return {
-    // state
     contests, activeContests, latestContests, loading,
-    // actions
     fetchAllContests, fetchActiveContests, fetchLatestContests,
     fetchContest, registerForContest, isRegistered, getMyContests,
     createContest, updateContest, deleteContest,

@@ -1,6 +1,6 @@
 <template>
   <nav class="fixed top-0 left-0 right-0 z-50 h-16"
-    :class="scrolled ? 'bg-dark-900/95 backdrop-blur-md border-b border-neon-red/20 shadow-neon-red/10' : 'bg-transparent'">
+    :class="scrolled ? 'bg-dark-900/95 backdrop-blur-md shadow-neon-red/10' : 'bg-transparent'">
     <div class="max-w-7xl mx-auto px-4 h-full flex items-center justify-between">
 
       <!-- Logo -->
@@ -62,7 +62,7 @@
       <div class="hidden md:flex items-center gap-3">
         <template v-if="!auth.isLoggedIn">
           <router-link to="/login" class="btn-ghost py-1.5 text-xs">Login</router-link>
-          <router-link to="/register" class="btn-primary py-1.5 text-xs">Register</router-link>
+          <router-link to="/register" class="btn-primary py-1.5 text-xs">Create Account</router-link>
         </template>
         <template v-else>
           <!-- Admin badge -->
@@ -179,7 +179,7 @@ function logout() {
   padding-right: 1rem;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
-  font-size: 0.875rem;
+  font-size: 1.25rem;
   font-family: var(--font-body, inherit);
   color: rgba(255, 255, 255, 0.7);
   border-radius: 0.25rem;

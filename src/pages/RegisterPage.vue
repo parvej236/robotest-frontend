@@ -1,73 +1,91 @@
 <template>
-  <div class="min-h-screen pt-20 flex items-center justify-center px-4 py-8">
-    <div class="w-full max-w-md">
+  <div class="min-h-screen flex items-center justify-center p-4 bg-[#020202] relative overflow-hidden">
+    <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
+      <div class="absolute -top-24 -left-24 w-96 h-96 bg-blue-600/20 rounded-full blur-[120px]"></div>
+      <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-red-600/20 rounded-full blur-[120px]"></div>
+    </div>
+
+    <div class="w-full max-w-lg z-10">
       <div class="text-center mb-8">
-        <div class="inline-flex items-center gap-2 mb-4">
-          <div class="w-6 h-px bg-red-700"></div>
-          <span class="text-xs font-display tracking-widest text-neon-red uppercase">Create Account</span>
-          <div class="w-6 h-px bg-red-700"></div>
+        <h1 class="text-5xl md:text-6xl font-black text-white tracking-tighter uppercase italic leading-none">
+          Join the <span class="text-red-600">Arena</span>
+        </h1>
+        <div class="flex items-center justify-center gap-3 mt-3">
+          <div class="h-[1px] w-8 bg-blue-500/50"></div>
+          <p class="text-blue-400 text-xs font-bold uppercase tracking-[0.3em]">Identity Verification</p>
+          <div class="h-[1px] w-8 bg-blue-500/50"></div>
         </div>
-        <h1 class="font-display text-3xl font-black text-white tracking-wider uppercase">Join the Arena</h1>
-        <p class="text-white/40 font-body text-sm mt-2">Create your account and start competing</p>
       </div>
 
-      <div v-if="success" class="glass-card neon-border-blue p-8 text-center">
-        <div class="text-5xl mb-4">📧</div>
-        <h2 class="font-display text-xl font-bold text-neon-blue mb-2">Check Your Email</h2>
-        <p class="text-white/60 font-body text-sm">We've sent a verification link to <strong class="text-white">{{ form.email }}</strong></p>
-        <p class="text-white/40 font-body text-xs mt-2">Click the link to activate your account</p>
-        <router-link to="/login" class="btn-primary inline-flex mt-6">Go to Login</router-link>
-      </div>
+      <div class="bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] rounded-3xl p-6 md:p-10 shadow-2xl overflow-hidden relative">
+        <div class="absolute inset-0 bg-gradient-to-br from-white/[0.05] to-transparent pointer-events-none"></div>
 
-      <div v-else class="glass-card neon-border-red p-8 relative">
-        <div class="absolute top-0 left-0 w-6 h-6 border-l-2 border-t-2 border-neon-red"></div>
-        <div class="absolute bottom-0 right-0 w-6 h-6 border-r-2 border-b-2 border-neon-red"></div>
+        <div v-if="success" class="relative py-8 text-center animate-in fade-in zoom-in duration-500">
+          <div class="w-20 h-20 bg-blue-500/20 text-blue-400 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl shadow-[0_0_30px_rgba(59,130,246,0.2)]">
+            ✓
+          </div>
+          <h2 class="text-3xl font-black text-white mb-2 uppercase italic">Success</h2>
+          <p class="text-gray-400 text-lg mb-8">Verification sent to <span class="text-white font-semibold">{{ form.email }}</span></p>
+          <router-link to="/login" 
+            class="inline-block w-full py-4 bg-white text-black font-bold rounded-xl hover:bg-gray-200 transition-all uppercase tracking-widest text-sm">
+            Proceed to Login
+          </router-link>
+        </div>
 
-        <form @submit.prevent="handleRegister" class="space-y-4">
-          <div>
-            <label class="label-text">Full Name</label>
-            <input v-model="form.fullName" type="text" placeholder="M Parvej Alam" class="input-field" required />
-          </div>
-          <div>
-            <label class="label-text">Username</label>
-            <input v-model="form.username" type="text" placeholder="robotmaster" class="input-field" required />
-          </div>
-          <div>
-            <label class="label-text">Email Address</label>
-            <input v-model="form.email" type="email" placeholder="your@gmail.com" class="input-field" required />
-          </div>
-          <div>
-            <label class="label-text">Password</label>
-            <input v-model="form.password" type="password" placeholder="Min 6 characters" class="input-field" required minlength="6" />
-          </div>
-          <div>
-            <label class="label-text">Confirm Password</label>
-            <input v-model="form.confirmPassword" type="password" placeholder="Repeat password" class="input-field" required />
-            <p v-if="form.password && form.confirmPassword && form.password !== form.confirmPassword"
-               class="text-neon-red text-xs mt-1 font-body">Passwords do not match</p>
+        <form v-else @submit.prevent="handleRegister" class="relative space-y-5">
+          <div class="grid grid-cols-2 gap-4">
+            <div class="space-y-1.5">
+              <label class="text-xl font-bold text-gray-500 uppercase tracking-widest ml-1">Full Name</label>
+              <input v-model="form.fullName" type="text" 
+                class="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-3.5 text-white text-lg focus:outline-none focus:border-red-500/50 focus:ring-1 focus:ring-red-500/50 transition-all placeholder:text-white" required />
+            </div>
+            <div class="space-y-1.5">
+              <label class="text-xl font-bold text-gray-500 uppercase tracking-widest ml-1">Username</label>
+              <input v-model="form.username" type="text" 
+                class="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-3.5 text-white text-lg focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all placeholder:text-white" required />
+            </div>
           </div>
 
-          <div v-if="errors.length" class="px-3 py-2.5 bg-red-700/10 border border-neon-red/30 rounded space-y-1">
-            <p v-for="e in errors" :key="e" class="text-neon-red text-xs font-body flex items-center gap-1">
-              <span>•</span> {{ e }}
+          <div class="space-y-1.5">
+            <label class="text-xl font-bold text-gray-500 uppercase tracking-widest ml-1">Email Address</label>
+            <input v-model="form.email" type="email" 
+              class="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-3.5 text-white text-lg focus:outline-none focus:border-red-500/50 focus:ring-1 focus:ring-red-500/50 transition-all placeholder:text-white" required />
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div class="space-y-1.5">
+              <label class="text-xl font-bold text-gray-500 uppercase tracking-widest ml-1">Password</label>
+              <input v-model="form.password" type="password"
+                class="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-3.5 text-white text-lg focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all placeholder:text-white" required minlength="6" />
+            </div>
+            <div class="space-y-1.5">
+              <label class="text-xl font-bold text-gray-500 uppercase tracking-widest ml-1">Confirm</label>
+              <input v-model="form.confirmPassword" type="password" 
+                class="w-full bg-white/[0.05] border border-white/10 rounded-xl px-4 py-3.5 text-white text-lg focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all placeholder:text-white" required />
+            </div>
+          </div>
+
+          <div v-if="errors.length" class="p-3 bg-red-500/10 border border-red-500/20 rounded-xl">
+            <p v-for="e in errors" :key="e" class="text-red-400 text-xs font-bold flex items-center gap-2">
+              <span class="w-1 h-1 bg-red-500 rounded-full"></span> {{ e }}
             </p>
           </div>
 
-          <button type="submit" class="btn-primary w-full justify-center flex items-center gap-2 mt-2" :disabled="loading">
-            <svg v-if="loading" class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
-              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
-            </svg>
-            {{ loading ? 'Creating Account...' : 'Create Account' }}
+          <button type="submit" 
+            class="w-full relative group overflow-hidden mt-4 py-4 bg-red-600 hover:bg-blue-600 text-white font-black rounded-xl transition-all duration-500 uppercase tracking-[0.2em] flex items-center justify-center gap-3 shadow-[0_10px_20px_rgba(220,38,38,0.2)]"
+            :disabled="loading">
+            <span v-if="!loading" class="z-10">{{ 'Create Account' }}</span>
+            <div v-else class="z-10 w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-red-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
           </button>
         </form>
+      </div>
 
-        <div class="mt-6 text-center">
-          <p class="text-sm font-body text-white/40">
-            Already have an account?
-            <router-link to="/login" class="text-neon-blue hover:text-white ml-1 transition-colors">Login</router-link>
-          </p>
-        </div>
+      <div class="mt-8 text-center">
+        <p class="text-gray-500 text-xl font-medium tracking-wide">
+          Already have an account?
+          <router-link to="/login" class="text-white text-2xl hover:text-blue-400 font-black transition-colors ml-2 underline underline-offset-4 decoration-blue-500/30">Login</router-link>
+        </p>
       </div>
     </div>
   </div>

@@ -3,6 +3,11 @@
   <div class="min-h-screen pt-20 px-4 pb-12">
     <div class="max-w-7xl mx-auto">
 
+    <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
+      <div class="absolute -top-48 -left-48 w-[600px] h-[600px] bg-red-600/10 rounded-full blur-[120px]"></div>
+      <div class="absolute bottom-0 right-0 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[120px]"></div>
+    </div>
+
       <!-- Header -->
       <div class="mb-6 flex items-center justify-between flex-wrap gap-4">
         <div>
@@ -139,15 +144,18 @@
     </div>
 
     <!-- ── CREATE / EDIT MODAL ───────────────────────────────── -->
-    <div v-if="showModal"
-      class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm overflow-y-auto"
+<div v-if="showModal"
+      class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
       @click.self="showModal = false">
-      <div class="glass-panel neon-border-red p-8 w-full max-w-xl relative my-4">
+      
+      <div class="glass-panel neon-border-red p-8 w-full max-w-xl relative my-4 flex flex-col max-h-[90vh]">
+        
         <button @click="showModal = false"
-          class="absolute top-4 right-4 text-white/40 hover:text-white text-xl">✕</button>
-        <h2 class="section-title mb-6">{{ editingId ? 'Edit Contest' : 'Create Contest' }}</h2>
+          class="absolute top-4 right-4 text-white/40 hover:text-white text-xl z-10">✕</button>
+        
+        <h2 class="section-title mb-6 flex-shrink-0">{{ editingId ? 'Edit Contest' : 'Create Contest' }}</h2>
 
-        <form @submit.prevent="handleSave" class="space-y-6">
+        <form @submit.prevent="handleSave" class="space-y-6 overflow-y-auto pr-2 custom-scrollbar">
           <div>
             <label class="label-text">Contest Name *</label>
             <input v-model="form.name" type="text" class="input-field" required
@@ -159,7 +167,6 @@
               placeholder="Brief description..."></textarea>
           </div>
 
-          <!-- ── Registration Window ────────────────────────── -->
           <div>
             <div class="flex items-center gap-2 mb-3">
               <div class="w-3 h-3 rounded-full bg-neon-blue/40 border border-neon-blue/60"></div>
@@ -179,7 +186,6 @@
             </div>
           </div>
 
-          <!-- ── Contest Window ─────────────────────────────── -->
           <div>
             <div class="flex items-center gap-2 mb-3">
               <div class="w-3 h-3 rounded-full bg-neon-red/40 border border-neon-red/60"></div>
@@ -199,7 +205,6 @@
             </div>
           </div>
 
-          <!-- Schedule preview -->
           <div v-if="formPreviewReady"
                class="bg-dark-800/60 border border-white/5 rounded-lg p-3 space-y-1.5">
             <div class="text-[9px] text-white/30 uppercase tracking-wider mb-2 font-display">Schedule Preview</div>
@@ -226,7 +231,7 @@
             {{ formError }}
           </div>
 
-          <div class="flex gap-3 pt-2">
+          <div class="flex gap-3 pt-2 pb-1">
             <button type="submit" :disabled="saving"
               class="btn-primary flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
               <svg v-if="saving" class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
@@ -504,5 +509,20 @@ async function doDelete() {
 }
 .dt-input::-webkit-calendar-picker-indicator:hover {
   opacity: 1;
+}
+
+/* Optional: Clean scrollbar for modern UI */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
 }
 </style>
