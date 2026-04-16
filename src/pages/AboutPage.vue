@@ -122,7 +122,7 @@ const features = [
 
 const team = [
   { name: 'Dr. Sejuti Das', role: 'Faculty Mentor' },
-  { name: 'M Parvej Alam', role: 'System Architect' },
+  { name: 'Hridoy', role: 'System Architect' },
   { name: 'Z. Chowdhury', role: 'Hardware Specialist' },
   { name: 'R. Islam', role: 'Event Coordinator' }
 ]
