@@ -12,10 +12,10 @@ const routes = [
   { path: '/profile', component: () => import('@/pages/ProfilePage.vue'), meta: { title: 'Profile', auth: true } },
   { path: '/contests', component: () => import('@/pages/ContestListPage.vue'), meta: { title: 'Contests' } },
   { path: '/contests/:id', component: () => import('@/pages/ContestPage.vue'), meta: { title: 'Contest' } },
-  { path: '/contests/:id/join', component: () => import('@/pages/JoinContestPage.vue'), meta: { title: 'Join Contest', auth: true } },
+  { path: '/contests/:id/join', component: () => import('@/pages/JoinContestPage.vue'), meta: { title: 'Join Contest', auth: true, requiresRegistration: true } },
   { path: '/leaderboard', component: () => import('@/pages/LeaderboardPage.vue'), meta: { title: 'Leaderboard' } },
   { path: '/rules', component: () => import('@/pages/RulesPage.vue'), meta: { title: 'Rules' } },
-  {path: '/about', component: () => import('@/pages/AboutPage.vue'), meta: { title: 'About' } },
+  { path: '/about', component: () => import('@/pages/AboutPage.vue'), meta: { title: 'About' } },
 
   // Admin routes
   {
@@ -37,25 +37,47 @@ const router = createRouter({
   routes,
   scrollBehavior: () => ({ top: 0 })
 })
-
 router.beforeEach(async (to, from, next) => {
-  document.title = to.meta.title ? `${to.meta.title} | RoboContest` : 'RoboContest'
+  document.title = to.meta.title
+    ? `${to.meta.title} | RoboContest`
+    : 'RoboContest'
 
-  // Use Pinia store inside guard
   const pinia = getActivePinia()
-  let auth
-  if (pinia) {
-    const { useAuthStore } = await import('@/stores/auth')
-    auth = useAuthStore(pinia)
-  } else {
-    // fallback if Pinia not ready
-    return next()
+  if (!pinia) return next()
+
+  const { useAuthStore } = await import('@/stores/auth')
+  const { useContestStore } = await import('@/stores/contest')
+
+  const auth = useAuthStore(pinia)
+  const contestStore = useContestStore(pinia)
+
+  // AUTH GUARD
+  if (to.meta.auth && !auth.isLoggedIn) {
+    return next('/login')
   }
 
-  if (to.meta.auth && !auth.isLoggedIn) return next('/login')
-  if (to.meta.admin && !auth.isAdmin) return next('/')
-  if (to.meta.guest && auth.isLoggedIn) return next('/dashboard')
+  if (to.meta.admin && !auth.isAdmin) {
+    return next('/')
+  }
+
+  if (to.meta.guest && auth.isLoggedIn) {
+    return next('/dashboard')
+  }
+
+  if (to.meta.requiresRegistration) {
+    try {
+      const isRegistered = await contestStore.isRegistered(to.params.id)
+      const hasSubmitted = await contestStore.hasSubmittedContest(to.params.id)
+
+      if (!isRegistered || !hasSubmitted) {
+        return next(`/contests/${to.params.id}`)
+      }
+
+    } catch (e) {
+      return next(`/contests/${to.params.id}`)
+    }
+  }
+
   next()
 })
-
 export default router

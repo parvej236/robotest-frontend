@@ -183,7 +183,7 @@
           Don't have an account?
           <router-link
             to="/register"
-            class="text-white hover:text-red-500 font-black transition-colors ml-2 underline underline-offset-8 decoration-blue-600"
+            class="text-white hover:text-blue-500 font-black transition-colors ml-2 underline underline-offset-8 decoration-blue-600"
           >
             Create Account
           </router-link>

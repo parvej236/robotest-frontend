@@ -103,11 +103,16 @@ export const useContestStore = defineStore('contest', () => {
     return res.data || []
   }
 
+  async function hasSubmittedContest(id) {
+  const res = await api.get(`/submissions/contest/${id}/exists`)
+  return res.data
+}
+
   return {
     contests, activeContests, latestContests, loading,
     fetchAllContests, fetchActiveContests, fetchLatestContests,
     fetchContest, registerForContest, isRegistered, getMyContests,
     createContest, updateContest, deleteContest,
-    getLeaderboard, getMyResult, submitAnswers, getContestQuestions
+    getLeaderboard, getMyResult, submitAnswers, getContestQuestions, hasSubmittedContest
   }
 })

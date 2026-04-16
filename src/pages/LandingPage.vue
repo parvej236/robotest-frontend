@@ -204,8 +204,8 @@ onUnmounted(() => {
           </div>
 
           <div v-else-if="activeContests.length === 0" class="text-center py-10">
-            <div class="text-3xl mb-3">🤖</div>
-            <p class="text-white/30 font-body text-sm">No active contests right now</p>
+            <div class="text-5xl mb-3 animate-bounce">🤖</div>
+            <p class="text-white/30 font-body text-sm ">No active contests right now</p>
             <router-link to="/contests" class="text-neon-blue text-xs mt-2 inline-block hover:underline">
               Browse all contests →
             </router-link>

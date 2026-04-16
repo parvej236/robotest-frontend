@@ -58,6 +58,7 @@
 <script setup>
 import { format } from 'date-fns'
 import StatusBadge from './StatusBadge.vue'
+import { is } from 'date-fns/locale'
 
 defineProps({ contest: { type: Object, required: true } })
 defineEmits(['register'])

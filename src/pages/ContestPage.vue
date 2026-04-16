@@ -141,7 +141,7 @@
                 REGISTERED & READY
               </div>
 
-              <router-link v-if="contest.status === 'RUNNING' && isRegistered" :to="`/contests/${contest.id}/join`"
+              <router-link v-if="contest.status === 'RUNNING' && isRegistered && hasSubmitted" :to="`/contests/${contest.id}/join`"
                 class="bg-gradient-to-r from-red-600 to-red-500 text-white font-black py-5 px-14 rounded-[1.5rem] shadow-[0_20px_50px_rgba(220,38,38,0.5)] transition-all active:scale-95 flex items-center gap-4 text-xl tracking-tight">
                 ⚡ JOIN CONTEST NOW
               </router-link>
@@ -288,6 +288,8 @@ const registering = ref(false)
 const regError = ref('')
 const regSuccess = ref(false)
 
+const hasSubmitted = ref(false)
+
 // ── FIX: convert relative path to full backend URL ────────────
 function toFullUrl(path) {
   if (!path) return null
@@ -381,6 +383,7 @@ onMounted(async () => {
     // Check registration status if logged in
     if (auth.isLoggedIn) {
       isRegistered.value = await contestStore.isRegistered(route.params.id)
+      hasSubmitted.value = await contestStore.hasSubmitted(route.params.id)
     }
 
     // Load leaderboard if contest is running or finished

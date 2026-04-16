@@ -9,11 +9,11 @@
     <div class="w-full max-w-lg z-10">
       <div class="text-center mb-10">
         <h1 class="text-3xl md:text-5xl font-black text-white tracking-tighter uppercase italic leading-none">
-          Join the <span class="text-red-600">Arena</span>
+          Join to <span class="text-red-600">RMEDU</span>
         </h1>
         <div class="flex items-center justify-center gap-3 mt-4">
           <div class="h-[1px] w-8 bg-blue-500/50"></div>
-          <p class="text-blue-500 text-xs font-bold uppercase tracking-[0.4em]">Identity Verification</p>
+          <p class="text-blue-500 text-xs font-bold uppercase tracking-[0.4em]">Create New Account</p>
           <div class="h-[1px] w-8 bg-blue-500/50"></div>
         </div>
       </div>
@@ -124,10 +124,10 @@
       </div>
 
       <div class="mt-8 text-center">
-        <p class="text-gray-500 text-sm font-medium">
-          Already verified?
-          <router-link to="/login" class="text-white hover:text-red-500 font-black transition-colors ml-2 uppercase tracking-widest text-xs">
-            Enter Arena
+        <p class="text-gray-500 text-lg font-medium">
+          Already have an account?
+          <router-link to="/login" class="text-white hover:text-blue-500 font-black transition-colors ml-2 underline underline-offset-8 decoration-blue-600 tracking-widest text-lg">
+            Login
           </router-link>
         </p>
       </div>

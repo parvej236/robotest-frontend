@@ -16,6 +16,7 @@
           </div>
           <h1 class="font-display text-2xl font-black text-white uppercase tracking-wider">Manage Users</h1>
         </div>
+        
         <button @click="openCreate" class="btn-primary text-xs py-2">+ Create User</button>
       </div>
 
@@ -152,6 +153,8 @@
               <select v-model="createForm.role" class="input-field">
                 <option value="ROLE_USER">User</option>
                 <option value="ROLE_ADMIN">Admin</option>
+                <option value="ROLE_JUDGE">Judge</option>
+                <option value="ROLE_MANAGER">Manager</option>
               </select>
             </div>
             <div class="sm:col-span-2 flex items-center gap-4">
@@ -234,6 +237,8 @@
               <select v-model="editForm.role" class="input-field">
                 <option value="ROLE_USER">User</option>
                 <option value="ROLE_ADMIN">Admin</option>
+                <option value="ROLE_JUDGE">Judge</option>
+                <option value="ROLE_MANAGER">Manager</option>
               </select>
             </div>
             <div class="flex flex-col gap-2 justify-center">
