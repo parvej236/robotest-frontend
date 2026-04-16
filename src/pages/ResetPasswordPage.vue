@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center p-4 bg-[#020202] relative overflow-hidden font-sans">
+  <div class="min-h-screen flex items-center justify-center p-4 bg-transparent relative overflow-hidden font-sans">
     <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
       <div class="absolute -bottom-24 -right-24 w-[500px] h-[500px] bg-red-600/10 rounded-full blur-[120px]"></div>
     </div>

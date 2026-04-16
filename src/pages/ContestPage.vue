@@ -1,6 +1,6 @@
 <!-- src/pages/ContestPage.vue -->
 <template>
-  <div class="min-h-screen pt-28 px-6 pb-24 bg-[#050505] text-white selection:bg-red-500/30">
+  <div class="min-h-screen pt-28 px-6 pb-24 bg-transparent text-white selection:bg-red-500/30">
     <div class="max-w-6xl mx-auto">
 
       <div v-if="loading" class="flex flex-col items-center justify-center py-40">
@@ -341,11 +341,11 @@ const dateItems = computed(() => {
 
 function formatDT(d) {
   if (!d) return 'TBD'
-  try { return format(new Date(d), 'MMM dd, HH:mm') } catch { return d }
+  try { return format(new Date(d), 'MMM dd, hh:mm a') } catch { return d }
 }
 function formatTime(d) {
   if (!d) return '-'
-  try { return format(new Date(d), 'HH:mm:ss') } catch { return d }
+  try { return format(new Date(d), 'hh:mm a') } catch { return d }
 }
 
 // ── Register ──────────────────────────────────────────────────

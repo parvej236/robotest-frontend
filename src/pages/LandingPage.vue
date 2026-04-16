@@ -8,13 +8,13 @@ import StatusBadge from '@/components/common/StatusBadge.vue'
 import LoadingSpinner from '@/components/common/LoadingSpinner.vue'
 import { format } from 'date-fns'
 
-const router       = useRouter()
-const auth         = useAuthStore()
+const router = useRouter()
+const auth = useAuthStore()
 const contestStore = useContestStore()
 
-const canvasRef     = ref(null)
+const canvasRef = ref(null)
 const activeContests = ref([])
-const loading        = ref(true)
+const loading = ref(true)
 
 let renderer, scene, camera, animId, particles, robotGroup
 
@@ -27,65 +27,65 @@ function initThree() {
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
   renderer.setClearColor(0x000000, 0)
 
-  scene  = new THREE.Scene()
+  scene = new THREE.Scene()
   camera = new THREE.PerspectiveCamera(60, W / H, 0.1, 1000)
   camera.position.set(0, 0, 30)
 
   // Particles
-  const pGeo  = new THREE.BufferGeometry()
+  const pGeo = new THREE.BufferGeometry()
   const count = 2000
-  const pos   = new Float32Array(count * 3)
-  const col   = new Float32Array(count * 3)
+  const pos = new Float32Array(count * 3)
+  const col = new Float32Array(count * 3)
   for (let i = 0; i < count; i++) {
-    pos[i*3]   = (Math.random()-0.5)*120
-    pos[i*3+1] = (Math.random()-0.5)*80
-    pos[i*3+2] = (Math.random()-0.5)*60
+    pos[i * 3] = (Math.random() - 0.5) * 120
+    pos[i * 3 + 1] = (Math.random() - 0.5) * 80
+    pos[i * 3 + 2] = (Math.random() - 0.5) * 60
     const t = Math.random()
-    if (t < 0.5) { col[i*3]=1; col[i*3+1]=0; col[i*3+2]=0.2 }
-    else          { col[i*3]=0; col[i*3+1]=0.75; col[i*3+2]=1 }
+    if (t < 0.5) { col[i * 3] = 1; col[i * 3 + 1] = 0; col[i * 3 + 2] = 0.2 }
+    else { col[i * 3] = 0; col[i * 3 + 1] = 0.75; col[i * 3 + 2] = 1 }
   }
   pGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3))
-  pGeo.setAttribute('color',    new THREE.BufferAttribute(col, 3))
-  particles = new THREE.Points(pGeo, new THREE.PointsMaterial({ size:0.15, vertexColors:true, transparent:true, opacity:0.7 }))
+  pGeo.setAttribute('color', new THREE.BufferAttribute(col, 3))
+  particles = new THREE.Points(pGeo, new THREE.PointsMaterial({ size: 0.15, vertexColors: true, transparent: true, opacity: 0.7 }))
   scene.add(particles)
 
   // Robot
   robotGroup = new THREE.Group()
-  const mR = new THREE.MeshBasicMaterial({ color:0xff0033, wireframe:true, transparent:true, opacity:0.15 })
-  const mB = new THREE.MeshBasicMaterial({ color:0x00bfff, wireframe:true, transparent:true, opacity:0.12 })
+  const mR = new THREE.MeshBasicMaterial({ color: 0xff0033, wireframe: true, transparent: true, opacity: 0.15 })
+  const mB = new THREE.MeshBasicMaterial({ color: 0x00bfff, wireframe: true, transparent: true, opacity: 0.12 })
 
-  robotGroup.add(Object.assign(new THREE.Mesh(new THREE.BoxGeometry(5,6,3), mR)))
-  const head = new THREE.Mesh(new THREE.BoxGeometry(3,2.5,2.5), mB); head.position.y=4.5; robotGroup.add(head)
-  const eL = new THREE.Mesh(new THREE.SphereGeometry(0.3,8,8), new THREE.MeshBasicMaterial({color:0xff0033})); eL.position.set(-0.6,4.6,1.3); robotGroup.add(eL)
-  const eR = new THREE.Mesh(new THREE.SphereGeometry(0.3,8,8), new THREE.MeshBasicMaterial({color:0x00ffff})); eR.position.set( 0.6,4.6,1.3); robotGroup.add(eR)
-  const aL = new THREE.Mesh(new THREE.BoxGeometry(1.2,5,1.2), mR); aL.position.set(-3.2,-0.5,0); robotGroup.add(aL)
-  const aR = new THREE.Mesh(new THREE.BoxGeometry(1.2,5,1.2), mB); aR.position.set( 3.2,-0.5,0); robotGroup.add(aR)
-  const lL = new THREE.Mesh(new THREE.BoxGeometry(1.8,4,1.8), mB); lL.position.set(-1.3,-5.5,0); robotGroup.add(lL)
-  const lR = new THREE.Mesh(new THREE.BoxGeometry(1.8,4,1.8), mR); lR.position.set( 1.3,-5.5,0); robotGroup.add(lR)
-  for (let i=0; i<3; i++) {
-    const ring = new THREE.Mesh(new THREE.TorusGeometry(8+i*2,0.05,4,64),
-      new THREE.MeshBasicMaterial({ color:i%2===0?0xff0033:0x00bfff, transparent:true, opacity:0.15-i*0.03 }))
-    ring.rotation.x = Math.PI/(3+i); ring.rotation.y = Math.PI/(5+i*2)
+  robotGroup.add(Object.assign(new THREE.Mesh(new THREE.BoxGeometry(5, 6, 3), mR)))
+  const head = new THREE.Mesh(new THREE.BoxGeometry(3, 2.5, 2.5), mB); head.position.y = 4.5; robotGroup.add(head)
+  const eL = new THREE.Mesh(new THREE.SphereGeometry(0.3, 8, 8), new THREE.MeshBasicMaterial({ color: 0xff0033 })); eL.position.set(-0.6, 4.6, 1.3); robotGroup.add(eL)
+  const eR = new THREE.Mesh(new THREE.SphereGeometry(0.3, 8, 8), new THREE.MeshBasicMaterial({ color: 0x00ffff })); eR.position.set(0.6, 4.6, 1.3); robotGroup.add(eR)
+  const aL = new THREE.Mesh(new THREE.BoxGeometry(1.2, 5, 1.2), mR); aL.position.set(-3.2, -0.5, 0); robotGroup.add(aL)
+  const aR = new THREE.Mesh(new THREE.BoxGeometry(1.2, 5, 1.2), mB); aR.position.set(3.2, -0.5, 0); robotGroup.add(aR)
+  const lL = new THREE.Mesh(new THREE.BoxGeometry(1.8, 4, 1.8), mB); lL.position.set(-1.3, -5.5, 0); robotGroup.add(lL)
+  const lR = new THREE.Mesh(new THREE.BoxGeometry(1.8, 4, 1.8), mR); lR.position.set(1.3, -5.5, 0); robotGroup.add(lR)
+  for (let i = 0; i < 3; i++) {
+    const ring = new THREE.Mesh(new THREE.TorusGeometry(8 + i * 2, 0.05, 4, 64),
+      new THREE.MeshBasicMaterial({ color: i % 2 === 0 ? 0xff0033 : 0x00bfff, transparent: true, opacity: 0.15 - i * 0.03 }))
+    ring.rotation.x = Math.PI / (3 + i); ring.rotation.y = Math.PI / (5 + i * 2)
     robotGroup.add(ring)
   }
   robotGroup.position.set(8, 8, 0)
   scene.add(robotGroup)
 
   // Grid
-  const grid = new THREE.Mesh(new THREE.PlaneGeometry(40,40,20,20),
-    new THREE.MeshBasicMaterial({ color:0xff0033, wireframe:true, transparent:true, opacity:0.04 }))
-  grid.rotation.x = -Math.PI/2; grid.position.y = -12
+  const grid = new THREE.Mesh(new THREE.PlaneGeometry(40, 40, 20, 20),
+    new THREE.MeshBasicMaterial({ color: 0xff0033, wireframe: true, transparent: true, opacity: 0.04 }))
+  grid.rotation.x = -Math.PI / 2; grid.position.y = -12
   scene.add(grid)
   scene.add(new THREE.AmbientLight(0x111111))
 
   function animate() {
     animId = requestAnimationFrame(animate)
-    const t = Date.now()*0.001
-    particles.rotation.y = t*0.02; particles.rotation.x = t*0.01
-    robotGroup.rotation.y = Math.sin(t*0.4)*0.3
-    robotGroup.position.y = 8+Math.sin(t*0.5)*1.5
-    robotGroup.children.forEach((c,i) => {
-      if (c.geometry?.type==='TorusGeometry') { c.rotation.z=t*(0.3+i*0.1); c.rotation.x=t*(0.2-i*0.05) }
+    const t = Date.now() * 0.001
+    particles.rotation.y = t * 0.02; particles.rotation.x = t * 0.01
+    robotGroup.rotation.y = Math.sin(t * 0.4) * 0.3
+    robotGroup.position.y = 8 + Math.sin(t * 0.5) * 1.5
+    robotGroup.children.forEach((c, i) => {
+      if (c.geometry?.type === 'TorusGeometry') { c.rotation.z = t * (0.3 + i * 0.1); c.rotation.x = t * (0.2 - i * 0.05) }
     })
     renderer.render(scene, camera)
   }
@@ -95,8 +95,8 @@ function initThree() {
 
 function onResize() {
   if (!renderer) return
-  const W=window.innerWidth, H=window.innerHeight
-  camera.aspect=W/H; camera.updateProjectionMatrix(); renderer.setSize(W,H)
+  const W = window.innerWidth, H = window.innerHeight
+  camera.aspect = W / H; camera.updateProjectionMatrix(); renderer.setSize(W, H)
 }
 
 // ── Actions ───────────────────────────────────────────────────
@@ -119,11 +119,11 @@ function formatDate(d) {
 }
 function formatShort(d) {
   if (!d) return '—'
-  try { return format(new Date(d), 'MMM dd HH:mm') } catch { return d }
+  try { return format(new Date(d), 'MMM dd hh:mm a') } catch { return d }
 }
 function contestEnd(c) {
   if (!c.contestEnd) return '—'
-  try { return format(new Date(c.contestEnd), 'HH:mm, MMM dd') } catch { return '—' }
+  try { return format(new Date(c.contestEnd), 'hh:mm a, MMM dd') } catch { return '—' }
 }
 
 // ── Mount ─────────────────────────────────────────────────────
@@ -179,7 +179,7 @@ onUnmounted(() => {
       <div class="max-w-7xl mx-auto">
 
         <!-- Section header -->
-        <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center justify-between mb-4 mt-5">
           <div class="flex items-center gap-3">
             <div class="w-1 h-6 bg-neon-red rounded-full"></div>
             <span class="font-display text-sm font-bold text-white uppercase tracking-widest">
@@ -211,124 +211,44 @@ onUnmounted(() => {
             </router-link>
           </div>
 
-          <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            <div
-              v-for="c in activeContests" :key="c.id"
-              class="relative group glass-card overflow-hidden cursor-pointer
-                     hover:border-neon-red/30 transition-all duration-300"
+          <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            <div v-for="c in activeContests" :key="c.id"
+              class="relative group overflow-hidden rounded-3xl border border-white/10 bg-white/10 shadow-[0_30px_90px_rgba(0,0,0,0.18)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:border-white/20"
               @click="handleCard(c)">
 
-              <!-- Top status stripe -->
-              <div class="h-0.5 w-full"
-                   :style="c.status === 'RUNNING'
-                     ? 'background: linear-gradient(90deg,#00ff88,#00bfff)'
-                     : 'background: linear-gradient(90deg,#ff0033,#00bfff)'">
-              </div>
+              <div class="rounded-3xl border border-white/20 bg-green-200/1 backdrop-blur-9xl p-4 shadow-inner shadow-white/5">
+                <div class="h-1 w-full rounded-full mb-3" :class="c.status === 'RUNNING' ? 'bg-gradient-to-r from-emerald-400 to-sky-400' : 'bg-gradient-to-r from-sky-400 to-fuchsia-400'"></div>
 
-              <div class="p-4">
-                <!-- Status row -->
-                <div class="flex items-center justify-between mb-3">
-                  <StatusBadge :status="c.status" />
-                  <span class="text-[10px] font-mono text-white/30">{{ formatDate(c.contestDate) }}</span>
-                </div>
-
-                <!-- Contest name -->
-                <h3 class="font-display font-bold text-white text-sm leading-tight mb-1
-                           line-clamp-2 group-hover:text-neon-red transition-colors">
-                  {{ c.name }}
-                </h3>
-
-                <!-- Description -->
-                <p v-if="c.description"
-                   class="text-[11px] text-white/35 font-body line-clamp-2 mb-3 leading-relaxed">
-                  {{ c.description }}
-                </p>
-                <div v-else class="mb-3"></div>
-
-                <!-- Stats row -->
-                <div class="flex items-center gap-3 mb-4">
-                  <div class="flex items-center gap-1.5">
-                    <svg class="w-3 h-3 text-neon-red/60" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
-                    </svg>
-                    <span class="text-[10px] font-mono text-white/40">
+                <div class="flex items-center justify-between gap-2 text-[12px] text-slate-300">
+                  <StatusBadge :status="c.status" size="sm" />
+                  <div class="flex flex-wrap items-center gap-2">
+                    <span class="rounded-full bg-white/10 px-2 py-1 text-[11px] text-slate-200 border border-white/10">
                       {{ c.registrationCount || 0 }} registered
                     </span>
-                  </div>
-                  <div class="flex items-center gap-1.5">
-                    <svg class="w-3 h-3 text-neon-blue/60" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M9 3L5 6.99h3V14h2V6.99h3L9 3zm7 14.01V10h-2v7.01h-3L15 21l4-3.99h-3z"/>
-                    </svg>
-                    <span class="text-[10px] font-mono text-white/40">
-                      {{ c.questionCount ?? '—' }} questions
+                    <span class="rounded-full bg-white/10 px-2 py-1 text-[11px] text-slate-200 border border-white/10">
+                      {{ formatShort(c.contestStart) }}
                     </span>
                   </div>
                 </div>
 
-                <!-- Timeline -->
-                <div v-if="c.status === 'RUNNING'" class="mb-4">
-                  <div class="flex items-center justify-between text-[10px] font-mono mb-1">
-                    <span class="text-green-400/70">Ends at</span>
-                    <span class="text-green-400">{{ contestEnd(c) }}</span>
-                  </div>
-                  <!-- Progress bar (visual only) -->
-                  <div class="h-0.5 bg-dark-800 rounded-full overflow-hidden">
-                    <div class="h-full bg-gradient-to-r from-green-500 to-neon-blue rounded-full animate-pulse"
-                         style="width: 60%"></div>
-                  </div>
-                </div>
+                <h3 class="mt-3 text-base font-semibold text-white leading-tight line-clamp-2 group-hover:text-sky-300 transition">
+                  {{ c.name }}
+                </h3>
+                <p v-if="c.description" class="mt-2 text-sm text-slate-400 line-clamp-2">
+                  {{ c.description }}
+                </p>
 
-                <div v-else class="mb-4">
-                  <div class="flex items-center justify-between text-[10px] font-mono">
-                    <span class="text-white/25">Reg closes</span>
-                    <span class="text-neon-blue/60">{{ formatShort(c.registrationEnd) }}</span>
-                  </div>
-                  <div class="flex items-center justify-between text-[10px] font-mono mt-0.5">
-                    <span class="text-white/25">Contest starts</span>
-                    <span class="text-white/50">{{ formatShort(c.contestStart) }}</span>
-                  </div>
-                </div>
-
-                <!-- Action buttons -->
-                <div class="flex gap-2">
-                  <!-- RUNNING → Join Now button -->
-                  <button
-                    v-if="c.status === 'RUNNING'"
-                    @click="handleJoin(c, $event)"
-                    class="flex-1 flex items-center justify-center gap-1.5
-                           bg-green-500/20 border border-green-500/40 text-green-400
-                           hover:bg-green-500/30 hover:border-green-400
-                           font-display text-xs py-2 rounded transition-all">
-                    <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M8 5v14l11-7z"/>
-                    </svg>
-                    Join Contest
+                <div class="mt-4 flex flex-wrap gap-2">
+                  <button v-if="c.status === 'RUNNING'" @click="handleJoin(c, $event)"
+                    class="flex-1 rounded-2xl bg-emerald-500/20 px-3 py-2 text-sm font-semibold text-emerald-100 shadow-sm shadow-emerald-500/10 transition hover:bg-emerald-500/30 hover:text-white">
+                    Join
                   </button>
-
-                  <!-- REGISTRATION_OPEN → Register button -->
-                  <button
-                    v-else-if="c.status === 'REGISTRATION_OPEN'"
-                    @click="handleRegister(c, $event)"
-                    class="flex-1 flex items-center justify-center gap-1.5
-                           bg-neon-blue/10 border border-neon-blue/30 text-neon-blue
-                           hover:bg-neon-blue/20 hover:border-neon-blue/60
-                           font-display text-xs py-2 rounded transition-all">
-                    <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
-                    </svg>
+                  <button v-else-if="c.status === 'REGISTRATION_OPEN'" @click="handleRegister(c, $event)"
+                    class="flex-1 rounded-2xl bg-gradient-to-r from-sky-500 to-blue-500 px-3 py-2 text-sm font-semibold text-white shadow-lg shadow-sky-500/20 transition hover:from-sky-400 hover:to-blue-400">
                     Register
                   </button>
-
-                  <!-- View details link (always) -->
-                  <button
-                    @click="handleCard(c)"
-                    :class="[
-                      'font-display text-xs py-2 px-3 rounded border transition-all',
-                      c.status === 'RUNNING' || c.status === 'REGISTRATION_OPEN'
-                        ? 'border-white/10 text-white/40 hover:text-white hover:border-white/20'
-                        : 'flex-1 border-white/10 text-white/50 hover:border-white/20 hover:text-white'
-                    ]">
+                  <button @click="handleCard(c)"
+                    class="flex-1 rounded-2xl border border-white/10 bg-white/10 px-3 py-2 text-sm font-semibold text-slate-200 transition hover:border-white/20 hover:text-white">
                     Details
                   </button>
                 </div>

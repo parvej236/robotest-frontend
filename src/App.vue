@@ -4,6 +4,8 @@ import { RouterView } from 'vue-router';
 </script>
 
 <template>
+  <div class="page-shell min-h-screen">
     <Navbar />
     <RouterView />
+  </div>
 </template>

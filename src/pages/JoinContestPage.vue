@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-[#050505] text-slate-200 selection:bg-neon-blue/30 overflow-hidden flex flex-col">
+  <div class="min-h-screen bg-transparent text-slate-200 selection:bg-neon-blue/30 overflow-hidden flex flex-col">
     
     <nav class="h-20 bg-black/60 backdrop-blur-md border-b border-white/5 px-6 flex items-center justify-between shrink-0 z-50">
       <div class="flex items-center gap-6">
@@ -104,7 +104,7 @@
                     v-model="answers[questions[activeIdx].id]"
                     :type="questions[activeIdx].type === 'NUMERIC_MCQ' ? 'number' : 'text'"
                     class="w-full bg-white/[0.03] border-1 rounded-full border-blue-500 p-4 text-2xl text-green-500 placeholder:text-green-500 focus:outline-none focus:border-blue-500 transition-all"
-                    :placeholder="questions[activeIdx].type === 'NUMERIC_MCQ' ? '0.00' : 'Enter value...'"
+                    :placeholder="questions[activeIdx].type === 'NUMERIC_MCQ' ? '0.000' : 'Enter value...'"
                   />
                 </div>
                 

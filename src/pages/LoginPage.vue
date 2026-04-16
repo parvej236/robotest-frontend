@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center p-4 bg-[#020202] relative overflow-hidden font-sans">
+  <div class="min-h-screen flex items-center justify-center p-4 bg-transparent relative overflow-hidden font-sans">
 
     <!-- Background glows -->
     <div class="absolute top-0 left-0 w-full h-full pointer-events-none">

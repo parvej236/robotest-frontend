@@ -9,28 +9,81 @@
     </div>
 
       <!-- Header -->
-      <div class="mb-6 flex items-center justify-between flex-wrap gap-4">
+      <div class="mb-6 space-y-4">
         <div>
           <div class="flex items-center gap-2 mb-1">
-            <div class="w-4 h-px bg-red-700"></div>
-            <span class="text-xs font-display tracking-widest text-neon-red uppercase">Admin</span>
+            <div class="w-4 h-px bg-rose-500"></div>
+            <span class="text-xs font-display tracking-widest text-rose-300 uppercase">Admin</span>
           </div>
           <h1 class="font-display text-2xl font-black text-white uppercase tracking-wider">Manage Contests</h1>
         </div>
-        <div class="flex items-center gap-3">
-          <div class="flex items-center bg-dark-700/60 border border-white/10 rounded overflow-hidden">
-            <button @click="viewMode = 'grid'"
-              :class="['px-3 py-1.5 text-xs font-display tracking-wider transition-colors',
-                       viewMode === 'grid' ? 'bg-red-700 text-white' : 'text-white/40 hover:text-white']">
-              ▦ Grid
-            </button>
-            <button @click="viewMode = 'list'"
-              :class="['px-3 py-1.5 text-xs font-display tracking-wider transition-colors',
-                       viewMode === 'list' ? 'bg-red-700 text-white' : 'text-white/40 hover:text-white']">
-              ☰ List
-            </button>
+
+        <!-- filters management -->
+        <div class="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+          <div class="min-w-0 flex-1">
+            <label for="contest-search" class="sr-only">Search contests</label>
+            <div class="relative rounded-3xl border border-slate-700 bg-slate-950/80 px-4 py-3 shadow-sm focus-within:border-sky-500/50">
+              <svg class="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="7" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
+              <input id="contest-search" v-model="searchQuery" type="search"
+                class="w-full rounded-3xl bg-transparent pl-11 pr-4 text-sm text-slate-100 placeholder:text-slate-500 outline-none"
+                placeholder="Search contests by name or description..." />
+            </div>
           </div>
-          <button @click="openCreate" class="btn-primary text-xs py-2">+ New Contest</button>
+
+          <div class="flex flex-wrap items-center gap-3 lg:justify-end">
+            <div class="flex flex-wrap gap-3 items-center">
+              <div class="relative w-full max-w-[18rem] rounded-3xl border border-slate-700 bg-slate-950/80 px-3 py-2 shadow-sm">
+                <label for="status-filter" class="sr-only">Filter by status</label>
+                <select id="status-filter" v-model="statusFilter"
+                  class="w-full bg-slate-950/90 text-sm text-slate-100 outline-none appearance-none accent-sky-400 focus:text-white focus:ring-2 focus:ring-sky-500/30 focus:border-sky-500">
+                  <option class="bg-slate-950 text-slate-100" value="ALL">All Statuses</option>
+                  <option class="bg-slate-950 text-slate-100" value="UPCOMING">Upcoming</option>
+                  <option class="bg-slate-950 text-slate-100" value="REGISTRATION_OPEN">Registration Open</option>
+                  <option class="bg-slate-950 text-slate-100" value="RUNNING">Running</option>
+                  <option class="bg-slate-950 text-slate-100" value="FINISHED">Finished</option>
+                </select>
+                <div class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-slate-500">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9" />
+                  </svg>
+                </div>
+              </div>
+              <div class="relative w-full max-w-[18rem] rounded-3xl border border-slate-700 bg-slate-950/80 px-3 py-2 shadow-sm">
+                <label for="sort-option" class="sr-only">Sort contests</label>
+                <select id="sort-option" v-model="sortOption"
+                  class="w-full bg-slate-950/90 text-sm text-slate-100 outline-none appearance-none accent-sky-400 focus:text-white focus:ring-2 focus:ring-sky-500/30 focus:border-sky-500">
+                  <option class="bg-slate-950 text-slate-100" value="createdDesc">Created: Newest</option>
+                  <option class="bg-slate-950 text-slate-100" value="createdAsc">Created: Oldest</option>
+                  <option class="bg-slate-950 text-slate-100" value="contestDesc">Contest Date: Latest</option>
+                  <option class="bg-slate-950 text-slate-100" value="contestAsc">Contest Date: Earliest</option>
+                  <option class="bg-slate-950 text-slate-100" value="registeredDesc">Registered: High to Low</option>
+                </select>
+                <div class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-slate-500">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap gap-3 items-center justify-end">
+              <div class="flex items-center rounded-full bg-slate-900/80 border border-slate-700 p-1 shadow-sm">
+                <button @click="viewMode = 'grid'"
+                  :class="['px-4 py-2 rounded-full text-sm font-semibold transition', viewMode === 'grid' ? 'bg-sky-500 text-slate-950' : 'text-slate-300 hover:text-white']">
+                  ▦ Grid
+                </button>
+                <button @click="viewMode = 'list'"
+                  :class="['px-4 py-2 rounded-full text-sm font-semibold transition', viewMode === 'list' ? 'bg-sky-500 text-slate-950' : 'text-slate-300 hover:text-white']">
+                  ☰ List
+                </button>
+              </div>
+              <button @click="openCreate"
+                class="btn-primary text-sm min-w-[10rem] px-4 py-2">+ New Contest</button>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -44,56 +97,93 @@
         <button @click="openCreate" class="btn-primary">Create First Contest</button>
       </div>
 
+      <div v-else-if="displayedContests.length === 0" class="glass-card p-16 text-center">
+        <div class="text-5xl mb-4">🔍</div>
+        <p class="text-slate-100 font-semibold mb-2">No contests match your search.</p>
+        <p class="text-slate-400 text-sm">Try a different keyword, status filter, or sort option.</p>
+      </div>
+
       <!-- GRID VIEW -->
       <div v-else-if="viewMode === 'grid'" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-        <div v-for="c in contests" :key="c.id"
-             class="glass-card relative overflow-hidden group hover:border-neon-red/30 transition-all duration-300">
+        <div v-for="c in pagedContests" :key="c.id"
+             class="glass-card relative overflow-hidden group hover:border-neon-red/40 hover:-translate-y-1 hover:shadow-[0_24px_80px_rgba(220,38,38,0.12)] transition-all duration-300">
+          <div class="absolute inset-0 bg-gradient-to-br from-red-500/10 via-transparent to-blue-500/5 opacity-0 group-hover:opacity-100 pointer-events-none"></div>
           <div class="h-1 w-full" :style="`background: ${statusColor(c.status)}`"></div>
-          <div class="p-5">
-            <div class="flex items-center justify-between mb-3">
+           <div class="relative p-5">
+            <div class="flex items-center justify-between gap-3 mb-4">
               <StatusBadge :status="c.status" />
-              <span class="text-xs font-mono text-white/30">{{ formatDate(c.contestDate) }}</span>
+              <span class="text-sm font-semibold text-sky-300 tracking-wide">{{ formatDate(c.contestDate) }}</span>
             </div>
-            <h3 class="font-display font-black text-white text-base leading-tight mb-2 line-clamp-2 group-hover:text-neon-red transition-colors">
+            <h3 class="font-display font-black text-white text-lg md:text-xl leading-tight mb-3 line-clamp-2 group-hover:text-rose-300 transition-colors">
               {{ c.name }}
             </h3>
-            <p v-if="c.description" class="text-xs text-white/40 font-body line-clamp-2 mb-4 leading-relaxed">{{ c.description }}</p>
-            <div class="grid grid-cols-2 gap-2 mb-4">
-              <div class="bg-dark-800/60 rounded p-2 text-center">
-                <p class="text-neon-red font-display font-black text-lg">{{ c.registrationCount || 0 }}</p>
-                <p class="text-[9px] text-white/30 font-display tracking-wider uppercase">Registered</p>
+            <p v-if="c.description" class="text-sm text-slate-300 font-body line-clamp-2 mb-5 leading-relaxed">{{ c.description }}</p>
+            <div class="grid grid-cols-2 gap-3 mb-5">
+              <div class="bg-slate-950/70 rounded-3xl p-4 text-center border border-slate-700 shadow-sm">
+                <div class="flex items-center justify-center gap-2 mb-2 text-slate-400">
+                  <svg class="w-4 h-4 text-rose-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                  </svg>
+                  <span class="text-[10px] font-display tracking-wider uppercase text-rose-200">Registered</span>
+                </div>
+                <p class="text-rose-300 font-display font-black text-2xl">{{ c.registrationCount || 0 }}</p>
               </div>
-              <div class="bg-dark-800/60 rounded p-2 text-center">
-                <p class="text-neon-blue font-display font-black text-lg">{{ c.questionCount ?? '—' }}</p>
-                <p class="text-[9px] text-white/30 font-display tracking-wider uppercase">Questions</p>
+              <div class="bg-slate-950/70 rounded-3xl p-4 text-center border border-slate-700 shadow-sm">
+                <div class="flex items-center justify-center gap-2 mb-2 text-slate-400">
+                  <svg class="w-4 h-4 text-cyan-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 9a3 3 0 1 1 6 0c0 1.657-1.343 3-3 3" />
+                    <path d="M12 17h.01" />
+                    <path d="M21 20a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9l5 5v11z" />
+                  </svg>
+                  <span class="text-[10px] font-display tracking-wider uppercase text-cyan-200">Questions</span>
+                </div>
+                <p class="text-cyan-300 font-display font-black text-2xl">{{ c.questionCount ?? '—' }}</p>
               </div>
             </div>
-            <div class="space-y-1 mb-4">
-              <div class="flex items-center justify-between text-[10px] font-mono">
-                <span class="text-white/30">Reg Open</span>
-                <span class="text-white/50">{{ formatShort(c.registrationStart) }}</span>
+            <div class="space-y-3 mb-5">
+              <div class="flex items-center justify-between text-xs font-mono text-slate-400">
+                <span class="font-semibold text-slate-300">Reg Open</span>
+                <span class="text-slate-200">{{ formatShort(c.registrationStart) }}</span>
               </div>
-              <div class="flex items-center justify-between text-[10px] font-mono">
-                <span class="text-white/30">Contest Start</span>
-                <span class="text-white/50">{{ formatShort(c.contestStart) }}</span>
+              <div class="flex items-center justify-between text-xs font-mono text-slate-400">
+                <span class="font-semibold text-slate-300">Contest Start</span>
+                <span class="text-slate-200">{{ formatShort(c.contestStart) }}</span>
               </div>
-              <div class="flex items-center justify-between text-[10px] font-mono">
-                <span class="text-white/30">Ends</span>
-                <span class="text-white/50">{{ formatShort(c.contestEnd) }}</span>
+              <div class="flex items-center justify-between text-xs font-mono text-slate-400">
+                <span class="font-semibold text-slate-300">Ends</span>
+                <span class="text-slate-200">{{ formatShort(c.contestEnd) }}</span>
               </div>
             </div>
-            <div class="flex gap-2">
+            <div class="flex flex-wrap gap-3">
               <router-link :to="`/admin/contests/${c.id}/questions`"
-                class="flex-1 text-center text-xs font-display text-neon-blue border border-neon-blue/30 px-2 py-1.5 rounded hover:bg-neon-blue/10 transition-colors">
+                class="flex-1 inline-flex items-center justify-center gap-2 text-xs md:text-sm font-semibold text-white bg-neon-blue/15 border border-neon-blue/30 px-3 py-3 rounded-2xl hover:bg-neon-blue/25 transition-colors">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="7 10 12 15 17 10" />
+                  <line x1="12" y1="15" x2="12" y2="3" />
+                </svg>
                 Questions
               </router-link>
               <button @click="openEdit(c)"
-                class="flex-1 text-xs font-display text-white/60 border border-white/10 px-2 py-1.5 rounded hover:bg-white/5 hover:text-white transition-colors">
+                class="flex-1 inline-flex items-center justify-center gap-2 text-xs md:text-sm font-semibold text-white/90 bg-white/10 border border-white/15 px-3 py-3 rounded-2xl hover:bg-white/15 hover:text-white transition-colors">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 20h9" />
+                  <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z" />
+                </svg>
                 Edit
               </button>
               <button @click="confirmDelete(c)"
-                class="text-xs font-display text-neon-red border border-neon-red/30 px-2 py-1.5 rounded hover:bg-red-700/10 transition-colors">
-                ✕
+                class="flex-1 inline-flex items-center justify-center gap-2 text-xs md:text-sm font-semibold text-red-100 bg-red-600/10 border border-red-600/25 px-3 py-3 rounded-2xl hover:bg-red-600/20 transition-colors">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="3 6 5 6 21 6" />
+                  <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+                  <path d="M10 11v6" />
+                  <path d="M14 11v6" />
+                </svg>
+                Delete
               </button>
             </div>
           </div>
@@ -102,37 +192,37 @@
 
       <!-- LIST VIEW -->
       <div v-else class="glass-card p-6 overflow-x-auto">
-        <table class="w-full">
+        <table class="w-full border-collapse">
           <thead>
-            <tr class="border-b border-white/5">
-              <th class="pb-3 text-left text-xs font-display tracking-wider text-white/40 uppercase">Name</th>
-              <th class="pb-3 text-center text-xs font-display tracking-wider text-white/40 uppercase hidden sm:table-cell">Status</th>
-              <th class="pb-3 text-center text-xs font-display tracking-wider text-white/40 uppercase hidden lg:table-cell">Contest Date</th>
-              <th class="pb-3 text-center text-xs font-display tracking-wider text-white/40 uppercase hidden md:table-cell">Registered</th>
-              <th class="pb-3 text-right text-xs font-display tracking-wider text-white/40 uppercase">Actions</th>
+            <tr class="border-b border-slate-700">
+              <th class="pb-3 text-left text-sm font-display tracking-wider text-slate-300 uppercase">Name</th>
+              <th class="pb-3 text-center text-sm font-display tracking-wider text-slate-300 uppercase hidden sm:table-cell">Status</th>
+              <th class="pb-3 text-center text-sm font-display tracking-wider text-slate-300 uppercase hidden lg:table-cell">Contest Date</th>
+              <th class="pb-3 text-center text-sm font-display tracking-wider text-slate-300 uppercase hidden md:table-cell">Registered</th>
+              <th class="pb-3 text-right text-sm font-display tracking-wider text-slate-300 uppercase">Actions</th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-white/5">
-            <tr v-for="c in contests" :key="c.id" class="hover:bg-white/3 transition-colors">
-              <td class="py-3 pr-4 max-w-xs">
-                <p class="font-display text-sm text-white font-semibold truncate">{{ c.name }}</p>
-                <p v-if="c.description" class="text-xs text-white/30 font-body truncate mt-0.5">{{ c.description }}</p>
+          <tbody>
+            <tr v-for="c in pagedContests" :key="c.id" class="border-b border-slate-800 bg-slate-950/80 hover:bg-slate-900/90 transition-colors">
+              <td class="py-4 pr-4 max-w-xs">
+                <p class="font-display text-base text-slate-100 font-semibold truncate">{{ c.name }}</p>
+                <p v-if="c.description" class="text-sm text-slate-400 font-body truncate mt-1">{{ c.description }}</p>
               </td>
-              <td class="py-3 text-center hidden sm:table-cell"><StatusBadge :status="c.status" size="xs" /></td>
-              <td class="py-3 text-center hidden lg:table-cell text-xs font-mono text-white/40">{{ formatDate(c.contestDate) }}</td>
-              <td class="py-3 text-center hidden md:table-cell text-xs font-mono text-white/50">{{ c.registrationCount || 0 }}</td>
-              <td class="py-3">
-                <div class="flex items-center justify-end gap-2">
+              <td class="py-4 text-center hidden sm:table-cell"><StatusBadge :status="c.status" size="xs" /></td>
+              <td class="py-4 text-center hidden lg:table-cell text-sm font-mono text-sky-300">{{ formatDate(c.contestDate) }}</td>
+              <td class="py-4 text-center hidden md:table-cell text-sm font-mono text-emerald-300">{{ c.registrationCount || 0 }}</td>
+              <td class="py-4">
+                <div class="flex flex-wrap justify-end gap-2">
                   <router-link :to="`/admin/contests/${c.id}/questions`"
-                    class="text-xs font-display text-neon-blue border border-neon-blue/30 px-2 py-1 rounded hover:bg-neon-blue/10 transition-colors">
+                    class="text-xs md:text-sm font-semibold text-white bg-sky-600/15 border border-sky-500/20 px-3 py-2 rounded-2xl hover:bg-sky-600/25 hover:text-white transition-colors">
                     Questions
                   </router-link>
                   <button @click="openEdit(c)"
-                    class="text-xs font-display text-white/60 border border-white/10 px-2 py-1 rounded hover:bg-white/5 hover:text-white transition-colors">
+                    class="text-xs md:text-sm font-semibold text-amber-100 bg-amber-500/10 border border-amber-500/20 px-3 py-2 rounded-2xl hover:bg-amber-500/20 hover:text-white transition-colors">
                     Edit
                   </button>
                   <button @click="confirmDelete(c)"
-                    class="text-xs font-display text-neon-red border border-neon-red/30 px-2 py-1 rounded hover:bg-red-700/10 transition-colors">
+                    class="text-xs md:text-sm font-semibold text-red-100 bg-red-600/10 border border-red-600/25 px-3 py-2 rounded-2xl hover:bg-red-600/20 transition-colors">
                     Delete
                   </button>
                 </div>
@@ -140,6 +230,42 @@
             </tr>
           </tbody>
         </table>
+      </div>
+
+      <div v-if="displayedContests.length > 0" class="mt-6 flex flex-col gap-4 rounded-3xl border border-slate-800 bg-slate-950/80 p-4 shadow-sm sm:flex-row sm:items-center sm:justify-between">
+        <div class="text-sm text-slate-400">
+          Showing <span class="font-semibold text-white">{{ pagedContests.length }}</span> of <span class="font-semibold text-white">{{ displayedContests.length }}</span> contests
+        </div>
+        <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-end">
+          <div class="relative flex items-center gap-2 rounded-full border border-slate-700 bg-slate-900/80 px-3 py-2 text-sm text-slate-300">
+            <span class="uppercase tracking-[0.2em] text-[10px] text-slate-500">Per page</span>
+            <select v-model="itemsPerPage" class="bg-slate-950/90 text-slate-100 outline-none appearance-none accent-sky-400 focus:text-white focus:ring-2 focus:ring-sky-500/30 focus:border-sky-500 px-4 py-1" aria-label="Contests per page">
+              <option class="bg-slate-950 text-slate-100" v-for="size in pageSizes" :key="size" :value="size">{{ size }}</option>
+            </select>
+            <div class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-slate-500">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </div>
+          </div>
+          <div class="flex flex-wrap items-center justify-end gap-2">
+            <button @click="currentPage = Math.max(1, currentPage - 1)"
+              :disabled="currentPage === 1"
+              class="h-9 rounded-full px-4 text-sm font-semibold transition disabled:opacity-40 disabled:cursor-not-allowed bg-slate-900/80 text-slate-200 hover:bg-slate-800">
+              Prev
+            </button>
+            <button v-for="page in Array.from({ length: totalPages }, (_, i) => i + 1)" :key="page"
+              @click="currentPage = page"
+              :class="['h-9 min-w-[2.25rem] rounded-full px-3 text-sm font-semibold transition', page === currentPage ? 'bg-sky-500 text-slate-950' : 'bg-slate-900/80 text-slate-200 hover:bg-slate-800']">
+              {{ page }}
+            </button>
+            <button @click="currentPage = Math.min(totalPages, currentPage + 1)"
+              :disabled="currentPage === totalPages"
+              class="h-9 rounded-full px-4 text-sm font-semibold transition disabled:opacity-40 disabled:cursor-not-allowed bg-slate-900/80 text-slate-200 hover:bg-slate-800">
+              Next
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -289,7 +415,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 import { useContestStore } from '@/stores/contest'
 import StatusBadge from '@/components/common/StatusBadge.vue'
 import LoadingSpinner from '@/components/common/LoadingSpinner.vue'
@@ -300,6 +426,12 @@ const contestStore = useContestStore()
 const contests     = ref([])
 const loading      = ref(true)
 const viewMode     = ref('grid')
+const searchQuery  = ref('')
+const statusFilter = ref('ALL')
+const sortOption   = ref('createdDesc')
+const currentPage  = ref(1)
+const itemsPerPage = ref(6)
+const pageSizes    = [6, 9, 12]
 const showModal    = ref(false)
 const editingId    = ref(null)
 const saving       = ref(false)
@@ -327,12 +459,22 @@ const formPreviewReady = computed(() =>
 )
 
 // ── Preview: dd/mm/yyyy HH:mm format ─────────────────────────
+function formatTime12(time) {
+  if (!time) return '—'
+  try {
+    const [hour, minute] = time.split(':').map(Number)
+    if (Number.isNaN(hour) || Number.isNaN(minute)) return time
+    const period = hour >= 12 ? 'PM' : 'AM'
+    const normalizedHour = hour % 12 || 12
+    return `${String(normalizedHour).padStart(2, '0')}:${String(minute).padStart(2, '0')} ${period}`
+  } catch { return time }
+}
+
 function previewFmt(date, time) {
   if (!date || !time) return '—'
   try {
-    // date = "yyyy-MM-dd" from input[type=date]
     const [y, m, d] = date.split('-')
-    return `${d}/${m}/${y} ${time}`
+    return `${d}/${m}/${y} ${formatTime12(time)}`
   } catch { return '—' }
 }
 
@@ -375,13 +517,81 @@ function formatDate(iso) {
   } catch { return iso }
 }
 
+function getSortTimestamp(contest) {
+  const created = contest.createdAt || contest.created_date || contest.contestDate || ''
+  return new Date(created).getTime() || 0
+}
+
+function getContestSortValue(contest, field) {
+  if (field === 'registered') {
+    return Number(contest.registrationCount || 0)
+  }
+  if (field === 'contestDate') {
+    return new Date(contest.contestDate || contest.contestStart || '').getTime() || 0
+  }
+  return getSortTimestamp(contest)
+}
+
+const filteredContests = computed(() => {
+  let items = contests.value || []
+  if (statusFilter.value !== 'ALL') {
+    items = items.filter(c => c.status === statusFilter.value)
+  }
+  const query = searchQuery.value.trim().toLowerCase()
+  if (query) {
+    items = items.filter(c =>
+      (c.name || '').toLowerCase().includes(query) ||
+      (c.description || '').toLowerCase().includes(query)
+    )
+  }
+  return items
+})
+
+const displayedContests = computed(() => {
+  const items = [...filteredContests.value]
+  return items.sort((a, b) => {
+    if (sortOption.value === 'createdDesc') {
+      return getSortTimestamp(b) - getSortTimestamp(a)
+    }
+    if (sortOption.value === 'createdAsc') {
+      return getSortTimestamp(a) - getSortTimestamp(b)
+    }
+    if (sortOption.value === 'contestDesc') {
+      return getContestSortValue(b, 'contestDate') - getContestSortValue(a, 'contestDate')
+    }
+    if (sortOption.value === 'contestAsc') {
+      return getContestSortValue(a, 'contestDate') - getContestSortValue(b, 'contestDate')
+    }
+    if (sortOption.value === 'registeredDesc') {
+      return getContestSortValue(b, 'registered') - getContestSortValue(a, 'registered')
+    }
+    return getSortTimestamp(b) - getSortTimestamp(a)
+  })
+})
+
+const totalPages = computed(() => Math.max(1, Math.ceil(displayedContests.value.length / itemsPerPage.value)))
+const pagedContests = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage.value
+  return displayedContests.value.slice(start, start + itemsPerPage.value)
+})
+
+watch([displayedContests, itemsPerPage], () => {
+  if (currentPage.value > totalPages.value) {
+    currentPage.value = totalPages.value
+  }
+})
+
+watch([searchQuery, statusFilter, sortOption], () => {
+  currentPage.value = 1
+})
+
 function formatShort(iso) {
   if (!iso) return '—'
   try {
     const [datePart, timePart] = iso.split('T')
     const [y, m, d] = datePart.split('-')
-    const time = (timePart || '').slice(0, 5)   // "10:00"
-    return `${d}/${m} ${time}`                  // "20/03 10:00"
+    const time = formatTime12((timePart || '').slice(0, 5))   // "10:00" → "10:00 AM"
+    return `${d}/${m} ${time}`                                // "20/03 10:00 AM"
   } catch { return iso }
 }
 

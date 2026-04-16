@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen pt-18 px-6 pb-16 bg-[#050505] bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-red-900/10 via-transparent to-transparent">
+  <div class="min-h-screen pt-18 px-6 pb-16 bg-transparent bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-red-900/10 via-transparent to-transparent">
     <div class="max-w-7xl mx-auto">
           <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
       <div class="absolute -top-48 -left-48 w-[600px] h-[600px] bg-red-600/10 rounded-full blur-[120px]"></div>
@@ -99,7 +99,9 @@ const filteredContests = computed(() => {
   let list = contestStore.contests
   if (activeFilter.value !== 'ALL') list = list.filter(c => c.status === activeFilter.value)
   if (search.value.trim()) list = list.filter(c => c.name.toLowerCase().includes(search.value.toLowerCase()))
-  return list
+
+  const sortTimestamp = contest => new Date(contest?.createdAt || contest?.created_date || contest?.contestDate || '').getTime() || 0
+  return [...list].sort((a, b) => sortTimestamp(b) - sortTimestamp(a))
 })
 
 function handleRegister(contest) {

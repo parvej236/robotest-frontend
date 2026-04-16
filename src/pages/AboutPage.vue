@@ -1,5 +1,5 @@
 <template>
-  <div class="relative min-h-screen bg-[#020205] text-white/90 font-sans selection:bg-red-500/30 overflow-x-hidden">
+  <div class="relative min-h-screen bg-transparent text-white/90 font-sans selection:bg-red-500/30 overflow-x-hidden">
     <div class="fixed inset-0 pointer-events-none">
       <div class="absolute top-[-10%] left-[-10%] w-[70%] h-[70%] bg-blue-900/20 rounded-full blur-[120px] animate-pulse"></div>
       <div class="absolute bottom-[10%] right-[-5%] w-[50%] h-[50%] bg-red-600/10 rounded-full blur-[150px]"></div>

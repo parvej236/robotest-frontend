@@ -10,13 +10,21 @@ export const useContestStore = defineStore('contest', () => {
   const latestContests = ref([])
   const loading        = ref(false)
 
+  function getCreatedTimestamp(contest) {
+    return new Date(contest?.createdAt || contest?.created_date || contest?.contestDate || '').getTime() || 0
+  }
+
+  function sortContestsByNewest(items) {
+    return [...items].sort((a, b) => getCreatedTimestamp(b) - getCreatedTimestamp(a))
+  }
+
   // ── Public Fetch All ──────────────────────────────────────
   async function fetchAllContests() {
     loading.value = true
     try {
       // Pass 'false' to allow guests
       const res = await api.get('/contests', false)
-      contests.value = res.data || []
+      contests.value = sortContestsByNewest(res.data || [])
     } finally {
       loading.value = false
     }

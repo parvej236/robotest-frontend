@@ -14,6 +14,52 @@
     color: #ffffff;
     font-family: 'Rajdhani', sans-serif;
     min-height: 100vh;
+    background-image:
+      radial-gradient(circle at top left, rgba(59, 130, 246, 0.14), transparent 24%),
+      radial-gradient(circle at bottom right, rgba(239, 68, 68, 0.12), transparent 22%);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+
+  #app,
+  .page-shell {
+    min-height: 100vh;
+    background: linear-gradient(180deg, rgba(5, 8, 15, 0.98), rgba(8, 12, 22, 0.96));
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-shell::before,
+  .page-shell::after {
+    content: '';
+    position: absolute;
+    z-index: 0;
+    pointer-events: none;
+    filter: blur(120px);
+  }
+
+  .page-shell::before {
+    top: -18%;
+    left: -15%;
+    width: 48rem;
+    height: 48rem;
+    background: radial-gradient(circle, rgba(239, 68, 68, 0.24), transparent 42%);
+  }
+
+  .page-shell::after {
+    bottom: -18%;
+    right: -15%;
+    width: 48rem;
+    height: 48rem;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.22), transparent 42%);
+  }
+
+  #app,
+  .page-shell > * {
+    position: relative;
+    z-index: 1;
+    background: transparent !important;
+    background-image: none !important;
   }
 
   ::-webkit-scrollbar {

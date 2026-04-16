@@ -1,105 +1,136 @@
 <!-- src/pages/admin/AdminQuestions.vue -->
 <template>
-  <div class="min-h-screen pt-20 px-4 pb-12">
-    <div class="max-w-5xl mx-auto">
+  <div class="relative min-h-screen pt-20 px-4 pb-12 bg-transparent overflow-hidden">
+    <div class="relative z-10 max-w-5xl mx-auto">
 
       <!-- Header -->
-      <div class="mb-6 flex items-center justify-between flex-wrap gap-4">
-        <div>
-          <router-link to="/admin/contests"
-            class="inline-flex items-center gap-1 text-xs font-display text-white/40 hover:text-white transition-colors tracking-wider mb-2">
-            ← Back to Contests
-          </router-link>
-          <div class="flex items-center gap-2 mb-1">
-            <div class="w-4 h-px bg-red-700"></div>
-            <span class="text-xs font-display tracking-widest text-neon-red uppercase">Admin · Questions</span>
+      <div class="mb-6 rounded-3xl border border-white/10 bg-white/5 p-5 backdrop-blur-xl shadow-[0_24px_80px_rgba(0,0,0,0.18)]">
+        <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+          <div class="min-w-0">
+            <router-link to="/admin/contests"
+              class="inline-flex items-center gap-2 rounded-full border border-slate-700 bg-slate-900/80 px-4 py-2 text-sm font-semibold tracking-[0.25em] text-slate-100 shadow-sm shadow-black/20 transition hover:bg-slate-800 hover:text-white mb-3">
+              ← Back to Contests
+            </router-link>
+            <div class="flex flex-wrap items-center gap-3 mb-3">
+              <span class="rounded-full border border-sky-400/20 bg-sky-400/10 px-3 py-1 text-[10px] uppercase tracking-[0.35em] text-sky-200">
+                Admin · Questions
+              </span>
+              <span class="text-xs text-slate-400">Manage contest question weights and validation</span>
+            </div>
+            <h1 class="font-display text-3xl font-black text-white leading-tight truncate">
+              {{ contestName || 'Loading...' }}
+            </h1>
           </div>
-          <h1 class="font-display text-xl font-black text-white uppercase tracking-wider line-clamp-1">
-            {{ contestName || 'Loading...' }}
-          </h1>
+          <button @click="openAdd"
+            class="inline-flex items-center justify-center rounded-full bg-sky-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-sky-500/20 transition hover:bg-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-300">
+            + Add Question
+          </button>
         </div>
-        <button @click="openAdd" class="btn-primary text-xs py-2">+ Add Question</button>
       </div>
 
       <div v-if="loading" class="flex justify-center py-20">
         <LoadingSpinner label="Loading questions..." />
       </div>
 
-      <div v-else-if="questions.length === 0" class="glass-card p-16 text-center neon-border-red">
+      <div v-else-if="questions.length === 0" class="rounded-3xl border border-white/10 bg-white/5 p-16 text-center backdrop-blur-xl shadow-[0_24px_80px_rgba(0,0,0,0.18)]">
         <div class="text-5xl mb-4">📋</div>
-        <p class="text-white/40 font-body mb-4">No questions added yet</p>
-        <button @click="openAdd" class="btn-primary">Add First Question</button>
+        <p class="text-slate-300 font-medium mb-4">No questions added yet for this contest.</p>
+        <button @click="openAdd" class="inline-flex items-center justify-center rounded-2xl bg-sky-500 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-sky-500/20 transition hover:bg-sky-400">
+          Add First Question
+        </button>
       </div>
 
       <!-- Questions list -->
-      <div v-else class="space-y-4">
+      <div v-else class="space-y-5">
         <div v-for="(q, idx) in questions" :key="q.id"
-             class="glass-card overflow-hidden group hover:border-neon-red/20 transition-all duration-300">
+             class="overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-[0_24px_80px_rgba(0,0,0,0.18)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:border-white/20">
 
-          <!-- Top bar -->
-          <div class="flex items-center gap-3 px-5 py-3 border-b border-white/5 bg-dark-800/40">
-            <div class="w-8 h-8 rounded bg-red-700/10 border border-neon-red/30 flex items-center justify-center flex-shrink-0">
-              <span class="font-display text-sm font-black text-neon-red">{{ idx + 1 }}</span>
-            </div>
-            <div class="flex items-center gap-2 flex-wrap flex-1">
-              <span class="text-[10px] font-display border border-neon-blue/30 text-neon-blue px-2 py-0.5 rounded tracking-widest">
-                NUMERIC · WEIGHT
-              </span>
-              <span class="text-[10px] font-mono text-white/30">{{ q.points || 10 }} pts</span>
-              <span class="text-[10px] font-mono text-white/30">Order: {{ q.orderIndex || idx + 1 }}</span>
-            </div>
-            <!-- Edit/Delete always visible on mobile, hover on desktop -->
-            <div class="flex gap-2 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
-              <button @click="openEdit(q)"
-                class="text-xs font-display text-neon-blue border border-neon-blue/30 px-2 py-1 rounded hover:bg-neon-blue/10 transition-colors">
-                Edit
-              </button>
-              <button @click="confirmDelete(q)"
-                class="text-xs font-display text-neon-red border border-neon-red/30 px-2 py-1 rounded hover:bg-red-700/10 transition-colors">
-                Delete
-              </button>
+          <div class="px-5 py-4 border-b border-white/10 bg-slate-950/70">
+            <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div class="flex items-center gap-4 min-w-0">
+                <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-500/10 text-sky-200 border border-sky-500/20 font-display font-black text-base">
+                  {{ idx + 1 }}
+                </div>
+                <div class="min-w-0">
+                  <p class="text-[11px] uppercase tracking-[0.35em] text-slate-400">Question {{ q.orderIndex || idx + 1 }}</p>
+                  <p class="truncate text-xl font-semibold text-white">{{ q.description || 'No description provided.' }}</p>
+                </div>
+              </div>
+              <div class="flex flex-wrap items-center justify-end gap-2">
+                <span class="rounded-full border border-slate-700 bg-slate-900/80 px-3 py-1 text-[11px] text-slate-300 uppercase tracking-[0.3em]">
+                  Numeric · weight
+                </span>
+                <button @click="openEdit(q)"
+                  class="rounded-2xl border border-sky-400/20 bg-sky-400/10 px-3 py-2 text-xs font-semibold text-sky-100 transition hover:bg-sky-400/20">
+                  Edit
+                </button>
+                <button @click="confirmDelete(q)"
+                  class="rounded-2xl border border-rose-400/20 bg-rose-400/10 px-3 py-2 text-xs font-semibold text-rose-100 transition hover:bg-rose-400/20">
+                  Delete
+                </button>
+              </div>
             </div>
           </div>
 
-          <!-- Body -->
-          <div class="p-5 flex gap-5 flex-col sm:flex-row">
-            <!-- Image -->
-            <div v-if="q.imageUrl"
-                 class="w-full sm:w-48 flex-shrink-0 rounded overflow-hidden border border-white/10 bg-dark-800">
-              <img :src="toFullUrl(q.imageUrl)" class="w-full h-40 sm:h-36 object-contain" alt="Question image" />
-            </div>
-            <div v-else
-                 class="w-full sm:w-48 flex-shrink-0 rounded border border-dashed border-white/10 bg-dark-800/40 flex items-center justify-center h-24 sm:h-36">
-              <span class="text-white/20 text-xs font-body">No image</span>
+          <div class="p-5 grid gap-4 lg:grid-cols-[360px_1fr] items-start">
+            <div class="space-y-4">
+              <div v-if="q.imageUrl" class="group relative overflow-hidden rounded-3xl border border-white/10 bg-slate-900/80 shadow-inner transition duration-300 hover:-translate-y-0.5">
+                <a :href="toFullUrl(q.imageUrl)"
+                   :download="downloadFileName(q.imageUrl)"
+                   target="_blank"
+                   rel="noopener"
+                   class="absolute right-3 top-3 z-10 inline-flex items-center gap-2 rounded-full bg-black/60 px-3 py-2 text-[11px] font-semibold text-slate-100 transition hover:bg-black/80">
+                  ⤓ Download
+                </a>
+                <button type="button" @click="openFullImage(q.imageUrl)"
+                  class="block w-full overflow-hidden text-left">
+                  <img
+                    v-if="isLikelyImageUrl(q.imageUrl)"
+                    :src="toFullUrl(q.imageUrl)"
+                    alt="Question file"
+                    class="h-64 w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                  <div
+                    v-else
+                    class="h-64 w-full flex items-center justify-center bg-slate-950/60 text-white/70 text-sm font-semibold p-3 text-center"
+                  >
+                    {{ isLikelyPdfUrl(q.imageUrl) ? 'PDF' : 'FILE' }}
+                  </div>
+                </button>
+              </div>
+              <div v-else class="flex min-h-[16rem] items-center justify-center rounded-3xl border border-dashed border-white/10 bg-slate-900/80 text-sm text-slate-500">
+                No file uploaded
+              </div>
+              <div class="rounded-3xl border border-white/10 bg-slate-950/80 p-4">
+                <p class="text-[11px] uppercase tracking-[0.35em] text-slate-400 mb-3">Summary</p>
+                <p class="text-base md:text-lg text-slate-100 leading-8">{{ q.description || 'No description provided.' }}</p>
+              </div>
             </div>
 
-            <!-- Details -->
-            <div class="flex-1 min-w-0">
-              <p class="font-body text-white/80 text-sm leading-relaxed mb-4">
-                {{ q.description || 'No description' }}
-              </p>
-              <div class="flex flex-wrap gap-3">
-                <div class="bg-dark-800/60 rounded px-3 py-2 border border-neon-blue/20">
-                  <p class="text-[9px] font-display tracking-widest text-white/30 uppercase mb-0.5">Correct Weight</p>
-                  <p class="font-display font-black text-neon-blue text-sm">
-                    {{ q.correctAnswer != null ? q.correctAnswer + ' g' : '—' }}
-                  </p>
+            <div class="space-y-4">
+              <div class="grid gap-3 sm:grid-cols-2">
+                <div class="rounded-3xl border border-white/10 bg-slate-950/80 p-4">
+                  <p class="text-[10px] uppercase tracking-[0.35em] text-slate-400 mb-2">Correct weight</p>
+                  <p class="text-lg font-semibold text-white">{{ q.correctAnswer != null ? q.correctAnswer + ' g' : 'Not set' }}</p>
                 </div>
-                <div class="bg-dark-800/60 rounded px-3 py-2 border border-neon-red/20">
-                  <p class="text-[9px] font-display tracking-widest text-white/30 uppercase mb-0.5">Tolerance</p>
-                  <p class="font-display font-black text-neon-red text-sm">
-                    ± {{ q.errorPercentage != null ? q.errorPercentage + '%' : '0%' }}
-                  </p>
+                <div class="rounded-3xl border border-white/10 bg-slate-950/80 p-4">
+                  <p class="text-[10px] uppercase tracking-[0.35em] text-slate-400 mb-2">Tolerance</p>
+                  <p class="text-lg font-semibold text-white">± {{ q.errorPercentage != null ? q.errorPercentage + '%' : '0%' }}</p>
                 </div>
-                <div class="bg-dark-800/60 rounded px-3 py-2 border border-white/10">
-                  <p class="text-[9px] font-display tracking-widest text-white/30 uppercase mb-0.5">Acceptable Range</p>
-                  <p class="font-mono text-white/60 text-xs">
-                    <span v-if="q.correctAnswer != null">
-                      {{ acceptableMin(q) }}g – {{ acceptableMax(q) }}g
-                    </span>
-                    <span v-else>—</span>
-                  </p>
+              </div>
+              <div class="grid gap-3 sm:grid-cols-2">
+                <div class="rounded-3xl border border-white/10 bg-slate-950/80 p-4">
+                  <p class="text-[10px] uppercase tracking-[0.35em] text-slate-400 mb-2">Points</p>
+                  <p class="text-lg font-semibold text-white">{{ q.points || 10 }}</p>
                 </div>
+                <div class="rounded-3xl border border-white/10 bg-slate-950/80 p-4">
+                  <p class="text-[10px] uppercase tracking-[0.35em] text-slate-400 mb-2">Order index</p>
+                  <p class="text-lg font-semibold text-white">{{ q.orderIndex || idx + 1 }}</p>
+                </div>
+              </div>
+              <div class="rounded-3xl border border-white/10 bg-slate-950/80 p-4">
+                <p class="text-[10px] uppercase tracking-[0.35em] text-slate-400 mb-2">Acceptable range</p>
+                <p class="text-base text-slate-200 font-mono">{{ q.correctAnswer != null ? `${acceptableMin(q)}g – ${acceptableMax(q)}g` : 'Not available' }}</p>
               </div>
             </div>
           </div>
@@ -111,9 +142,11 @@
     <div v-if="showModal"
       class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm overflow-y-auto"
       @click.self="showModal = false">
-      <div class="glass-panel neon-border-red p-8 w-full max-w-xl relative my-4">
-        <button @click="showModal = false" class="absolute top-4 right-4 text-white/40 hover:text-white text-xl">✕</button>
-        <h2 class="section-title mb-6">{{ editingId ? 'Edit Question' : 'Add Question' }}</h2>
+      <div class="relative w-full max-w-xl overflow-hidden rounded-[2rem] border border-white/10 bg-slate-950/95 p-8 shadow-[0_36px_120px_rgba(0,0,0,0.35)] backdrop-blur-2xl">
+        <button @click="showModal = false" class="absolute top-4 right-4 text-white/50 hover:text-white text-xl">✕</button>
+        <h2 class="text-2xl font-black uppercase tracking-[0.2em] text-white mb-6">
+          {{ editingId ? 'Edit Question' : 'Add Question' }}
+        </h2>
 
         <form @submit.prevent="handleSave" class="space-y-5">
 
@@ -127,27 +160,36 @@
 
           <!-- Image upload -->
           <div>
-            <label class="label-text">Question Image (optional)</label>
+            <label class="label-text">Question File (optional)</label>
             <div class="flex items-start gap-4">
               <div class="flex-1">
-                <label class="flex items-center gap-3 glass-card p-4 cursor-pointer hover:border-neon-red/30 transition-colors border-dashed">
-                  <svg class="w-8 h-8 text-white/20 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <label class="flex items-center gap-3 rounded-3xl border border-white/10 bg-white/5 p-4 cursor-pointer transition hover:border-sky-400/30">
+                  <svg class="w-8 h-8 text-slate-300 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
                       d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                   </svg>
                   <div>
                     <p class="text-xs font-body text-white/60">
-                      {{ imageFile ? imageFile.name : 'Click to upload image' }}
+                      {{ imageFile ? imageFile.name : 'Click to upload file' }}
                     </p>
-                    <p class="text-[10px] text-white/30 mt-0.5">JPEG, PNG, WebP — max 5 MB</p>
+                    <p class="text-[10px] text-white/30 mt-0.5">Any file — max 500 MB</p>
                   </div>
-                  <input type="file" accept="image/jpeg,image/png,image/webp" class="hidden" @change="handleImageChange" />
+                  <input type="file" accept="*/*" class="hidden" @change="handleImageChange" />
                 </label>
               </div>
               <div v-if="imagePreview || (editingId && qForm.existingImageUrl)"
-                   class="w-24 h-24 rounded border border-white/10 overflow-hidden bg-dark-800 flex-shrink-0">
-                <img :src="imagePreview || toFullUrl(qForm.existingImageUrl)"
-                     class="w-full h-full object-contain" alt="Preview" />
+                   class="w-28 h-28 rounded-3xl border border-white/10 overflow-hidden bg-slate-900 flex-shrink-0">
+                <img
+                  v-if="imagePreviewIsImage || (editingId && isLikelyImageUrl(qForm.existingImageUrl))"
+                  :src="imagePreview || toFullUrl(qForm.existingImageUrl)"
+                  class="w-full h-full object-cover" alt="Preview"
+                />
+                <div
+                  v-else
+                  class="w-full h-full flex items-center justify-center text-white/70 text-xs font-semibold p-2 text-center"
+                >
+                  {{ imagePreviewIsPdf || (editingId && isLikelyPdfUrl(qForm.existingImageUrl)) ? 'PDF' : 'FILE' }}
+                </div>
               </div>
             </div>
           </div>
@@ -233,6 +275,42 @@
       </div>
     </div>
 
+    <!-- IMAGE ZOOM MODAL -->
+    <div v-if="showImageModal"
+      class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+      @click.self="closeImageModal">
+      <div class="relative w-full max-w-5xl overflow-hidden rounded-[2rem] bg-slate-950/95 p-4 shadow-[0_36px_120px_rgba(0,0,0,0.35)]">
+        <button @click="closeImageModal" class="absolute right-4 top-4 text-white/70 hover:text-white text-2xl">✕</button>
+        <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between pb-4 border-b border-white/10 mb-4">
+          <p class="text-sm uppercase tracking-[0.35em] text-slate-400">File preview</p>
+          <a :href="toFullUrl(imageModalUrl)"
+             :download="downloadFileName(imageModalUrl)"
+             target="_blank"
+             rel="noopener"
+             class="inline-flex items-center gap-2 rounded-2xl bg-sky-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-sky-400">
+            ⤓ Download
+          </a>
+        </div>
+        <img
+          v-if="isLikelyImageUrl(imageModalUrl)"
+          :src="toFullUrl(imageModalUrl)"
+          alt="Full question file"
+          class="mx-auto max-h-[75vh] w-full object-contain"
+        />
+        <iframe
+          v-else-if="isLikelyPdfUrl(imageModalUrl)"
+          :src="toFullUrl(imageModalUrl)"
+          class="mx-auto w-full max-h-[75vh] rounded-lg border border-white/10 bg-white/5"
+        />
+        <div
+          v-else
+          class="mx-auto w-full max-w-2xl text-center text-white/70 py-12"
+        >
+          Preview not available for this file type. Use Download above.
+        </div>
+      </div>
+    </div>
+
     <!-- DELETE CONFIRM -->
     <div v-if="deleteTarget"
       class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
@@ -276,6 +354,10 @@ const deleteTarget = ref(null)
 const deleting     = ref(false)
 const imageFile    = ref(null)
 const imagePreview = ref(null)
+const imagePreviewIsImage = ref(false)
+const imagePreviewIsPdf = ref(false)
+const showImageModal = ref(false)
+const imageModalUrl = ref(null)
 
 const defaultQ = () => ({
   description: '', correctAnswer: null, errorPercentage: 5,
@@ -283,28 +365,42 @@ const defaultQ = () => ({
 })
 const qForm = ref(defaultQ())
 
+const MAX_IMAGE_SIZE_BYTES = 500 * 1024 * 1024 // 500 MB
+
 function toFullUrl(path) {
   if (!path) return null
   if (path.startsWith('http')) return path
   return BACKEND_URL + path
 }
 
+function isLikelyImageUrl(url) {
+  if (!url) return false
+  const s = String(url).toLowerCase()
+  return ['.png', '.jpg', '.jpeg', '.webp', '.gif', '.bmp', '.svg'].some(ext => s.endsWith(ext))
+}
+
+function isLikelyPdfUrl(url) {
+  if (!url) return false
+  const s = String(url).toLowerCase()
+  return s.endsWith('.pdf')
+}
+
 function acceptableMin(q) {
   if (q.correctAnswer == null) return '—'
-  return (q.correctAnswer * (1 - (q.errorPercentage || 0) / 100)).toFixed(2)
+  return (q.correctAnswer * (1 - (q.errorPercentage || 0) / 100)).toFixed(3)
 }
 function acceptableMax(q) {
   if (q.correctAnswer == null) return '—'
-  return (q.correctAnswer * (1 + (q.errorPercentage || 0) / 100)).toFixed(2)
+  return (q.correctAnswer * (1 + (q.errorPercentage || 0) / 100)).toFixed(3)
 }
 
 const liveMin = computed(() => {
   if (!qForm.value.correctAnswer) return '—'
-  return (qForm.value.correctAnswer * (1 - (qForm.value.errorPercentage || 0) / 100)).toFixed(2)
+  return (qForm.value.correctAnswer * (1 - (qForm.value.errorPercentage || 0) / 100)).toFixed(3)
 })
 const liveMax = computed(() => {
   if (!qForm.value.correctAnswer) return '—'
-  return (qForm.value.correctAnswer * (1 + (qForm.value.errorPercentage || 0) / 100)).toFixed(2)
+  return (qForm.value.correctAnswer * (1 + (qForm.value.errorPercentage || 0) / 100)).toFixed(3)
 })
 
 // FIX: api.get returns { success, message, data: ContestDto }
@@ -330,16 +426,52 @@ onMounted(async () => {
 function handleImageChange(e) {
   const file = e.target.files[0]
   if (!file) return
-  imageFile.value    = file
+  formError.value = ''
+
+  if (file.size > MAX_IMAGE_SIZE_BYTES) {
+    formError.value = `File is too large. Max size is 500 MB.`
+    imageFile.value = null
+    imagePreviewIsImage.value = false
+    imagePreviewIsPdf.value = false
+    if (imagePreview.value) URL.revokeObjectURL(imagePreview.value)
+    imagePreview.value = null
+    e.target.value = ''
+    return
+  }
+
+  imageFile.value = file
+  imagePreviewIsImage.value = file.type?.startsWith('image/') || isLikelyImageUrl(file.name)
+  imagePreviewIsPdf.value = file.type === 'application/pdf' || String(file.name || '').toLowerCase().endsWith('.pdf')
+  // Replace preview if user selects a new file
+  if (imagePreview.value) URL.revokeObjectURL(imagePreview.value)
   imagePreview.value = URL.createObjectURL(file)
-  e.target.value     = ''
+  e.target.value = ''
+}
+
+function openFullImage(imageUrl) {
+  imageModalUrl.value = imageUrl
+  showImageModal.value = true
+}
+
+function closeImageModal() {
+  showImageModal.value = false
+  imageModalUrl.value = null
+}
+
+function downloadFileName(imageUrl) {
+  if (!imageUrl) return 'question-image'
+  return imageUrl.split('/').filter(Boolean).pop()
 }
 
 function openAdd() {
   qForm.value = defaultQ()
   qForm.value.orderIndex = questions.value.length + 1
   editingId.value = null
-  imageFile.value = null; imagePreview.value = null; formError.value = ''
+  imageFile.value = null
+  imagePreview.value = null
+  imagePreviewIsImage.value = false
+  imagePreviewIsPdf.value = false
+  formError.value = ''
   showModal.value = true
 }
 
@@ -353,7 +485,11 @@ function openEdit(q) {
     points:           q.points           || 10,
     existingImageUrl: q.imageUrl         || null,
   }
-  imageFile.value = null; imagePreview.value = null; formError.value = ''
+  imageFile.value = null
+  imagePreview.value = null
+  imagePreviewIsImage.value = false
+  imagePreviewIsPdf.value = false
+  formError.value = ''
   showModal.value = true
 }
 
@@ -388,7 +524,10 @@ async function handleSave() {
 
     showModal.value = false
     if (imagePreview.value) URL.revokeObjectURL(imagePreview.value)
-    imageFile.value = null; imagePreview.value = null
+    imageFile.value = null
+    imagePreview.value = null
+    imagePreviewIsImage.value = false
+    imagePreviewIsPdf.value = false
     await loadQuestions()
   } catch (e) {
     formError.value = e.message || 'Failed to save question'

@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen pt-24 px-6 pb-12 bg-[#020202] relative overflow-hidden font-sans">
+  <div class="min-h-screen pt-24 px-6 pb-12 bg-transparent relative overflow-hidden font-sans">
     <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
       <div class="absolute -top-48 -left-48 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[120px]"></div>
       <div class="absolute bottom-0 right-0 w-[600px] h-[600px] bg-red-600/10 rounded-full blur-[120px]"></div>
