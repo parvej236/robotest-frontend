@@ -212,6 +212,45 @@
                 </ul>
             </div>
 
+
+
+            <div class="space-y-4">
+                <span class="block text-sm uppercase tracking-widest text-blue-500 font-black">Fixed Submission Formats</span>
+                <div class="flex flex-wrap gap-3">
+                    <span v-for="tag in ['CAD: STEP(.step/.stp)', 'Report: PDF', 'Images: PNG/JPG', 'Animation: MP4/GIF']" :key="tag" class="px-4 py-2 rounded-xl bg-purple-600/20 border border-purple-600/30 text-sm font-mono text-white uppercase">
+                        {{ tag }}
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="space-y-8">
+            <div class="p-8 rounded-[32px] bg-blue-600/[0.03] border border-blue-600/10">
+                <h3 class="text-xs font-black uppercase tracking-widest text-blue-500/60 mb-6 flex items-center gap-2">
+                    Judging Criteria
+                </h3>
+                <div class="space-y-4 mb-6">
+                    <div v-for="(criterion, index) in [
+                        { name: 'Accuracy of the model', percentage: 'creativity_innovation' },
+                        { name: 'Design methodology', percentage: 'functionality' },
+                        { name: 'Efficiency of modeling', percentage: 'cad_modeling' },
+                        { name: 'Creativity and problem-solving', percentage: 'engineering_feasibility' },
+                        { name: 'Completion in time', percentage: 'engineering_feasibility' }
+                    ]" :key="index" class="flex items-center justify-between">
+                        <span class="text-base text-white/70 font-light">{{ criterion.name }}</span>
+                        <div class="flex items-center gap-2">
+                            <input v-if="isEditing" v-model="sections.mechathon[criterion.percentage]" type="number" min="0" max="100" class="w-16 bg-black/40 border border-blue-500/30 rounded-lg px-3 py-1 text-white font-bold text-center outline-none focus:border-blue-500" />
+                            <span v-else class="text-white font-bold text-lg hidden">{{ sections.mechathon[criterion.percentage] }}%</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-sm text-white/50 italic leading-relaxed">
+                    Judges may also consider design clarity, efficiency, motion quality, realism, and assembly quality.
+                </p>
+            </div>
+
+
+
             <div class="p-8 rounded-[32px] bg-purple-600/[0.03] border border-purple-600/10">
                 <h3 class="text-xs font-black uppercase tracking-widest text-purple-400 mb-6 flex items-center gap-2">
                     Submission Requirements
@@ -248,41 +287,6 @@
                         <span class="text-base text-white/80 font-light leading-relaxed">Optional video</span>
                     </li>
                 </ul>
-            </div>
-        </div>
-
-        <div class="space-y-8">
-            <div class="p-8 rounded-[32px] bg-blue-600/[0.03] border border-blue-600/10">
-                <h3 class="text-xs font-black uppercase tracking-widest text-blue-500/60 mb-6 flex items-center gap-2">
-                    Judging Criteria
-                </h3>
-                <div class="space-y-4 mb-6">
-                    <div v-for="(criterion, index) in [
-                        { name: 'Accuracy of the model', percentage: 'creativity_innovation' },
-                        { name: 'Design methodology', percentage: 'functionality' },
-                        { name: 'Efficiency of modeling', percentage: 'cad_modeling' },
-                        { name: 'Creativity and problem-solving', percentage: 'engineering_feasibility' },
-                        { name: 'Completion in time', percentage: 'engineering_feasibility' }
-                    ]" :key="index" class="flex items-center justify-between">
-                        <span class="text-base text-white/70 font-light">{{ criterion.name }}</span>
-                        <div class="flex items-center gap-2">
-                            <input v-if="isEditing" v-model="sections.mechathon[criterion.percentage]" type="number" min="0" max="100" class="w-16 bg-black/40 border border-blue-500/30 rounded-lg px-3 py-1 text-white font-bold text-center outline-none focus:border-blue-500" />
-                            <span v-else class="text-white font-bold text-lg hidden">{{ sections.mechathon[criterion.percentage] }}%</span>
-                        </div>
-                    </div>
-                </div>
-                <p class="text-sm text-white/50 italic leading-relaxed">
-                    Judges may also consider design clarity, efficiency, motion quality, realism, and assembly quality.
-                </p>
-            </div>
-
-            <div class="space-y-4">
-                <span class="block text-sm uppercase tracking-widest text-blue-500 font-black">Fixed Submission Formats</span>
-                <div class="flex flex-wrap gap-3">
-                    <span v-for="tag in ['CAD: STEP(.step/.stp)', 'Report: PDF', 'Images: PNG/JPG', 'Animation: MP4/GIF']" :key="tag" class="px-4 py-2 rounded-xl bg-purple-600/20 border border-purple-600/30 text-sm font-mono text-white uppercase">
-                        {{ tag }}
-                    </span>
-                </div>
             </div>
         </div>
     </div>

@@ -8,9 +8,10 @@ async function request(method, endpoint, body = null, requiresAuth = true) {
   const headers = { 'Content-Type': 'application/json' }
   const token   = localStorage.getItem('accessToken')
   
-  // UPDATED: Always send token if available, even for public routes.
-  // This helps backend identify user status (e.g. is-registered) on public lists.
-  if (token) {
+  const isAuthEndpoint = endpoint.includes('/auth/')
+  // For guest calls to /auth/* endpoints (e.g. register/login/username/email checks),
+  // avoid sending a possibly stale JWT which can cause 401s and break validation UI.
+  if (token && (!isAuthEndpoint || requiresAuth)) {
     headers['Authorization'] = `Bearer ${token}`
   }
 

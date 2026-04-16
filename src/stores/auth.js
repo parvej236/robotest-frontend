@@ -114,6 +114,16 @@ export const useAuthStore = defineStore('auth', () => {
     return res.data
   }
 
+  // CHECK USERNAME AVAILABILITY
+  async function checkUsername(username) {
+    return await api.get(`/auth/check-username?username=${encodeURIComponent(username)}`, false)
+  }
+
+  // CHECK EMAIL AVAILABILITY
+  async function checkEmail(emailAddr) {
+    return await api.get(`/auth/check-email?email=${encodeURIComponent(emailAddr)}`, false)
+  }
+
   return {
     // state
     accessToken, refreshToken, user,
@@ -122,6 +132,6 @@ export const useAuthStore = defineStore('auth', () => {
     // actions
     login, register, verifyEmail, resendVerification,
     forgotPassword, resetPassword, changePassword,
-    refresh, logout, fetchMe
+    refresh, logout, fetchMe, checkUsername, checkEmail
   }
 })

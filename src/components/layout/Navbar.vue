@@ -56,19 +56,48 @@
 
         <router-link to="/leaderboard" class="nav-link">Leaderboard</router-link>
         <router-link to="/rules" class="nav-link">Rules</router-link>
+        <router-link to="/about" class="nav-link">About</router-link>
       </div>
 
       <!-- Auth Section -->
       <div class="hidden md:flex items-center gap-3">
         <template v-if="!auth.isLoggedIn">
-          <router-link to="/login" class="btn-ghost py-1.5 text-xs">Login</router-link>
-          <router-link to="/register" class="btn-primary py-1.5 text-xs">Create Account</router-link>
+          <router-link to="/login" class="btn-ghost rounded-full py-1.5 text-xs text-white">Login</router-link>
+          <router-link to="/register" class="btn-secondary rounded-full py-1.5 text-xs">Create Account</router-link>
         </template>
         <template v-else>
           <!-- Admin badge -->
           <router-link v-if="auth.isAdmin" to="/admin"
-            class="text-xs font-display tracking-widest text-neon-red border border-neon-red/40 px-3 py-1 rounded hover:bg-red-700/10 transition-colors">
-            Admin Panel
+            class="group relative flex items-center gap-2.5 px-5 py-2 rounded-xl transition-all duration-500 overflow-hidden">
+            <div
+              class="absolute inset-0 bg-gradient-to-r from-red-600/20 via-blue-600/20 to-red-600/20 opacity-40 group-hover:opacity-100 transition-opacity duration-500">
+            </div>
+
+            <div class="absolute inset-[1px] bg-[#050505]/90 rounded-[11px] backdrop-blur-2xl z-10"></div>
+
+            <div
+              class="absolute inset-0 z-0 bg-gradient-to-r from-red-500 via-blue-500 to-red-500 animate-gradient-x opacity-40 group-hover:opacity-100">
+            </div>
+
+            <div class="relative z-20 flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                class="text-red-500 group-hover:text-blue-400 transition-colors duration-500">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
+                <path d="m9 12 2 2 4-4" />
+              </svg>
+
+              <span
+                class="text-[11px] font-black uppercase tracking-[0.2em] text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-red-400 group-hover:to-blue-400 transition-all duration-500">
+                Admin Panel
+              </span>
+
+              <div class="flex h-1.5 w-1.5 rounded-full bg-red-600 shadow-[0_0_8px_#dc2626]"></div>
+            </div>
+
+            <div
+              class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 shadow-[inset_0_0_20px_rgba(220,38,38,0.2)]">
+            </div>
           </router-link>
 
           <!-- User dropdown -->
@@ -76,7 +105,8 @@
             <button class="flex items-center gap-2 group">
               <div
                 class="w-8 h-8 rounded-full border border-neon-red/50 overflow-hidden bg-dark-700 flex items-center justify-center">
-                <img v-if="avatarFullUrl" :src="avatarFullUrl" :key="avatarFullUrl" class="w-full h-full object-cover"/>
+                <img v-if="avatarFullUrl" :src="avatarFullUrl" :key="avatarFullUrl"
+                  class="w-full h-full object-cover" />
                 <span v-else class="font-display text-xs text-neon-red font-bold">{{
                   auth.username?.charAt(0)?.toUpperCase() }}</span>
               </div>
@@ -113,6 +143,8 @@
           <router-link to="/" @click="mobileOpen = false" class="mobile-nav-link">Home</router-link>
           <router-link to="/contests" @click="mobileOpen = false" class="mobile-nav-link">Contests</router-link>
           <router-link to="/leaderboard" @click="mobileOpen = false" class="mobile-nav-link">Leaderboard</router-link>
+          <router-link to="/rules" @click="mobileOpen = false" class="mobile-nav-link">Rules</router-link>
+          <router-link to="/about" @click="mobileOpen = false" class="mobile-nav-link">About</router-link>
           <template v-if="auth.isLoggedIn">
             <router-link to="/dashboard" @click="mobileOpen = false" class="mobile-nav-link">Dashboard</router-link>
             <router-link to="/profile" @click="mobileOpen = false" class="mobile-nav-link">Profile</router-link>
@@ -154,7 +186,7 @@ const latestContests = ref([])
 const avatarFullUrl = computed(() => {
   const path = auth.avatar
   if (!path) return null
-  if (path.startsWith('http')) return path 
+  if (path.startsWith('http')) return path
   return BACKEND_URL + path
 })
 
