@@ -216,7 +216,6 @@ onMounted(async () => {
   try {
     // 1. Fetch User Performance History
     history.value = await contestStore.getMyHistory()
-    console.Consolelog('Fetched history:', history.value)
 
     // 2. Fetch Profile Info
     const res = await api.get('/users/me')

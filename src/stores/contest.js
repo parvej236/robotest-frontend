@@ -124,9 +124,7 @@ export const useContestStore = defineStore('contest', () => {
 async function getMyHistory() {
     try {
       // Changed from /leaderboard/my-history to /results/my-history
-      console.log("Fetching my contest history...")
       const res = await api.get('/leaderboard/my-history')
-      console.log("My History API Response:", res)
       return res.data || []
     } catch (error) {
       console.error("Store Error:", error)
