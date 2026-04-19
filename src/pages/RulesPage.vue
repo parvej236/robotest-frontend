@@ -113,7 +113,7 @@
                                     Requirements</span>
                                 <div class="flex flex-wrap gap-3">
                                     <span
-                                        v-for="tag in ['STEP (.step/.stp)', 'Model weight (mass)', 'Submission time is recorded automatically']"
+                                        v-for="tag in ['Model weight (mass)', 'Submission time is recorded automatically']"
                                         :key="tag"
                                         class="px-4 py-2 rounded-xl bg-purple-600/20 border border-purple-600/30 text-sm font-mono text-white uppercase">
                                         {{ tag }}
@@ -297,17 +297,18 @@
                                     </li>
                                     <li class="flex items-center gap-4">
                                         <span class="w-1.5 h-1.5 rounded-full bg-purple-500 shrink-0"></span>
-                                        <span class="text-base text-white/80 font-light leading-relaxed">Mathematical
+                                        <span class="text-base text-white/80 font-light leading-relaxed">Real world
+                                            feasibility</span>
+                                    </li>
+
+                                    <li class="flex items-center gap-4">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-purple-500 shrink-0"></span>
+                                        <span class="text-base text-white/80 font-light leading-relaxed">Optional Mathematical
                                             Model</span>
                                     </li>
                                     <li class="flex items-center gap-4">
                                         <span class="w-1.5 h-1.5 rounded-full bg-purple-500 shrink-0"></span>
-                                        <span class="text-base text-white/80 font-light leading-relaxed">Real world
-                                            feasibility</span>
-                                    </li>
-                                    <li class="flex items-center gap-4">
-                                        <span class="w-1.5 h-1.5 rounded-full bg-purple-500 shrink-0"></span>
-                                        <span class="text-base text-white/80 font-light leading-relaxed">CAD file</span>
+                                        <span class="text-base text-white/80 font-light leading-relaxed">Optional CAD file</span>
                                     </li>
                                     <li class="flex items-center gap-4">
                                         <span class="w-1.5 h-1.5 rounded-full bg-purple-500 shrink-0"></span>
@@ -375,13 +376,13 @@
                             <div class="space-y-4">
                                 <div
                                     class="flex items-center justify-between p-4 rounded-2xl bg-white/[0.03] border border-purple-500/20">
-                                    <span class="text-base text-white/70 font-light">Creative Mechanism Design</span>
-                                    <span class="text-white font-bold text-lg">60%</span>
+                                    <span class="text-base text-white/70 font-light">Mechathon</span>
+                                    <span class="text-white font-bold text-lg">50%</span>
                                 </div>
                                 <div
                                     class="flex items-center justify-between p-4 rounded-2xl bg-white/[0.03] border border-purple-500/20">
                                     <span class="text-base text-white/70 font-light">Quick CAD Speed Modeling</span>
-                                    <span class="text-white font-bold text-lg">40%</span>
+                                    <span class="text-white font-bold text-lg">50%</span>
                                 </div>
                             </div>
                         </div>
