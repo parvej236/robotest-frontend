@@ -91,7 +91,7 @@
                   </span>
                 </div>
 
-                <div class="relative flex gap-6 md:gap-10">
+                <div class="relative flex gap-6 md:gap-10 mb-2">
                   <div v-for="(val, key) in timeLeft" :key="key" class="flex items-baseline gap-2">
                     <span class="text-3xl md:text-5xl font-black text-white tabular-nums tracking-tighter 
                    drop-shadow-[0_0_15px_rgba(220,38,38,0.3)]">
@@ -112,7 +112,7 @@
               </div>
             </div>
 
-            <div class="flex flex-wrap gap-5 items-center">
+            <div class="flex flex-wrap gap-5 items-center mt-2">
               <button v-if="contest.status === 'REGISTRATION_OPEN' && !auth.isLoggedIn" @click="$router.push('/login')"
                 class="bg-white text-black font-black py-5 px-12 rounded-[1.5rem] text-lg hover:bg-gray-200 transition-all active:scale-95 flex items-center gap-3 shadow-[0_20px_40px_rgba(255,255,255,0.1)]">
                 <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
@@ -147,7 +147,7 @@
                 REGISTERED & READY
               </div>
 
-              <router-link v-if="contest.status === 'RUNNING' && isRegistered && hasSubmitted"
+              <router-link v-if="contest.status === 'RUNNING' && isRegistered"
                 :to="`/contests/${contest.id}/join`"
                 class="bg-gradient-to-r from-red-600 to-red-500 text-white font-black py-5 px-14 rounded-[1.5rem] shadow-[0_20px_50px_rgba(220,38,38,0.5)] transition-all active:scale-95 flex items-center gap-4 text-xl tracking-tight">
                 ⚡ JOIN CONTEST NOW

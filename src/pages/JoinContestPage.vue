@@ -322,7 +322,7 @@ async function handleSingleSubmit() {
 
     if (result.success) {
       // ✓ Correct answer
-      responseMessage.value = '✓ Correct! Moving to next question...'
+      responseMessage.value = 'Correct! Moving to next question...'
       responseType.value = 'success'
       
       // Auto-move to next question after brief delay

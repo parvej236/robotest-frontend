@@ -1,9 +1,9 @@
 <template>
     <div class="relative min-h-screen bg-transparent text-white/90 font-sans selection:bg-red-500/30 overflow-x-hidden">
-    <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
-      <div class="absolute -top-48 -left-48 w-[600px] h-[600px] bg-red-600/10 rounded-full blur-[120px]"></div>
-      <div class="absolute bottom-0 right-0 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[120px]"></div>
-    </div>
+        <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
+            <div class="absolute -top-48 -left-48 w-[600px] h-[600px] bg-red-600/10 rounded-full blur-[120px]"></div>
+            <div class="absolute bottom-0 right-0 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[120px]"></div>
+        </div>
         <div class="absolute inset-0 overflow-hidden pointer-events-none">
             <div class="absolute top-0 left-1/4 w-[500px] h-[500px] bg-red-600/5 rounded-full blur-[140px]"></div>
             <div class="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-blue-600/5 rounded-full blur-[140px]"></div>
@@ -71,12 +71,13 @@
 
                 <div
                     class="lg:col-span-12 p-10 md:p-12 rounded-[40px] bg-gradient-to-br from-green-600/20 via-transparent to-emerald-200/20 border border-white/5 hover:border-red-600/20 transition-all duration-500">
-                <div class="flex flex-col md:flex-row justify-between items-start gap-8 mb-12">
+                    <div class="flex flex-col md:flex-row justify-between items-start gap-8 mb-12">
                         <div>
                             <h2 class="text-4xl md:text-5xl font-black uppercase tracking-tighter text-white mb-2">
                                 CAD</h2>
                             <span
-                                class="text-sm font-bold text-green-500 tracking-[0.4em] uppercase opacity-80 italic">Quick CAD Speed Modeling Contest</span>
+                                class="text-sm font-bold text-green-500 tracking-[0.4em] uppercase opacity-80 italic">Quick
+                                CAD Speed Modeling Contest</span>
                         </div>
                         <div
                             class="px-8 py-3 rounded-full border border-green-500/20 text-xs font-black text-green-500 tracking-[0.5em] uppercase bg-green-500/5">
@@ -161,136 +162,169 @@
                     </div>
                 </div>
 
-<div class="lg:col-span-12 p-10 md:p-14 rounded-[56px] bg-gradient-to-br from-blue-600/20 via-transparent to-blue-200/20 border border-white/5 hover:border-blue-600/20 transition-all duration-700">
-    <div class="flex flex-col md:flex-row justify-between items-start gap-8 mb-12">
-        <div>
-            <h2 class="text-4xl md:text-5xl font-black uppercase tracking-tighter text-white mb-2">
-                Mechathon</h2>
-            <span class="text-sm font-bold text-blue-500 tracking-[0.4em] uppercase opacity-80 italic">Creative
-                Mechanism Design</span>
-        </div>
-        <div class="px-8 py-3 rounded-full border border-blue-500/20 text-xs font-black text-blue-500 tracking-[0.5em] uppercase bg-blue-500/5">
-            Monthly Team Challenge
-        </div>
-    </div>
+                <div
+                    class="lg:col-span-12 p-10 md:p-14 rounded-[56px] bg-gradient-to-br from-blue-600/20 via-transparent to-blue-200/20 border border-white/5 hover:border-blue-600/20 transition-all duration-700">
+                    <div class="flex flex-col md:flex-row justify-between items-start gap-8 mb-12">
+                        <div>
+                            <h2 class="text-4xl md:text-5xl font-black uppercase tracking-tighter text-white mb-2">
+                                Mechathon</h2>
+                            <span
+                                class="text-sm font-bold text-blue-500 tracking-[0.4em] uppercase opacity-80 italic">Creative
+                                Mechanism Design</span>
+                        </div>
+                        <div
+                            class="px-8 py-3 rounded-full border border-blue-500/20 text-xs font-black text-blue-500 tracking-[0.5em] uppercase bg-blue-500/5">
+                            Monthly Team Challenge
+                        </div>
+                    </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
-        <div class="space-y-10">
-            <div>
-                <p class="text-xl md:text-2xl text-white/70 font-light leading-tight">
-                    A team-based sprint where exactly <span class="text-white font-normal underline decoration-blue-500/30">2 members</span>
-                    solve complex engineering challenges through functional mechanism design.
-                </p>
-            </div>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                        <div class="space-y-10">
+                            <div>
+                                <p class="text-xl md:text-2xl text-white/70 font-light leading-tight">
+                                    A team-based sprint where exactly <span
+                                        class="text-white font-normal underline decoration-blue-500/30">2 members</span>
+                                    solve complex engineering challenges through functional mechanism design.
+                                </p>
+                            </div>
 
-            <div class="p-6 rounded-[40px] bg-white/[0.03] border border-white/5 flex items-center justify-between group/time">
-                <div class="flex-1">
-                    <span class="block text-[10px] uppercase tracking-widest opacity-40 mb-2">Time
-                        Limit</span>
-                    <input v-if="isEditing" v-model="sections.mechathon.duration" class="bg-transparent border-b-2 border-blue-600/30 text-3xl font-black text-white outline-none focus:border-blue-600 w-full py-1 transition-all" />
-                    <span v-else class="text-4xl font-black text-white tracking-tighter">{{ sections.mechathon?.duration }}</span>
-                </div>
-            </div>
+                            <div
+                                class="p-6 rounded-[40px] bg-white/[0.03] border border-white/5 flex items-center justify-between group/time">
+                                <div class="flex-1">
+                                    <span class="block text-[10px] uppercase tracking-widest opacity-40 mb-2">Time
+                                        Limit</span>
+                                    <input v-if="isEditing" v-model="sections.mechathon.duration"
+                                        class="bg-transparent border-b-2 border-blue-600/30 text-3xl font-black text-white outline-none focus:border-blue-600 w-full py-1 transition-all" />
+                                    <span v-else class="text-4xl font-black text-white tracking-tighter">{{
+                                        sections.mechathon?.duration }}</span>
+                                </div>
+                            </div>
 
-            <div class="p-8 rounded-[32px] bg-blue-600/[0.03] border border-blue-600/10">
-                <h3 class="text-xs font-black uppercase tracking-widest text-blue-500/60 mb-6 flex items-center gap-2">
-                    Team Rules
-                </h3>
-                <ul class="space-y-4">
-                    <li class="flex items-center gap-4">
-                        <span class="mt-1 w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0"></span>
-                        <span class="text-base text-white/70 font-light leading-relaxed">Each team must consist of exactly <span class="text-white font-semibold">2 members</span>.</span>
-                    </li>
-                    <li class="flex items-center gap-4">
-                        <span class="mt-1 w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0"></span>
-                        <span class="text-base text-white/70 font-light leading-relaxed">A participant may join only <span class="text-white font-semibold">one team</span>.</span>
-                    </li>
-                    <li class="flex items-center gap-4">
-                        <span class="mt-1 w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0"></span>
-                        <span class="text-base text-white/70 font-light leading-relaxed">Each team must nominate <span class="text-white font-semibold">one team leader</span> for final submission.</span>
-                    </li>
-                </ul>
-            </div>
+                            <div class="p-8 rounded-[32px] bg-blue-600/[0.03] border border-blue-600/10">
+                                <h3
+                                    class="text-xs font-black uppercase tracking-widest text-blue-500/60 mb-6 flex items-center gap-2">
+                                    Team Rules
+                                </h3>
+                                <ul class="space-y-4">
+                                    <li class="flex items-center gap-4">
+                                        <span class="mt-1 w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0"></span>
+                                        <span class="text-base text-white/70 font-light leading-relaxed">Each team must
+                                            consist of exactly <span class="text-white font-semibold">2
+                                                members</span>.</span>
+                                    </li>
+                                    <li class="flex items-center gap-4">
+                                        <span class="mt-1 w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0"></span>
+                                        <span class="text-base text-white/70 font-light leading-relaxed">A participant
+                                            may join only <span class="text-white font-semibold">one team</span>.</span>
+                                    </li>
+                                    <li class="flex items-center gap-4">
+                                        <span class="mt-1 w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0"></span>
+                                        <span class="text-base text-white/70 font-light leading-relaxed">Each team must
+                                            nominate <span class="text-white font-semibold">one team leader</span> for
+                                            final submission.</span>
+                                    </li>
+                                </ul>
+                            </div>
 
 
 
-            <div class="space-y-4">
-                <span class="block text-sm uppercase tracking-widest text-blue-500 font-black">Fixed Submission Formats</span>
-                <div class="flex flex-wrap gap-3">
-                    <span v-for="tag in ['CAD: STEP(.step/.stp)', 'Report: PDF', 'Images: PNG/JPG', 'Animation: MP4/GIF']" :key="tag" class="px-4 py-2 rounded-xl bg-purple-600/20 border border-purple-600/30 text-sm font-mono text-white uppercase">
-                        {{ tag }}
-                    </span>
-                </div>
-            </div>
-        </div>
+                            <div class="space-y-4">
+                                <span class="block text-sm uppercase tracking-widest text-blue-500 font-black">Fixed
+                                    Submission Formats</span>
+                                <div class="flex flex-wrap gap-3">
+                                    <span
+                                        v-for="tag in ['CAD: STEP(.step/.stp)', 'Report: PDF', 'Images: PNG/JPG', 'Animation: MP4/GIF']"
+                                        :key="tag"
+                                        class="px-4 py-2 rounded-xl bg-purple-600/20 border border-purple-600/30 text-sm font-mono text-white uppercase">
+                                        {{ tag }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
 
-        <div class="space-y-8">
-            <div class="p-8 rounded-[32px] bg-blue-600/[0.03] border border-blue-600/10">
-                <h3 class="text-xs font-black uppercase tracking-widest text-blue-500/60 mb-6 flex items-center gap-2">
-                    Judging Criteria
-                </h3>
-                <div class="space-y-4 mb-6">
-                    <div v-for="(criterion, index) in [
-                        { name: 'Accuracy of the model', percentage: 'creativity_innovation' },
-                        { name: 'Design methodology', percentage: 'functionality' },
-                        { name: 'Efficiency of modeling', percentage: 'cad_modeling' },
-                        { name: 'Creativity and problem-solving', percentage: 'engineering_feasibility' },
-                        { name: 'Completion in time', percentage: 'engineering_feasibility' }
-                    ]" :key="index" class="flex items-center justify-between">
-                        <span class="text-base text-white/70 font-light">{{ criterion.name }}</span>
-                        <div class="flex items-center gap-2">
-                            <input v-if="isEditing" v-model="sections.mechathon[criterion.percentage]" type="number" min="0" max="100" class="w-16 bg-black/40 border border-blue-500/30 rounded-lg px-3 py-1 text-white font-bold text-center outline-none focus:border-blue-500" />
-                            <span v-else class="text-white font-bold text-lg hidden">{{ sections.mechathon[criterion.percentage] }}%</span>
+                        <div class="space-y-8">
+                            <div class="p-8 rounded-[32px] bg-blue-600/[0.03] border border-blue-600/10">
+                                <h3
+                                    class="text-xs font-black uppercase tracking-widest text-blue-500/60 mb-6 flex items-center gap-2">
+                                    Judging Criteria
+                                </h3>
+                                <div class="space-y-4 mb-6">
+                                    <div v-for="(criterion, index) in [
+                                        { name: 'Accuracy of the model', percentage: 'creativity_innovation' },
+                                        { name: 'Design methodology', percentage: 'functionality' },
+                                        { name: 'Efficiency of modeling', percentage: 'cad_modeling' },
+                                        { name: 'Creativity and problem-solving', percentage: 'engineering_feasibility' },
+                                        { name: 'Completion in time', percentage: 'engineering_feasibility' }
+                                    ]" :key="index" class="flex items-center justify-between">
+                                        <span class="text-base text-white/70 font-light">{{ criterion.name }}</span>
+                                        <div class="flex items-center gap-2">
+                                            <input v-if="isEditing" v-model="sections.mechathon[criterion.percentage]"
+                                                type="number" min="0" max="100"
+                                                class="w-16 bg-black/40 border border-blue-500/30 rounded-lg px-3 py-1 text-white font-bold text-center outline-none focus:border-blue-500" />
+                                            <span v-else class="text-white font-bold text-lg hidden">{{
+                                                sections.mechathon[criterion.percentage] }}%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="text-sm text-white/50 italic leading-relaxed">
+                                    Judges may also consider design clarity, efficiency, motion quality, realism, and
+                                    assembly quality.
+                                </p>
+                            </div>
+
+
+
+                            <div class="p-8 rounded-[32px] bg-purple-600/[0.03] border border-purple-600/10">
+                                <h3
+                                    class="text-xs font-black uppercase tracking-widest text-purple-400 mb-6 flex items-center gap-2">
+                                    Submission Requirements
+                                </h3>
+                                <ul class="space-y-4">
+                                    <li class="space-y-3">
+                                        <div class="flex items-center gap-4">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-purple-500 shrink-0"></span>
+                                            <span class="text-base text-white font-semibold italic">Short PDF report
+                                                including:</span>
+                                        </div>
+                                        <ul class="ml-8 space-y-2">
+                                            <li class="flex items-center gap-3 text-white/60 font-light">
+                                                <span class="text-purple-500">—</span> working principle
+                                            </li>
+                                            <li class="flex items-center gap-3 text-white/60 font-light">
+                                                <span class="text-purple-500">—</span> visualization (figure diagram)
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="flex items-center gap-4">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-purple-500 shrink-0"></span>
+                                        <span class="text-base text-white/80 font-light leading-relaxed">Mathematical
+                                            Model</span>
+                                    </li>
+                                    <li class="flex items-center gap-4">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-purple-500 shrink-0"></span>
+                                        <span class="text-base text-white/80 font-light leading-relaxed">Real world
+                                            feasibility</span>
+                                    </li>
+                                    <li class="flex items-center gap-4">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-purple-500 shrink-0"></span>
+                                        <span class="text-base text-white/80 font-light leading-relaxed">CAD file</span>
+                                    </li>
+                                    <li class="flex items-center gap-4">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-purple-500 shrink-0"></span>
+                                        <span class="text-base text-white/80 font-light leading-relaxed">Optional
+                                            video</span>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <p class="text-sm text-white/50 italic leading-relaxed">
-                    Judges may also consider design clarity, efficiency, motion quality, realism, and assembly quality.
-                </p>
-            </div>
 
+                <div class="lg:col-span-12 px-8 rounded-[40px] bg-white/[0.02] border border-white/5 backdrop-blur-3xl hover:bg-white/[0.03] transition-all duration-500">
+                    <div class="text-xl text-center mb-2 py-4">Score System</div>
+                    <img src="@/assets/marking.png" alt="Marking Scheme" class="w-full rounded-2xl border border-white/10 shadow-lg">
+                </div>
 
-
-            <div class="p-8 rounded-[32px] bg-purple-600/[0.03] border border-purple-600/10">
-                <h3 class="text-xs font-black uppercase tracking-widest text-purple-400 mb-6 flex items-center gap-2">
-                    Submission Requirements
-                </h3>
-                <ul class="space-y-4">
-                    <li class="space-y-3">
-                        <div class="flex items-center gap-4">
-                            <span class="w-1.5 h-1.5 rounded-full bg-purple-500 shrink-0"></span>
-                            <span class="text-base text-white font-semibold italic">Short PDF report including:</span>
-                        </div>
-                        <ul class="ml-8 space-y-2">
-                            <li class="flex items-center gap-3 text-white/60 font-light">
-                                <span class="text-purple-500">—</span> working principle
-                            </li>
-                            <li class="flex items-center gap-3 text-white/60 font-light">
-                                <span class="text-purple-500">—</span> visualization (figure diagram)
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="flex items-center gap-4">
-                        <span class="w-1.5 h-1.5 rounded-full bg-purple-500 shrink-0"></span>
-                        <span class="text-base text-white/80 font-light leading-relaxed">Mathematical Model</span>
-                    </li>
-                    <li class="flex items-center gap-4">
-                        <span class="w-1.5 h-1.5 rounded-full bg-purple-500 shrink-0"></span>
-                        <span class="text-base text-white/80 font-light leading-relaxed">Real world feasibility</span>
-                    </li>
-                    <li class="flex items-center gap-4">
-                        <span class="w-1.5 h-1.5 rounded-full bg-purple-500 shrink-0"></span>
-                        <span class="text-base text-white/80 font-light leading-relaxed">CAD file</span>
-                    </li>
-                    <li class="flex items-center gap-4">
-                        <span class="w-1.5 h-1.5 rounded-full bg-purple-500 shrink-0"></span>
-                        <span class="text-base text-white/80 font-light leading-relaxed">Optional video</span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
 
                 <div
                     class="lg:col-span-12 p-10 md:p-12 rounded-[40px] bg-white/[0.02] border border-white/5 backdrop-blur-3xl hover:bg-white/[0.03] transition-all duration-500">
@@ -305,8 +339,10 @@
                         <div v-for="software in ['FreeCAD', 'SolidWorks', 'Fusion 360', 'Autodesk Inventor', 'CATIA', 'Siemens NX', 'Onshape']"
                             :key="software"
                             class="p-5 rounded-2xl bg-gradient-to-br from-green-600/20 to-red-600/5 border border-green-600/30 hover:border-green-600/60 hover:bg-green-600/15 transition-all duration-300 flex items-center gap-3 group cursor-default">
-                            <span class="w-2.5 h-2.5 rounded-full bg-green-600 shrink-0 group-hover:shadow-[0_0_12px_#dc2626] transition-all"></span>
-                            <span class="text-base md:text-lg text-white/80 font-semibold group-hover:text-white transition-colors">
+                            <span
+                                class="w-2.5 h-2.5 rounded-full bg-green-600 shrink-0 group-hover:shadow-[0_0_12px_#dc2626] transition-all"></span>
+                            <span
+                                class="text-base md:text-lg text-white/80 font-semibold group-hover:text-white transition-colors">
                                 {{ software }}
                             </span>
                         </div>
@@ -322,7 +358,8 @@
                             Leaderboard & Rewards
                         </h2>
                         <span
-                            class="text-sm font-bold text-purple-500 tracking-[0.4em] uppercase opacity-80 italic">Monthly Rankings & Recognition</span>
+                            class="text-sm font-bold text-purple-500 tracking-[0.4em] uppercase opacity-80 italic">Monthly
+                            Rankings & Recognition</span>
                     </div>
                     <div
                         class="px-8 py-3 rounded-full border border-purple-500/20 text-xs font-black text-purple-500 tracking-[0.5em] uppercase bg-purple-500/5">
@@ -333,13 +370,16 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
                     <div class="space-y-8">
                         <div>
-                            <h3 class="text-lg font-bold text-purple-400 mb-4 uppercase tracking-wide">Final Monthly Score Weightage</h3>
+                            <h3 class="text-lg font-bold text-purple-400 mb-4 uppercase tracking-wide">Final Monthly
+                                Score Weightage</h3>
                             <div class="space-y-4">
-                                <div class="flex items-center justify-between p-4 rounded-2xl bg-white/[0.03] border border-purple-500/20">
+                                <div
+                                    class="flex items-center justify-between p-4 rounded-2xl bg-white/[0.03] border border-purple-500/20">
                                     <span class="text-base text-white/70 font-light">Creative Mechanism Design</span>
                                     <span class="text-white font-bold text-lg">60%</span>
                                 </div>
-                                <div class="flex items-center justify-between p-4 rounded-2xl bg-white/[0.03] border border-purple-500/20">
+                                <div
+                                    class="flex items-center justify-between p-4 rounded-2xl bg-white/[0.03] border border-purple-500/20">
                                     <span class="text-base text-white/70 font-light">Quick CAD Speed Modeling</span>
                                     <span class="text-white font-bold text-lg">40%</span>
                                 </div>
@@ -347,7 +387,8 @@
                         </div>
 
                         <div class="p-6 rounded-[32px] bg-purple-600/[0.03] border border-purple-600/10">
-                            <h3 class="text-xs font-black uppercase tracking-widest text-purple-500/60 mb-6">Monthly Announcements</h3>
+                            <h3 class="text-xs font-black uppercase tracking-widest text-purple-500/60 mb-6">Monthly
+                                Announcements</h3>
                             <ul class="space-y-4">
                                 <li class="flex items-start gap-3">
                                     <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-purple-500 shrink-0"></span>
@@ -367,21 +408,25 @@
 
                     <div class="space-y-8">
                         <div class="p-8 rounded-[32px] bg-purple-600/[0.03] border border-purple-600/10">
-                            <h3 class="text-xs font-black uppercase tracking-widest text-purple-500/60 mb-6">Rewards & Recognition</h3>
+                            <h3 class="text-xs font-black uppercase tracking-widest text-purple-500/60 mb-6">Rewards &
+                                Recognition</h3>
                             <p class="text-base text-white/70 font-light leading-relaxed">
                                 Winners at the end of each month receive recognition and may be awarded:
                             </p>
                             <ul class="space-y-3 mt-6">
                                 <li class="flex items-center gap-3">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-purple-400 shrink-0 shadow-[0_0_8px_#a855f7]"></span>
+                                    <span
+                                        class="w-1.5 h-1.5 rounded-full bg-purple-400 shrink-0 shadow-[0_0_8px_#a855f7]"></span>
                                     <span class="text-base text-white/60 font-light">Certificates of Achievement</span>
                                 </li>
                                 <li class="flex items-center gap-3">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-purple-400 shrink-0 shadow-[0_0_8px_#a855f7]"></span>
+                                    <span
+                                        class="w-1.5 h-1.5 rounded-full bg-purple-400 shrink-0 shadow-[0_0_8px_#a855f7]"></span>
                                     <span class="text-base text-white/60 font-light">Public Recognition</span>
                                 </li>
                                 <li class="flex items-center gap-3">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-purple-400 shrink-0 shadow-[0_0_8px_#a855f7]"></span>
+                                    <span
+                                        class="w-1.5 h-1.5 rounded-full bg-purple-400 shrink-0 shadow-[0_0_8px_#a855f7]"></span>
                                     <span class="text-base text-white/60 font-light">Exclusive Prizes & Rewards</span>
                                 </li>
                             </ul>
@@ -398,7 +443,8 @@
                             Disqualification & Fair Play
                         </h2>
                         <span
-                            class="text-sm font-bold text-red-500 tracking-[0.4em] uppercase opacity-80 italic">Integrity & Contest Standards</span>
+                            class="text-sm font-bold text-red-500 tracking-[0.4em] uppercase opacity-80 italic">Integrity
+                            & Contest Standards</span>
                     </div>
                     <div
                         class="px-8 py-3 rounded-full border border-red-500/20 text-xs font-black text-red-500 tracking-[0.5em] uppercase bg-red-500/5">
@@ -408,7 +454,8 @@
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
                     <div class="p-8 rounded-[32px] bg-red-600/[0.03] border border-red-600/10">
-                        <h3 class="text-xs font-black uppercase tracking-widest text-red-500/60 mb-6">Disqualification Triggers</h3>
+                        <h3 class="text-xs font-black uppercase tracking-widest text-red-500/60 mb-6">Disqualification
+                            Triggers</h3>
                         <ul class="space-y-4">
                             <li class="flex items-start gap-4">
                                 <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-red-500 shrink-0"></span>
@@ -420,7 +467,8 @@
                             </li>
                             <li class="flex items-start gap-4">
                                 <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-red-500 shrink-0"></span>
-                                <span class="text-base text-white/70 font-light">Pre-made submissions created before the contest</span>
+                                <span class="text-base text-white/70 font-light">Pre-made submissions created before the
+                                    contest</span>
                             </li>
                             <li class="flex items-start gap-4">
                                 <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-red-500 shrink-0"></span>
@@ -435,29 +483,38 @@
 
                     <div class="space-y-8">
                         <div class="p-8 rounded-[32px] bg-red-600/[0.03] border border-red-600/10">
-                            <h3 class="text-xs font-black uppercase tracking-widest text-red-500/60 mb-6">Fair Play Policy</h3>
+                            <h3 class="text-xs font-black uppercase tracking-widest text-red-500/60 mb-6">Fair Play
+                                Policy</h3>
                             <p class="text-base text-white/70 font-light leading-relaxed">
-                                All participants must submit <span class="text-white font-semibold">original work</span>. Sharing CAD files, copying designs, or engaging in unfair collaboration is <span class="text-red-400 font-semibold">strictly prohibited</span>.
+                                All participants must submit <span class="text-white font-semibold">original
+                                    work</span>. Sharing CAD files, copying designs, or engaging in unfair collaboration
+                                is <span class="text-red-400 font-semibold">strictly prohibited</span>.
                             </p>
                         </div>
 
                         <div class="p-8 rounded-[32px] bg-red-600/[0.03] border border-red-600/10">
-                            <h3 class="text-xs font-black uppercase tracking-widest text-red-500/60 mb-6">Organizer Rights</h3>
+                            <h3 class="text-xs font-black uppercase tracking-widest text-red-500/60 mb-6">Organizer
+                                Rights</h3>
                             <ul class="space-y-3">
                                 <li class="flex items-start gap-3">
-                                    <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-red-400 shrink-0 shadow-[0_0_8px_#f87171]"></span>
+                                    <span
+                                        class="mt-1.5 w-1.5 h-1.5 rounded-full bg-red-400 shrink-0 shadow-[0_0_8px_#f87171]"></span>
                                     <span class="text-base text-white/60 font-light">Update the rules</span>
                                 </li>
                                 <li class="flex items-start gap-3">
-                                    <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-red-400 shrink-0 shadow-[0_0_8px_#f87171]"></span>
+                                    <span
+                                        class="mt-1.5 w-1.5 h-1.5 rounded-full bg-red-400 shrink-0 shadow-[0_0_8px_#f87171]"></span>
                                     <span class="text-base text-white/60 font-light">Modify the contest schedule</span>
                                 </li>
                                 <li class="flex items-start gap-3">
-                                    <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-red-400 shrink-0 shadow-[0_0_8px_#f87171]"></span>
-                                    <span class="text-base text-white/60 font-light">Disqualify unfair submissions</span>
+                                    <span
+                                        class="mt-1.5 w-1.5 h-1.5 rounded-full bg-red-400 shrink-0 shadow-[0_0_8px_#f87171]"></span>
+                                    <span class="text-base text-white/60 font-light">Disqualify unfair
+                                        submissions</span>
                                 </li>
                             </ul>
-                            <p class="text-sm text-red-400/80 font-semibold mt-6 italic">All organizer decisions are final.</p>
+                            <p class="text-sm text-red-400/80 font-semibold mt-6 italic">All organizer decisions are
+                                final.</p>
                         </div>
                     </div>
                 </div>
