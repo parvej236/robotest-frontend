@@ -3,10 +3,10 @@
   <div class="min-h-screen pt-20 px-4 pb-12">
     <div class="max-w-7xl mx-auto">
 
-    <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
-      <div class="absolute -top-48 -left-48 w-[600px] h-[600px] bg-red-600/10 rounded-full blur-[120px]"></div>
-      <div class="absolute bottom-0 right-0 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[120px]"></div>
-    </div>
+      <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
+        <div class="absolute -top-48 -left-48 w-[600px] h-[600px] bg-red-600/10 rounded-full blur-[120px]"></div>
+        <div class="absolute bottom-0 right-0 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[120px]"></div>
+      </div>
 
       <!-- Header -->
       <div class="mb-6 space-y-4">
@@ -22,8 +22,11 @@
         <div class="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
           <div class="min-w-0 flex-1">
             <label for="contest-search" class="sr-only">Search contests</label>
-            <div class="relative rounded-3xl border border-slate-700 bg-slate-950/80 px-4 py-3 shadow-sm focus-within:border-sky-500/50">
-              <svg class="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <div
+              class="relative rounded-3xl border border-slate-700 bg-slate-950/80 px-4 py-3 shadow-sm focus-within:border-sky-500/50">
+              <svg class="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500"
+                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
                 <circle cx="11" cy="11" r="7" />
                 <line x1="21" y1="21" x2="16.65" y2="16.65" />
               </svg>
@@ -35,7 +38,8 @@
 
           <div class="flex flex-wrap items-center gap-3 lg:justify-end">
             <div class="flex flex-wrap gap-3 items-center">
-              <div class="relative w-full max-w-[18rem] rounded-3xl border border-slate-700 bg-slate-950/80 px-3 py-2 shadow-sm">
+              <div
+                class="relative w-full max-w-[18rem] rounded-3xl border border-slate-700 bg-slate-950/80 px-3 py-2 shadow-sm">
                 <label for="status-filter" class="sr-only">Filter by status</label>
                 <select id="status-filter" v-model="statusFilter"
                   class="w-full bg-slate-950/90 text-sm text-slate-100 outline-none appearance-none accent-sky-400 focus:text-white focus:ring-2 focus:ring-sky-500/30 focus:border-sky-500">
@@ -46,12 +50,14 @@
                   <option class="bg-slate-950 text-slate-100" value="FINISHED">Finished</option>
                 </select>
                 <div class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-slate-500">
-                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="6 9 12 15 18 9" />
                   </svg>
                 </div>
               </div>
-              <div class="relative w-full max-w-[18rem] rounded-3xl border border-slate-700 bg-slate-950/80 px-3 py-2 shadow-sm">
+              <div
+                class="relative w-full max-w-[18rem] rounded-3xl border border-slate-700 bg-slate-950/80 px-3 py-2 shadow-sm">
                 <label for="sort-option" class="sr-only">Sort contests</label>
                 <select id="sort-option" v-model="sortOption"
                   class="w-full bg-slate-950/90 text-sm text-slate-100 outline-none appearance-none accent-sky-400 focus:text-white focus:ring-2 focus:ring-sky-500/30 focus:border-sky-500">
@@ -62,7 +68,8 @@
                   <option class="bg-slate-950 text-slate-100" value="registeredDesc">Registered: High to Low</option>
                 </select>
                 <div class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-slate-500">
-                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="6 9 12 15 18 9" />
                   </svg>
                 </div>
@@ -80,8 +87,7 @@
                   ☰ List
                 </button>
               </div>
-              <button @click="openCreate"
-                class="btn-primary text-sm min-w-[10rem] px-4 py-2">+ New Contest</button>
+              <button @click="openCreate" class="btn-primary text-sm min-w-[10rem] px-4 py-2">+ New Contest</button>
             </div>
           </div>
         </div>
@@ -106,22 +112,27 @@
       <!-- GRID VIEW -->
       <div v-else-if="viewMode === 'grid'" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
         <div v-for="c in pagedContests" :key="c.id"
-             class="glass-card relative overflow-hidden group hover:border-neon-red/40 hover:-translate-y-1 hover:shadow-[0_24px_80px_rgba(220,38,38,0.12)] transition-all duration-300">
-          <div class="absolute inset-0 bg-gradient-to-br from-red-500/10 via-transparent to-blue-500/5 opacity-0 group-hover:opacity-100 pointer-events-none"></div>
+          class="glass-card relative overflow-hidden group hover:border-neon-red/40 hover:-translate-y-1 hover:shadow-[0_24px_80px_rgba(220,38,38,0.12)] transition-all duration-300">
+          <div
+            class="absolute inset-0 bg-gradient-to-br from-red-500/10 via-transparent to-blue-500/5 opacity-0 group-hover:opacity-100 pointer-events-none">
+          </div>
           <div class="h-1 w-full" :style="`background: ${statusColor(c.status)}`"></div>
-           <div class="relative p-5">
+          <div class="relative p-5">
             <div class="flex items-center justify-between gap-3 mb-4">
               <StatusBadge :status="c.status" />
               <span class="text-sm font-semibold text-sky-300 tracking-wide">{{ formatDate(c.contestDate) }}</span>
             </div>
-            <h3 class="font-display font-black text-white text-lg md:text-xl leading-tight mb-3 line-clamp-2 group-hover:text-rose-300 transition-colors">
+            <h3
+              class="font-display font-black text-white text-lg md:text-xl leading-tight mb-3 line-clamp-2 group-hover:text-rose-300 transition-colors">
               {{ c.name }}
             </h3>
-            <p v-if="c.description" class="text-sm text-slate-300 font-body line-clamp-2 mb-5 leading-relaxed">{{ c.description }}</p>
+            <p v-if="c.description" class="text-sm text-slate-300 font-body line-clamp-2 mb-5 leading-relaxed">{{
+              c.description }}</p>
             <div class="grid grid-cols-2 gap-3 mb-5">
               <div class="bg-slate-950/70 rounded-3xl p-4 text-center border border-slate-700 shadow-sm">
                 <div class="flex items-center justify-center gap-2 mb-2 text-slate-400">
-                  <svg class="w-4 h-4 text-rose-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <svg class="w-4 h-4 text-rose-400" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
                     <circle cx="9" cy="7" r="4" />
                     <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
@@ -133,7 +144,8 @@
               </div>
               <div class="bg-slate-950/70 rounded-3xl p-4 text-center border border-slate-700 shadow-sm">
                 <div class="flex items-center justify-center gap-2 mb-2 text-slate-400">
-                  <svg class="w-4 h-4 text-cyan-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <svg class="w-4 h-4 text-cyan-300" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M9 9a3 3 0 1 1 6 0c0 1.657-1.343 3-3 3" />
                     <path d="M12 17h.01" />
                     <path d="M21 20a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9l5 5v11z" />
@@ -160,7 +172,8 @@
             <div class="flex flex-wrap gap-3">
               <router-link :to="`/admin/contests/${c.id}/questions`"
                 class="flex-1 inline-flex items-center justify-center gap-2 text-xs md:text-sm font-semibold text-white bg-neon-blue/15 border border-neon-blue/30 px-3 py-3 rounded-2xl hover:bg-neon-blue/25 transition-colors">
-                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
                   <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                   <polyline points="7 10 12 15 17 10" />
                   <line x1="12" y1="15" x2="12" y2="3" />
@@ -169,7 +182,8 @@
               </router-link>
               <button @click="openEdit(c)"
                 class="flex-1 inline-flex items-center justify-center gap-2 text-xs md:text-sm font-semibold text-white/90 bg-white/10 border border-white/15 px-3 py-3 rounded-2xl hover:bg-white/15 hover:text-white transition-colors">
-                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
                   <path d="M12 20h9" />
                   <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z" />
                 </svg>
@@ -177,7 +191,8 @@
               </button>
               <button @click="confirmDelete(c)"
                 class="flex-1 inline-flex items-center justify-center gap-2 text-xs md:text-sm font-semibold text-red-100 bg-red-600/10 border border-red-600/25 px-3 py-3 rounded-2xl hover:bg-red-600/20 transition-colors">
-                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
                   <polyline points="3 6 5 6 21 6" />
                   <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
                   <path d="M10 11v6" />
@@ -196,21 +211,32 @@
           <thead>
             <tr class="border-b border-slate-700">
               <th class="pb-3 text-left text-sm font-display tracking-wider text-slate-300 uppercase">Name</th>
-              <th class="pb-3 text-center text-sm font-display tracking-wider text-slate-300 uppercase hidden sm:table-cell">Status</th>
-              <th class="pb-3 text-center text-sm font-display tracking-wider text-slate-300 uppercase hidden lg:table-cell">Contest Date</th>
-              <th class="pb-3 text-center text-sm font-display tracking-wider text-slate-300 uppercase hidden md:table-cell">Registered</th>
+              <th
+                class="pb-3 text-center text-sm font-display tracking-wider text-slate-300 uppercase hidden sm:table-cell">
+                Status</th>
+              <th
+                class="pb-3 text-center text-sm font-display tracking-wider text-slate-300 uppercase hidden lg:table-cell">
+                Contest Date</th>
+              <th
+                class="pb-3 text-center text-sm font-display tracking-wider text-slate-300 uppercase hidden md:table-cell">
+                Registered</th>
               <th class="pb-3 text-right text-sm font-display tracking-wider text-slate-300 uppercase">Actions</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="c in pagedContests" :key="c.id" class="border-b border-slate-800 bg-slate-950/80 hover:bg-slate-900/90 transition-colors">
+            <tr v-for="c in pagedContests" :key="c.id"
+              class="border-b border-slate-800 bg-slate-950/80 hover:bg-slate-900/90 transition-colors">
               <td class="py-4 pr-4 max-w-xs">
                 <p class="font-display text-base text-slate-100 font-semibold truncate">{{ c.name }}</p>
                 <p v-if="c.description" class="text-sm text-slate-400 font-body truncate mt-1">{{ c.description }}</p>
               </td>
-              <td class="py-4 text-center hidden sm:table-cell"><StatusBadge :status="c.status" size="xs" /></td>
-              <td class="py-4 text-center hidden lg:table-cell text-sm font-mono text-sky-300">{{ formatDate(c.contestDate) }}</td>
-              <td class="py-4 text-center hidden md:table-cell text-sm font-mono text-emerald-300">{{ c.registrationCount || 0 }}</td>
+              <td class="py-4 text-center hidden sm:table-cell">
+                <StatusBadge :status="c.status" size="xs" />
+              </td>
+              <td class="py-4 text-center hidden lg:table-cell text-sm font-mono text-sky-300">{{
+                formatDate(c.contestDate) }}</td>
+              <td class="py-4 text-center hidden md:table-cell text-sm font-mono text-emerald-300">{{
+                c.registrationCount || 0 }}</td>
               <td class="py-4">
                 <div class="flex flex-wrap justify-end gap-2">
                   <router-link :to="`/admin/contests/${c.id}/questions`"
@@ -232,25 +258,31 @@
         </table>
       </div>
 
-      <div v-if="displayedContests.length > 0" class="mt-6 flex flex-col gap-4 rounded-3xl border border-slate-800 bg-slate-950/80 p-4 shadow-sm sm:flex-row sm:items-center sm:justify-between">
+      <div v-if="displayedContests.length > 0"
+        class="mt-6 flex flex-col gap-4 rounded-3xl border border-slate-800 bg-slate-950/80 p-4 shadow-sm sm:flex-row sm:items-center sm:justify-between">
         <div class="text-sm text-slate-400">
-          Showing <span class="font-semibold text-white">{{ pagedContests.length }}</span> of <span class="font-semibold text-white">{{ displayedContests.length }}</span> contests
+          Showing <span class="font-semibold text-white">{{ pagedContests.length }}</span> of <span
+            class="font-semibold text-white">{{ displayedContests.length }}</span> contests
         </div>
         <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-end">
-          <div class="relative flex items-center gap-2 rounded-full border border-slate-700 bg-slate-900/80 px-3 py-2 text-sm text-slate-300">
+          <div
+            class="relative flex items-center gap-2 rounded-full border border-slate-700 bg-slate-900/80 px-3 py-2 text-sm text-slate-300">
             <span class="uppercase tracking-[0.2em] text-[10px] text-slate-500">Per page</span>
-            <select v-model="itemsPerPage" class="bg-slate-950/90 text-slate-100 outline-none appearance-none accent-sky-400 focus:text-white focus:ring-2 focus:ring-sky-500/30 focus:border-sky-500 px-4 py-1" aria-label="Contests per page">
-              <option class="bg-slate-950 text-slate-100" v-for="size in pageSizes" :key="size" :value="size">{{ size }}</option>
+            <select v-model="itemsPerPage"
+              class="bg-slate-950/90 text-slate-100 outline-none appearance-none accent-sky-400 focus:text-white focus:ring-2 focus:ring-sky-500/30 focus:border-sky-500 px-4 py-1"
+              aria-label="Contests per page">
+              <option class="bg-slate-950 text-slate-100" v-for="size in pageSizes" :key="size" :value="size">{{ size }}
+              </option>
             </select>
             <div class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-slate-500">
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="6 9 12 15 18 9" />
               </svg>
             </div>
           </div>
           <div class="flex flex-wrap items-center justify-end gap-2">
-            <button @click="currentPage = Math.max(1, currentPage - 1)"
-              :disabled="currentPage === 1"
+            <button @click="currentPage = Math.max(1, currentPage - 1)" :disabled="currentPage === 1"
               class="h-9 rounded-full px-4 text-sm font-semibold transition disabled:opacity-40 disabled:cursor-not-allowed bg-slate-900/80 text-slate-200 hover:bg-slate-800">
               Prev
             </button>
@@ -259,8 +291,7 @@
               :class="['h-9 min-w-[2.25rem] rounded-full px-3 text-sm font-semibold transition', page === currentPage ? 'bg-sky-500 text-slate-950' : 'bg-slate-900/80 text-slate-200 hover:bg-slate-800']">
               {{ page }}
             </button>
-            <button @click="currentPage = Math.min(totalPages, currentPage + 1)"
-              :disabled="currentPage === totalPages"
+            <button @click="currentPage = Math.min(totalPages, currentPage + 1)" :disabled="currentPage === totalPages"
               class="h-9 rounded-full px-4 text-sm font-semibold transition disabled:opacity-40 disabled:cursor-not-allowed bg-slate-900/80 text-slate-200 hover:bg-slate-800">
               Next
             </button>
@@ -270,22 +301,20 @@
     </div>
 
     <!-- ── CREATE / EDIT MODAL ───────────────────────────────── -->
-<div v-if="showModal"
-      class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
+    <div v-if="showModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
       @click.self="showModal = false">
-      
+
       <div class="glass-panel neon-border-red p-8 w-full max-w-xl relative my-4 flex flex-col max-h-[90vh]">
-        
+
         <button @click="showModal = false"
           class="absolute top-4 right-4 text-white/40 hover:text-white text-xl z-10">✕</button>
-        
+
         <h2 class="section-title mb-6 flex-shrink-0">{{ editingId ? 'Edit Contest' : 'Create Contest' }}</h2>
 
         <form @submit.prevent="handleSave" class="space-y-6 overflow-y-auto pr-2 custom-scrollbar">
           <div>
             <label class="label-text">Contest Name *</label>
-            <input v-model="form.name" type="text" class="input-field" required
-              placeholder="e.g. RoboContest Week-1" />
+            <input v-model="form.name" type="text" class="input-field" required placeholder="e.g. RoboContest Week-1" />
           </div>
           <div>
             <label class="label-text">Description</label>
@@ -329,6 +358,23 @@
             </div>
           </div>
 
+          <!-- NEW: Send Mail Button (only shows when editing an existing contest) -->
+          <div v-if="editingId" class="mx-16 border-t border-slate-700 pt-4 mt-2">
+            <button type="button" @click="sendContestAnnouncement" :disabled="sendingEmail"
+              class="w-full btn-secondary flex items-center justify-center gap-2 py-3 bg-gradient-to-r from-rose-600/20 to-red-600/20 border border-rose-500/40 hover:from-rose-600/30 hover:to-red-600/30 transition-all duration-300 rounded-2xl">
+              <svg v-if="sendingEmail" class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+              </svg>
+              <svg v-else class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
+              </svg>
+              {{ sendingEmail ? 'Sending...' : 'Send Email Announcement to All Users' }}
+            </button>
+            <p class="text-xs text-slate-500 mt-2 text-center">Send contest announcement email to all registered users
+            </p>
+          </div>
+
           <div v-if="formError"
             class="text-neon-red text-xs font-body px-3 py-2 bg-red-700/10 border border-neon-red/30 rounded">
             {{ formError }}
@@ -338,8 +384,8 @@
             <button type="submit" :disabled="saving"
               class="btn-primary flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
               <svg v-if="saving" class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
               </svg>
               {{ saving ? 'Saving...' : (editingId ? 'Update Contest' : 'Create Contest') }}
             </button>
@@ -364,8 +410,8 @@
           <button @click="doDelete" :disabled="deleting"
             class="btn-primary flex items-center gap-2 disabled:opacity-50">
             <svg v-if="deleting" class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
-              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
             </svg>
             Delete
           </button>
@@ -382,8 +428,8 @@
         <h3 class="font-display text-xl font-bold text-white mb-2">Contest Created!</h3>
         <p class="text-white/60 font-body text-sm mb-6">Would you like to add questions now?</p>
         <div class="flex gap-3 justify-center">
-          <router-link :to="`/admin/contests/${newContestId}/questions`"
-            @click="newContestId = null" class="btn-primary">Add Questions</router-link>
+          <router-link :to="`/admin/contests/${newContestId}/questions`" @click="newContestId = null"
+            class="btn-primary">Add Questions</router-link>
           <button @click="newContestId = null" class="btn-ghost">Later</button>
         </div>
       </div>
@@ -400,34 +446,35 @@ import { format } from 'date-fns'
 
 const contestStore = useContestStore()
 
-const contests     = ref([])
-const loading      = ref(true)
-const viewMode     = ref('grid')
-const searchQuery  = ref('')
+const contests = ref([])
+const loading = ref(true)
+const viewMode = ref('grid')
+const searchQuery = ref('')
 const statusFilter = ref('ALL')
-const sortOption   = ref('createdDesc')
-const currentPage  = ref(1)
+const sortOption = ref('createdDesc')
+const currentPage = ref(1)
 const itemsPerPage = ref(6)
-const pageSizes    = [6, 9, 12]
-const showModal    = ref(false)
-const editingId    = ref(null)
-const saving       = ref(false)
-const formError    = ref('')
+const pageSizes = [6, 9, 12]
+const showModal = ref(false)
+const editingId = ref(null)
+const saving = ref(false)
+const formError = ref('')
 const deleteTarget = ref(null)
-const deleting     = ref(false)
+const deleting = ref(false)
 const newContestId = ref(null)
+const sendingEmail = ref(false)
 
 const defaultForm = () => ({
-  name:                  '',
-  description:           '',
+  name: '',
+  description: '',
   registrationStartDate: '',
   registrationStartTime: '',
-  registrationEndDate:   '',
-  registrationEndTime:   '',
-  contestStartDate:      '',
-  contestStartTime:      '',
-  contestEndDate:        '',
-  contestEndTime:        '',
+  registrationEndDate: '',
+  registrationEndTime: '',
+  contestStartDate: '',
+  contestStartTime: '',
+  contestEndDate: '',
+  contestEndTime: '',
 })
 const form = ref(defaultForm())
 
@@ -474,8 +521,8 @@ function splitDatetime(iso) {
   try {
     // iso from backend = "2026-03-20T10:00:00" or "2026-03-20T10:00:00.000000"
     const parts = iso.split('T')
-    const date  = parts[0]                        // "2026-03-20"
-    const time  = (parts[1] || '').slice(0, 5)   // "10:00"
+    const date = parts[0]                        // "2026-03-20"
+    const time = (parts[1] || '').slice(0, 5)   // "10:00"
     return { date, time }
   } catch { return { date: '', time: '' } }
 }
@@ -569,7 +616,7 @@ function formatShort(iso) {
 }
 
 function statusColor(s) {
-  return { UPCOMING:'#444', REGISTRATION_OPEN:'#00bfff', RUNNING:'#00ff88', FINISHED:'#333' }[s] || '#444'
+  return { UPCOMING: '#444', REGISTRATION_OPEN: '#00bfff', RUNNING: '#00ff88', FINISHED: '#333' }[s] || '#444'
 }
 
 // ── Load ──────────────────────────────────────────────────────
@@ -594,28 +641,28 @@ function openEdit(c) {
   const cs = splitDatetime(c.contestStart)
   const ce = splitDatetime(c.contestEnd)
   form.value = {
-    name:                  c.name,
-    description:           c.description || '',
+    name: c.name,
+    description: c.description || '',
     registrationStartDate: rs.date,
     registrationStartTime: rs.time,
-    registrationEndDate:   re.date,
-    registrationEndTime:   re.time,
-    contestStartDate:      cs.date,
-    contestStartTime:      cs.time,
-    contestEndDate:        ce.date,
-    contestEndTime:        ce.time,
+    registrationEndDate: re.date,
+    registrationEndTime: re.time,
+    contestStartDate: cs.date,
+    contestStartTime: cs.time,
+    contestEndDate: ce.date,
+    contestEndTime: ce.time,
   }
   showModal.value = true
 }
 
 async function handleSave() {
-  saving.value    = true
+  saving.value = true
   formError.value = ''
 
   const regStart = toLocalDateTime(form.value.registrationStartDate, form.value.registrationStartTime)
-  const regEnd   = toLocalDateTime(form.value.registrationEndDate,   form.value.registrationEndTime)
-  const conStart = toLocalDateTime(form.value.contestStartDate,      form.value.contestStartTime)
-  const conEnd   = toLocalDateTime(form.value.contestEndDate,        form.value.contestEndTime)
+  const regEnd = toLocalDateTime(form.value.registrationEndDate, form.value.registrationEndTime)
+  const conStart = toLocalDateTime(form.value.contestStartDate, form.value.contestStartTime)
+  const conEnd = toLocalDateTime(form.value.contestEndDate, form.value.contestEndTime)
 
   // Client-side validation (compare string directly — same format, lexicographic = chronological)
   if (regEnd <= regStart) {
@@ -628,13 +675,13 @@ async function handleSave() {
   }
 
   const payload = {
-    name:              form.value.name,
-    description:       form.value.description || null,
-    contestDate:       conStart,   // display date = contest start
+    name: form.value.name,
+    description: form.value.description || null,
+    contestDate: conStart,   // display date = contest start
     registrationStart: regStart,
-    registrationEnd:   regEnd,
-    contestStart:      conStart,
-    contestEnd:        conEnd,
+    registrationEnd: regEnd,
+    contestStart: conStart,
+    contestEnd: conEnd,
   }
 
   try {
@@ -665,6 +712,20 @@ async function doDelete() {
   } catch (e) { console.error(e) }
   finally { deleting.value = false }
 }
+
+async function sendContestAnnouncement() {
+  if (!editingId.value) return
+  
+  sendingEmail.value = true
+  try {
+    await contestStore.sendContestAnnouncement(editingId.value)
+  } catch (error) {
+    console.error('Failed to send emails:', error)
+    alert('Failed to send emails: ' + (error.message || 'Unknown error'))
+  } finally {
+    sendingEmail.value = false
+  }
+}
 </script>
 
 <style scoped>
@@ -681,15 +742,18 @@ async function doDelete() {
   transition: border-color 0.2s, box-shadow 0.2s;
   color-scheme: dark;
 }
+
 .dt-input:focus {
   border-color: rgba(255, 0, 51, 0.5);
   box-shadow: 0 0 0 1px rgba(255, 0, 51, 0.15);
 }
+
 .dt-input::-webkit-calendar-picker-indicator {
   filter: invert(0.6);
   cursor: pointer;
   opacity: 0.7;
 }
+
 .dt-input::-webkit-calendar-picker-indicator:hover {
   opacity: 1;
 }
@@ -698,13 +762,16 @@ async function doDelete() {
 .custom-scrollbar::-webkit-scrollbar {
   width: 5px;
 }
+
 .custom-scrollbar::-webkit-scrollbar-track {
   background: transparent;
 }
+
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.1);
   border-radius: 10px;
 }
+
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.2);
 }

@@ -121,14 +121,23 @@ export const useContestStore = defineStore('contest', () => {
     return res.data
   }
 
-async function getMyHistory() {
+  async function getMyHistory() {
     try {
       // Changed from /leaderboard/my-history to /results/my-history
       const res = await api.get('/leaderboard/my-history')
       return res.data || []
     } catch (error) {
       console.error("Store Error:", error)
-      throw error; 
+      throw error;
+    }
+  }
+
+  async function sendContestAnnouncement(contestId) {
+    try {
+      const response = await api.post(`/contests/${contestId}/send-announcement`)
+      return response.data
+    } catch (error) {
+      throw error.response?.data || error
     }
   }
 
@@ -137,6 +146,7 @@ async function getMyHistory() {
     fetchAllContests, fetchActiveContests, fetchLatestContests,
     fetchContest, registerForContest, isRegistered, getMyContests,
     createContest, updateContest, deleteContest,
-    getLeaderboard, submitAnswers, getContestQuestions, hasSubmittedContest, getMyHistory
+    getLeaderboard, submitAnswers, getContestQuestions, hasSubmittedContest, getMyHistory,
+    sendContestAnnouncement
   }
 })
