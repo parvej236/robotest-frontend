@@ -5,10 +5,10 @@ import api from '@/utils/api'
 
 export const useContestStore = defineStore('contest', () => {
 
-  const contests       = ref([])
+  const contests = ref([])
   const activeContests = ref([])
   const latestContests = ref([])
-  const loading        = ref(false)
+  const loading = ref(false)
 
   function getCreatedTimestamp(contest) {
     return new Date(contest?.createdAt || contest?.created_date || contest?.contestDate || '').getTime() || 0
@@ -47,7 +47,7 @@ export const useContestStore = defineStore('contest', () => {
   // ── Public Fetch Single ───────────────────────────────────
   async function fetchContest(id) {
     const res = await api.get(`/contests/${id}`, false)
-    return res.data 
+    return res.data
   }
 
   // ── Authenticated Actions ─────────────────────────────────
@@ -57,7 +57,7 @@ export const useContestStore = defineStore('contest', () => {
 
   async function isRegistered(id) {
     const res = await api.get(`/contests/${id}/is-registered`)
-    return res.data 
+    return res.data
   }
 
   async function getMyContests() {
@@ -85,15 +85,11 @@ export const useContestStore = defineStore('contest', () => {
     // Usually leaderboards are public, but I kept default auth here
     // Change to 'false' if you want anyone to see the leaderboard
     const res = await api.get(`/leaderboard/contest/${contestId}`, false)
+    console.log("Leaderboard API Response:", res)
     return res.data || []
   }
 
-  async function getMyResult(contestId) {
-    const res = await api.get(`/leaderboard/contest/${contestId}/my-result`)
-    return res.data
-  }
-
-async function submitAnswers(contestId, qId, answer) {
+  async function submitAnswers(contestId, qId, answer) {
     try {
       const res = await api.post(`/submissions/contest/${contestId}/question/${qId}`, { answer: String(answer) })
       console.log("API Response:", res)
@@ -121,15 +117,28 @@ async function submitAnswers(contestId, qId, answer) {
   }
 
   async function hasSubmittedContest(id) {
-  const res = await api.get(`/submissions/contest/${id}/exists`)
-  return res.data
-}
+    const res = await api.get(`/submissions/contest/${id}/exists`)
+    return res.data
+  }
+
+async function getMyHistory() {
+    try {
+      // Changed from /leaderboard/my-history to /results/my-history
+      console.log("Fetching my contest history...")
+      const res = await api.get('/leaderboard/my-history')
+      console.log("My History API Response:", res)
+      return res.data || []
+    } catch (error) {
+      console.error("Store Error:", error)
+      throw error; 
+    }
+  }
 
   return {
     contests, activeContests, latestContests, loading,
     fetchAllContests, fetchActiveContests, fetchLatestContests,
     fetchContest, registerForContest, isRegistered, getMyContests,
     createContest, updateContest, deleteContest,
-    getLeaderboard, getMyResult, submitAnswers, getContestQuestions, hasSubmittedContest
+    getLeaderboard, submitAnswers, getContestQuestions, hasSubmittedContest, getMyHistory
   }
 })
