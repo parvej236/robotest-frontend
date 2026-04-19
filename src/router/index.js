@@ -12,7 +12,7 @@ const routes = [
   { path: '/profile', component: () => import('@/pages/ProfilePage.vue'), meta: { title: 'Profile', auth: true } },
   { path: '/contests', component: () => import('@/pages/ContestListPage.vue'), meta: { title: 'Contests' } },
   { path: '/contests/:id', component: () => import('@/pages/ContestPage.vue'), meta: { title: 'Contest' } },
-  { path: '/contests/:id/join', component: () => import('@/pages/JoinContestPage.vue'), meta: { title: 'Join Contest', auth: true, requiresRegistration: true } },
+  { path: '/contests/:id/join', component: () => import('@/pages/JoinContestPage.vue'), meta: { title: 'Join Contest', auth: true, requiresRegistration: true, hideNavbar: true } },
   { path: '/leaderboard', component: () => import('@/pages/LeaderboardPage.vue'), meta: { title: 'Leaderboard' } },
   { path: '/rules', component: () => import('@/pages/RulesPage.vue'), meta: { title: 'Rules' } },
   { path: '/about', component: () => import('@/pages/AboutPage.vue'), meta: { title: 'About' } },
@@ -69,7 +69,7 @@ router.beforeEach(async (to, from, next) => {
       const isRegistered = await contestStore.isRegistered(to.params.id)
       const hasSubmitted = await contestStore.hasSubmittedContest(to.params.id)
 
-      if (!isRegistered || !hasSubmitted) {
+      if (!isRegistered && !hasSubmitted) {
         return next(`/contests/${to.params.id}`)
       }
 

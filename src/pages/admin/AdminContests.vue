@@ -295,7 +295,6 @@
 
           <div>
             <div class="flex items-center gap-2 mb-3">
-              <div class="w-3 h-3 rounded-full bg-neon-blue/40 border border-neon-blue/60"></div>
               <span class="text-xs font-display tracking-widest text-neon-blue uppercase">Registration Window</span>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -314,7 +313,6 @@
 
           <div>
             <div class="flex items-center gap-2 mb-3">
-              <div class="w-3 h-3 rounded-full bg-neon-red/40 border border-neon-red/60"></div>
               <span class="text-xs font-display tracking-widest text-neon-red uppercase">Contest Window</span>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -328,27 +326,6 @@
                 <input v-model="form.contestEndDate" type="date" class="dt-input" required />
                 <input v-model="form.contestEndTime" type="time" class="dt-input mt-2" required />
               </div>
-            </div>
-          </div>
-
-          <div v-if="formPreviewReady"
-               class="bg-dark-800/60 border border-white/5 rounded-lg p-3 space-y-1.5">
-            <div class="text-[9px] text-white/30 uppercase tracking-wider mb-2 font-display">Schedule Preview</div>
-            <div class="flex justify-between text-[11px] font-mono">
-              <span class="text-neon-blue/60">Reg opens</span>
-              <span class="text-white/70">{{ previewFmt(form.registrationStartDate, form.registrationStartTime) }}</span>
-            </div>
-            <div class="flex justify-between text-[11px] font-mono">
-              <span class="text-neon-blue/40">Reg closes</span>
-              <span class="text-white/70">{{ previewFmt(form.registrationEndDate, form.registrationEndTime) }}</span>
-            </div>
-            <div class="border-t border-white/5 pt-1.5 flex justify-between text-[11px] font-mono">
-              <span class="text-neon-red/60">Contest starts</span>
-              <span class="text-white/70">{{ previewFmt(form.contestStartDate, form.contestStartTime) }}</span>
-            </div>
-            <div class="flex justify-between text-[11px] font-mono">
-              <span class="text-neon-red/40">Contest ends</span>
-              <span class="text-white/70">{{ previewFmt(form.contestEndDate, form.contestEndTime) }}</span>
             </div>
           </div>
 
@@ -444,19 +421,15 @@ const defaultForm = () => ({
   name:                  '',
   description:           '',
   registrationStartDate: '',
-  registrationStartTime: '09:00',
+  registrationStartTime: '',
   registrationEndDate:   '',
-  registrationEndTime:   '23:59',
+  registrationEndTime:   '',
   contestStartDate:      '',
-  contestStartTime:      '10:00',
+  contestStartTime:      '',
   contestEndDate:        '',
-  contestEndTime:        '18:00',
+  contestEndTime:        '',
 })
 const form = ref(defaultForm())
-
-const formPreviewReady = computed(() =>
-  form.value.registrationStartDate && form.value.contestStartDate && form.value.contestEndDate
-)
 
 // ── Preview: dd/mm/yyyy HH:mm format ─────────────────────────
 function formatTime12(time) {

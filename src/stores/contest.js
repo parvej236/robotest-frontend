@@ -93,9 +93,26 @@ export const useContestStore = defineStore('contest', () => {
     return res.data
   }
 
-  async function submitAnswers(contestId, answers) {
-    const res = await api.post(`/submissions/contest/${contestId}`, { answers })
-    return res
+async function submitAnswers(contestId, qId, answer) {
+    try {
+      const res = await api.post(`/submissions/contest/${contestId}/question/${qId}`, { answer: String(answer) })
+      console.log("API Response:", res)
+      // Success response - returns ApiResponse<String>
+      return {
+        success: res.success,
+        message: res.message || 'Correct! Moving to next question.',
+        data: res.data
+      }
+    } catch (error) {
+      // Catch error response from backend
+      // The backend throws AppException.badRequest() for wrong answers
+      const errorMessage = error.response?.data?.message || error.message || 'An error occurred'
+      return {
+        success: false,
+        message: errorMessage,
+        error: error
+      }
+    }
   }
 
   async function getContestQuestions(contestId) {
