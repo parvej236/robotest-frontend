@@ -56,7 +56,6 @@
 
         <router-link to="/leaderboard" class="nav-link">Leaderboard</router-link>
         <router-link to="/rules" class="nav-link">Rules</router-link>
-        <router-link to="/about" class="nav-link hidden">About</router-link>
       </div>
 
       <!-- Auth Section -->
@@ -144,7 +143,6 @@
           <router-link to="/contests" @click="mobileOpen = false" class="mobile-nav-link">Contests</router-link>
           <router-link to="/leaderboard" @click="mobileOpen = false" class="mobile-nav-link">Leaderboard</router-link>
           <router-link to="/rules" @click="mobileOpen = false" class="mobile-nav-link">Rules</router-link>
-          <router-link to="/about" @click="mobileOpen = false" class="mobile-nav-link hidden">About</router-link>
           <template v-if="auth.isLoggedIn">
             <router-link to="/dashboard" @click="mobileOpen = false" class="mobile-nav-link">Dashboard</router-link>
             <router-link to="/profile" @click="mobileOpen = false" class="mobile-nav-link">Profile</router-link>
