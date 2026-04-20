@@ -7,6 +7,17 @@ import { useAuthStore } from '@/stores/auth'
 import StatusBadge from '@/components/common/StatusBadge.vue'
 import LoadingSpinner from '@/components/common/LoadingSpinner.vue'
 import { format } from 'date-fns'
+import { useHead } from '@vueuse/head'
+
+useHead({
+  title: 'RMEDU Robotics Society - Home',
+  meta: [
+    {
+      name: 'description',
+      content: 'Official platform for RMEDU robotics contests, CAD challenges, and student competitions.'
+    }
+  ]
+})
 
 const router = useRouter()
 const auth = useAuthStore()

@@ -529,6 +529,29 @@
 import { ref, onMounted, computed } from 'vue'
 import api from '@/utils/api'
 import { useAuthStore } from '@/stores/auth'
+import { useHead } from '@vueuse/head'
+
+useHead({
+  title: 'Contest Rules - RMEDU Robotics Society',
+  meta: [
+    {
+      name: 'description',
+      content: 'Read the official rules and guidelines for RMEDU Robotics CAD contests. Understand eligibility, submission format, judging criteria, and participation policies.'
+    },
+    {
+      property: 'og:title',
+      content: 'Contest Rules - RMEDU Robotics Society'
+    },
+    {
+      property: 'og:description',
+      content: 'Official rules and guidelines for CAD contests at RMEDU Robotics Society.'
+    },
+    {
+      property: 'og:type',
+      content: 'website'
+    }
+  ]
+})
 
 const authStore = useAuthStore()
 const loading = ref(true)

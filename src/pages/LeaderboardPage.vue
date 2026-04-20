@@ -198,6 +198,17 @@ import { useContestStore } from '@/stores/contest'
 import { BACKEND_URL } from '@/config'
 import LoadingSpinner from '@/components/common/LoadingSpinner.vue'
 import { format, parseISO } from 'date-fns'
+import { useHead } from '@vueuse/head'
+
+useHead({
+  title: 'Leaderboard - RMEDU Robotics Society',
+  meta: [
+    {
+      name: 'description',
+      content: 'Check rankings of CAD contest participants in RMEDU Robotics Society.'
+    }
+  ]
+})
 
 const contestStore    = useContestStore()
 const contests        = ref([])

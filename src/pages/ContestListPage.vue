@@ -78,6 +78,17 @@ import { useContestStore } from '@/stores/contest'
 import { useAuthStore } from '@/stores/auth'
 import ContestCard from '@/components/common/ContestCard.vue'
 import LoadingSpinner from '@/components/common/LoadingSpinner.vue'
+import { useHead } from '@vueuse/head'
+
+useHead({
+  title: 'CAD Contests - RMEDU Robotics',
+  meta: [
+    {
+      name: 'description',
+      content: 'Join CAD robotics contests and compete with students worldwide.'
+    }
+  ]
+})
 
 const router = useRouter()
 const auth = useAuthStore()
