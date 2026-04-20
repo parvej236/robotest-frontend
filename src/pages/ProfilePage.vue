@@ -85,7 +85,7 @@
               </div>
               <div class="sm:col-span-2">
                 <label class="label-text">University / Institution</label>
-                <input v-model="form.university" type="text" class="input-field" placeholder="Dhaka University" />
+                <input v-model="form.university" type="text" class="input-field" placeholder="University of Dhaka" />
               </div>
               <div class="sm:col-span-2">
                 <label class="label-text">Hobby</label>

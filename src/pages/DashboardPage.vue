@@ -120,7 +120,7 @@
 
             <div v-if="profile" class="space-y-3 text-left bg-white/5 p-4 rounded-2xl mb-6">
               <div class="flex items-center gap-3 text-[11px] font-bold text-gray-400 uppercase">
-                <span class="text-blue-500 text-lg">🎓</span> {{ profile.university || 'CUET' }}
+                <span class="text-blue-500 text-lg">🎓</span> {{ profile.university || 'University of Dhaka' }}
               </div>
               <div class="flex items-center gap-3 text-[11px] font-bold text-gray-400 uppercase">
                 <span class="text-red-500 text-lg">🪪</span> {{ profile.registrationNumber || 'N/A' }}
