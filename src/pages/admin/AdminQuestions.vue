@@ -206,16 +206,16 @@
             <div>
               <label class="label-text">Correct Weight (grams)</label>
               <div class="relative">
-                <input v-model.number="qForm.correctAnswer" type="number" step="0.01" min="0" class="input-field pr-8"
+                <input v-model.number="qForm.correctAnswer" type="number" min="0.001" class="input-field pr-8"
                   placeholder="e.g. 250.00" required />
-                <span class="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-white/30 font-mono">g</span>
+                <span class="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-white/30 font-mono">g/ounce</span>
               </div>
-              <p class="text-[10px] text-white/30 mt-1 font-body">Weight in grams the robot must achieve</p>
+              <p class="text-[10px] text-white/30 mt-1 font-body">Weight in grams or ounces</p>
             </div>
             <div>
               <label class="label-text">Tolerance (%)</label>
               <div class="relative">
-                <input v-model.number="qForm.errorPercentage" type="number" step="0.1" min="0" max="100"
+                <input v-model.number="qForm.errorPercentage" type="number" min="0.001" max="100"
                   class="input-field pr-8" placeholder="e.g. 5" />
                 <span class="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-white/30 font-mono">%</span>
               </div>
