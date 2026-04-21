@@ -206,7 +206,7 @@
             <div>
               <label class="label-text">Correct Weight (grams)</label>
               <div class="relative">
-                <input v-model.number="qForm.correctAnswer" type="number" class="input-field pr-8"
+                <input v-model.number="qForm.correctAnswer" class="input-field pr-8"
                   placeholder="e.g. 250.00" required />
                 <span class="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-white/30 font-mono">g/ounce</span>
               </div>
@@ -215,7 +215,7 @@
             <div>
               <label class="label-text">Tolerance (%)</label>
               <div class="relative">
-                <input v-model.number="qForm.errorPercentage" type="number"
+                <input v-model.number="qForm.errorPercentage"
                   class="input-field pr-8" placeholder="e.g. 5" />
                 <span class="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-white/30 font-mono">%</span>
               </div>
