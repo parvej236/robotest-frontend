@@ -125,6 +125,11 @@ export const useContestStore = defineStore('contest', () => {
     return res.data
   }
 
+  async function completeContest(id) {
+    const res = await api.post(`/submissions/contest/${id}/complete`)
+    return res.data
+  }
+
   async function getMyHistory() {
     try {
       // Changed from /leaderboard/my-history to /results/my-history
@@ -150,7 +155,7 @@ export const useContestStore = defineStore('contest', () => {
     fetchAllContests, fetchActiveContests, fetchLatestContests,
     fetchContest, registerForContest, isRegistered, getMyContests,
     createContest, updateContest, deleteContest,
-    getLeaderboard, submitAnswers, getContestQuestions, hasSubmittedContest, getMyHistory,
+    getLeaderboard, submitAnswers, getContestQuestions, hasSubmittedContest, completeContest, getMyHistory,
     sendContestAnnouncement
   }
 })

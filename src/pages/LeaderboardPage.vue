@@ -156,10 +156,11 @@
                   <td v-for="(status, idx) in entry.questionStatuses" :key="idx" class="py-2 text-center">
                     <div v-if="status" class="inline-flex flex-col items-center gap-1">
                       <div v-if="status.correct"
-                        class="px-2 py-1 rounded-md bg-green-500/10 border border-green-500/30 flex flex-col items-center">
-                        <span class="text-[10px] font-black text-green-400">+{{ status.score.toFixed(1) }}</span>
-                        <div v-if="status.wrongCount > 0" class="text-[8px] font-bold text-red-400">(-{{
-                          status.wrongCount }})</div>
+                        class="px-2 py-1 rounded-md bg-green-500/10 border border-green-500/30 flex flex-col items-center w-full min-w-[60px]">
+                        <span class="text-[11px] font-black text-green-400">+{{ status.score.toFixed(1) }}</span>
+                        <div v-if="status.penalty > 0" class="text-[9px] font-bold text-red-400" title="Total Penalty">
+                          (-{{ status.penalty.toFixed(1) }})
+                        </div>
                       </div>
 
                       <div v-else
@@ -167,7 +168,11 @@
                         <span class="text-[10px] font-black text-red-500">-{{ status.wrongCount }}</span>
                       </div>
 
-                      <span class="text-[8px] text-white/80 font-mono">{{ formatTime(status.submittedAt) }}</span>
+                      <!-- <span class="text-[8px] text-white/80 font-mono">{{ formatTime(status.submittedAt) }}</span> -->
+
+                        <div v-if="status.timeTakenSeconds != null" class="text-[10px] mt-0.5 text-white/80 font-mono leading-tight whitespace-nowrap">
+                          {{ formatDuration(status.timeTakenSeconds) }}
+                        </div>
                     </div>
                     <div v-else class="w-6 h-1 bg-white/5 rounded-full mx-auto"></div>
                   </td>
@@ -234,6 +239,19 @@ function formatTime(d) {
   } catch {
     return String(d)
   }
+}
+
+function formatDuration(sec) {
+  if (sec == null) return '-'
+  if (sec === 0) return '0s'
+  const h = Math.floor(sec / 3600)
+  const m = Math.floor((sec % 3600) / 60)
+  const s = sec % 60
+  let res = []
+  if (h > 0) res.push(`${h}h`)
+  if (m > 0 || h > 0) res.push(`${m}m`)
+  res.push(`${s}s`)
+  return res.join(' ')
 }
 
 // FIX: contestStore.getLeaderboard() returns res.data (the array directly)

@@ -17,7 +17,7 @@
         </div>
       </div>
 
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+      <div class="grid grid-cols-3 gap-4 mb-10">
         <div v-for="stat in statCards" :key="stat.label"
              class="bg-white/[0.03] backdrop-blur-xl border border-white/10 p-6 rounded-3xl relative overflow-hidden group">
           <div class="absolute -top-4 -right-4 text-5xl opacity-10 group-hover:scale-125 transition-transform duration-500">{{ stat.icon }}</div>
@@ -199,7 +199,6 @@ const statCards = computed(() => {
 
   return [
     { label: 'Contests Joined', value: history.value.length, color: '#ff0033', icon: '🏆' },
-    { label: 'Avg Accuracy',    value: accuracy + '%',       color: '#00ff88', icon: '🎯' },
     { label: 'Best Rank',       value: bestResult.value ? '#' + bestResult.value.rank : '—', color: '#00bfff', icon: '🥇' },
     { label: 'Total Score',     value: Math.round(history.value.reduce((a, b) => a + (b.totalScore || 0), 0)), color: '#ffaa00', icon: '💎' },
   ]

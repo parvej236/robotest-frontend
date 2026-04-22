@@ -82,15 +82,24 @@
                   </p>
                 </div>
 
-                <!-- Question Timer -->
-                <div v-if="questionTimer !== null"
-                  class="text-right ml-6 p-4 rounded-xl bg-white/[0.02] border border-white/5 min-w-[120px]">
-                  <span class="text-[10px] text-white/30 font-display tracking-widest uppercase block mb-1">Time
-                    Remaining</span>
-                  <div
-                    :class="['font-mono text-3xl font-bold leading-none', questionTimer < 30 ? 'text-red-500 animate-pulse' : 'text-neon-blue']">
-                    {{ Math.floor(questionTimer / 60) }}:{{ String(questionTimer % 60).padStart(2, '0') }}
+                <!-- Question Timer & Skip -->
+                <div class="flex flex-col items-end ml-6 min-w-[120px]">
+                  <div v-if="questionTimer !== null"
+                    class="text-right w-full p-4 rounded-xl bg-white/[0.02] border border-white/5 mb-3">
+                    <span class="text-[10px] text-white/30 font-display tracking-widest uppercase block mb-1">Time
+                      Remaining</span>
+                    <div
+                      :class="['font-mono text-3xl font-bold leading-none', questionTimer < 30 ? 'text-red-500 animate-pulse' : 'text-neon-blue']">
+                      {{ Math.floor(questionTimer / 60) }}:{{ String(questionTimer % 60).padStart(2, '0') }}
+                    </div>
                   </div>
+                  <button @click="showSkipModal = true"
+                    class="text-xs text-orange-500/70 hover:text-orange-500 transition-colors uppercase tracking-widest font-display flex items-center gap-1 group">
+                    <span>Skip Question</span>
+                    <svg class="w-3 h-3 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"/>
+                    </svg>
+                  </button>
                 </div>
               </div>
 
@@ -185,6 +194,27 @@
       </main>
     </div>
 
+    <!-- ════════════════════ SKIP CONFIRMATION MODAL ════════════════════ -->
+    <Transition name="fade">
+      <div v-if="showSkipModal"
+        class="fixed inset-0 z-[100] bg-black/80 flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="glass-card neon-border-blue p-8 max-w-md w-full animate-fade-in relative border !border-orange-500/50 !shadow-[0_0_20px_rgba(249,115,22,0.3)]">
+          <h3 class="font-display text-2xl font-black text-white uppercase tracking-tight mb-4">Skip Question?</h3>
+          <p class="text-white/60 mb-8">Are you sure you want to skip this question? You will not be able to return to it later.</p>
+          <div class="flex justify-end gap-4">
+            <button @click="showSkipModal = false"
+              class="px-6 py-2 rounded-xl text-white/60 hover:text-white hover:bg-white/5 transition-all">
+              Cancel
+            </button>
+            <button @click="confirmSkip"
+              class="px-6 py-2 rounded-xl bg-orange-500 text-black font-bold hover:scale-105 active:scale-95 transition-all">
+              Yes, Skip
+            </button>
+          </div>
+        </div>
+      </div>
+    </Transition>
+
     <!-- ════════════════════ IMAGE ZOOM MODAL ════════════════════ -->
     <Transition name="fade">
       <div v-if="zoomedImg"
@@ -221,6 +251,7 @@ const activeIdx = ref(0)
 const zoomedImg = ref(null)
 const contestName = ref('')
 const contestEndAt = ref(null)
+const showSkipModal = ref(false)
 
 // ── Response Message State ───────────────────────────────────
 const responseMessage = ref(null)
@@ -243,6 +274,32 @@ function getLocalIsoString() {
   return new Date(date.getTime() - tzOffset).toISOString().slice(0, 19)
 }
 
+function getLocalStorageKey() {
+  return `robotest_contest_${contestId}`
+}
+
+function saveContestState() {
+  try {
+    localStorage.setItem(getLocalStorageKey(), JSON.stringify({
+      activeIdx: activeIdx.value,
+      questionStartTimes: questionStartTimes.value,
+      answers: answers.value
+    }))
+  } catch (e) {
+    console.error('Failed to save contest state', e)
+  }
+}
+
+function loadContestState() {
+  try {
+    const saved = localStorage.getItem(getLocalStorageKey())
+    if (saved) return JSON.parse(saved)
+  } catch (e) {
+    console.error('Failed to load contest state', e)
+  }
+  return null
+}
+
 async function downloadImg(url) {
   try {
     const res = await fetch(toFullUrl(url))
@@ -254,6 +311,17 @@ async function downloadImg(url) {
     URL.revokeObjectURL(link.href)
   } catch (e) {
     console.error('Download failed:', e)
+  }
+}
+
+async function completeContestLocally() {
+  submitted.value = true
+  if (qTimerHandle) clearInterval(qTimerHandle)
+  
+  try {
+    await contestStore.completeContest(contestId)
+  } catch (e) {
+    console.error('Failed to mark contest complete:', e)
   }
 }
 
@@ -269,8 +337,7 @@ function tickContest() {
 
   // Auto-submit if contest ends
   if (diff === 0 && !submitted.value) {
-    submitted.value = true
-    if (qTimerHandle) clearInterval(qTimerHandle)
+    completeContestLocally()
   }
 }
 
@@ -280,15 +347,36 @@ function startQuestionTimer() {
 
   const currentQ = questions.value[activeIdx.value]
   if (currentQ && currentQ.timeLimit && currentQ.timeLimit > 0) {
-    questionTimer.value = currentQ.timeLimit
-    qTimerHandle = setInterval(() => {
-      if (questionTimer.value > 0) {
-        questionTimer.value--
-      } else {
-        clearInterval(qTimerHandle)
-        handleQuestionTimeout()
-      }
-    }, 1000)
+    const qId = currentQ.id;
+    let startTimeIso = questionStartTimes.value[qId];
+    if (!startTimeIso) {
+      startTimeIso = getLocalIsoString();
+      questionStartTimes.value[qId] = startTimeIso;
+      saveContestState();
+    }
+
+    const [datePart, timePart] = startTimeIso.split('T')
+    const [y, m, d] = datePart.split('-')
+    const [H, M, S] = timePart.split(':')
+    const startTimeMs = new Date(y, m-1, d, H, M, S).getTime()
+    
+    const elapsedSecs = Math.floor((Date.now() - startTimeMs) / 1000)
+    const remaining = currentQ.timeLimit - elapsedSecs
+
+    if (remaining > 0) {
+      questionTimer.value = remaining
+      qTimerHandle = setInterval(() => {
+        if (questionTimer.value > 0) {
+          questionTimer.value--
+        } else {
+          clearInterval(qTimerHandle)
+          handleQuestionTimeout()
+        }
+      }, 1000)
+    } else {
+      questionTimer.value = 0
+      handleQuestionTimeout()
+    }
   } else {
     questionTimer.value = null
   }
@@ -373,13 +461,28 @@ function moveToNext() {
     if (currentQ && !questionStartTimes.value[currentQ.id]) {
       questionStartTimes.value[currentQ.id] = getLocalIsoString()
     }
+    saveContestState()
     startQuestionTimer()
   } else {
     // All questions answered
-    submitted.value = true
-    if (qTimerHandle) clearInterval(qTimerHandle)
+    completeContestLocally()
   }
 }
+
+function confirmSkip() {
+  showSkipModal.value = false
+  moveToNext()
+}
+
+watch(answers, () => {
+  saveContestState()
+}, { deep: true })
+
+watch(submitted, (newVal) => {
+  if (newVal) {
+    localStorage.removeItem(getLocalStorageKey())
+  }
+})
 
 // ── Lifecycle ─────────────────────────────────────────────────
 onMounted(async () => {
@@ -393,13 +496,25 @@ onMounted(async () => {
     const qs = await contestStore.getContestQuestions(contestId)
     questions.value = qs
 
-    // Initialize answers object
-    qs.forEach(q => answers.value[q.id] = '')
-
-    // Record start time for the first question
-    if (qs.length > 0) {
-      questionStartTimes.value[qs[0].id] = getLocalIsoString()
+    const savedState = loadContestState()
+    if (savedState) {
+      activeIdx.value = savedState.activeIdx || 0
+      questionStartTimes.value = savedState.questionStartTimes || {}
+      answers.value = savedState.answers || {}
     }
+
+    // Ensure answers has the keys
+    qs.forEach(q => {
+      if (answers.value[q.id] === undefined) {
+        answers.value[q.id] = ''
+      }
+    })
+
+    // Record start time for the first question if not set
+    if (qs.length > 0 && !questionStartTimes.value[qs[activeIdx.value].id]) {
+      questionStartTimes.value[qs[activeIdx.value].id] = getLocalIsoString()
+    }
+    saveContestState()
 
     // Start timers
     tickContest()

@@ -147,11 +147,21 @@
                 REGISTERED & READY
               </div>
 
-              <router-link v-if="contest.status === 'RUNNING' && isRegistered"
+              <router-link v-if="contest.status === 'RUNNING' && isRegistered && !hasSubmitted"
                 :to="`/contests/${contest.id}/join`"
                 class="bg-gradient-to-r from-red-600 to-red-500 text-white font-black py-5 px-14 rounded-[1.5rem] shadow-[0_20px_50px_rgba(220,38,38,0.5)] transition-all active:scale-95 flex items-center gap-4 text-xl tracking-tight">
                 ⚡ JOIN CONTEST NOW
               </router-link>
+
+              <div v-if="contest.status === 'RUNNING' && isRegistered && hasSubmitted"
+                class="bg-white/10 text-white/50 border border-white/20 font-black py-5 px-10 rounded-[1.5rem] flex items-center gap-4 text-lg cursor-not-allowed">
+                <div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
+                  <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                CONTEST COMPLETED
+              </div>
             </div>
 
             <transition name="slide-up">
@@ -232,10 +242,11 @@
                   <td v-for="(status, idx) in entry.questionStatuses" :key="idx" class="py-2 text-center">
                     <div v-if="status" class="inline-flex flex-col items-center gap-1">
                       <div v-if="status.correct"
-                        class="px-2 py-1 rounded-md bg-green-500/10 border border-green-500/30 flex flex-col items-center">
-                        <span class="text-[10px] font-black text-green-400">+{{ status.score.toFixed(1) }}</span>
-                        <div v-if="status.wrongCount > 0" class="text-[8px] font-bold text-red-400">(-{{
-                          status.wrongCount }})</div>
+                        class="px-2 py-1 rounded-md bg-green-500/10 border border-green-500/30 flex flex-col items-center w-full min-w-[60px]">
+                        <span class="text-[11px] font-black text-green-400">+{{ status.score.toFixed(1) }}</span>
+                        <div v-if="status.penalty > 0" class="text-[9px] font-bold text-red-400" title="Total Penalty">
+                          (-{{ status.penalty.toFixed(1) }})
+                        </div>
                       </div>
 
                       <div v-else
@@ -243,7 +254,11 @@
                         <span class="text-[10px] font-black text-red-500">-{{ status.wrongCount }}</span>
                       </div>
 
-                      <span class="text-[8px] text-white/80 font-mono">{{ formatTime(status.submittedAt) }}</span>
+                      <!-- <span class="text-[8px] text-white/80 font-mono">{{ formatTime(status.submittedAt) }}</span> -->
+
+                        <div v-if="status.timeTakenSeconds != null" class="text-[10px] mt-0.5 text-white/80 font-mono leading-tight whitespace-nowrap">
+                          {{ formatDuration(status.timeTakenSeconds) }}
+                        </div>
                     </div>
                     <div v-else class="w-6 h-1 bg-white/5 rounded-full mx-auto"></div>
                   </td>
@@ -310,6 +325,19 @@ function formatDT(d) {
 function formatTime(d) {
   if (!d) return '-'
   try { return format(new Date(d), 'hh:mm a') } catch { return d }
+}
+
+function formatDuration(sec) {
+  if (sec == null) return '-'
+  if (sec === 0) return '0s'
+  const h = Math.floor(sec / 3600)
+  const m = Math.floor((sec % 3600) / 60)
+  const s = sec % 60
+  let res = []
+  if (h > 0) res.push(`${h}h`)
+  if (m > 0 || h > 0) res.push(`${m}m`)
+  res.push(`${s}s`)
+  return res.join(' ')
 }
 
 const dateItems = computed(() => {

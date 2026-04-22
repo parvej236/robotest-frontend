@@ -227,8 +227,11 @@ onUnmounted(() => {
               class="relative group overflow-hidden rounded-3xl border border-white/10 bg-white/10 shadow-[0_30px_90px_rgba(0,0,0,0.18)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:border-white/20"
               @click="handleCard(c)">
 
-              <div class="rounded-3xl border border-white/20 bg-green-200/1 backdrop-blur-9xl p-4 shadow-inner shadow-white/5">
-                <div class="h-1 w-full rounded-full mb-3" :class="c.status === 'RUNNING' ? 'bg-gradient-to-r from-emerald-400 to-sky-400' : 'bg-gradient-to-r from-sky-400 to-fuchsia-400'"></div>
+              <div
+                class="rounded-3xl border border-white/20 bg-green-200/1 backdrop-blur-9xl p-4 shadow-inner shadow-white/5">
+                <div class="h-1 w-full rounded-full mb-3"
+                  :class="c.status === 'RUNNING' ? 'bg-gradient-to-r from-emerald-400 to-sky-400' : 'bg-gradient-to-r from-sky-400 to-fuchsia-400'">
+                </div>
 
                 <div class="flex items-center justify-between gap-2 text-[12px] text-slate-300">
                   <StatusBadge :status="c.status" size="sm" />
@@ -242,7 +245,8 @@ onUnmounted(() => {
                   </div>
                 </div>
 
-                <h3 class="mt-3 text-base font-semibold text-white leading-tight line-clamp-2 group-hover:text-sky-300 transition">
+                <h3
+                  class="mt-3 text-base font-semibold text-white leading-tight line-clamp-2 group-hover:text-sky-300 transition">
                   {{ c.name }}
                 </h3>
                 <p v-if="c.description" class="mt-2 text-sm text-slate-400 line-clamp-2">

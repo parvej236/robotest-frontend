@@ -69,7 +69,7 @@ router.beforeEach(async (to, from, next) => {
       const isRegistered = await contestStore.isRegistered(to.params.id)
       const hasSubmitted = await contestStore.hasSubmittedContest(to.params.id)
 
-      if (!isRegistered && !hasSubmitted) {
+      if (!isRegistered || hasSubmitted) {
         return next(`/contests/${to.params.id}`)
       }
 

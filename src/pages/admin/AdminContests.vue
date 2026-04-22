@@ -126,8 +126,10 @@
               class="font-display font-black text-white text-lg md:text-xl leading-tight mb-3 line-clamp-2 group-hover:text-rose-300 transition-colors">
               {{ c.name }}
             </h3>
-            <p v-if="c.description" class="text-sm text-slate-300 font-body line-clamp-2 mb-5 leading-relaxed">{{
-              c.description }}</p>
+            <div class="flex justify-between items-center gap-3 mb-4">
+              <div v-if="c.description" class="text-sm text-slate-400 font-body line-clamp-3">{{ c.description }} </div>
+              <button @click="confirmDelete(c)" class="text-red-400 hover:text-red-300 cursor-pointer">Delete</button>
+            </div>
             <div class="grid grid-cols-2 gap-3 mb-5">
               <div class="bg-slate-950/70 rounded-3xl p-4 text-center border border-slate-700 shadow-sm">
                 <div class="flex items-center justify-center gap-2 mb-2 text-slate-400">
@@ -188,17 +190,6 @@
                   <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z" />
                 </svg>
                 Edit
-              </button>
-              <button @click="confirmDelete(c)"
-                class="flex-1 inline-flex items-center justify-center gap-2 text-xs md:text-sm font-semibold text-red-100 bg-red-600/10 border border-red-600/25 px-3 py-3 rounded-2xl hover:bg-red-600/20 transition-colors">
-                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="3 6 5 6 21 6" />
-                  <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
-                  <path d="M10 11v6" />
-                  <path d="M14 11v6" />
-                </svg>
-                Delete
               </button>
             </div>
           </div>
@@ -404,7 +395,7 @@
         <h3 class="font-display text-xl font-bold text-white mb-2">Delete Contest?</h3>
         <p class="text-white/60 font-body text-sm mb-6">
           Permanently delete <strong class="text-white">{{ deleteTarget.name }}</strong>
-          and all its questions, registrations and results.
+          and all its questions, registrations, submissions and results.
         </p>
         <div class="flex gap-3 justify-center">
           <button @click="doDelete" :disabled="deleting"
