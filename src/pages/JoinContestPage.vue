@@ -216,6 +216,7 @@ const submitting = ref(false)
 const submitted = ref(false)
 const questions = ref([])
 const answers = ref({})
+const questionStartTimes = ref({})
 const activeIdx = ref(0)
 const zoomedImg = ref(null)
 const contestName = ref('')
@@ -235,6 +236,12 @@ let contestTimerHandle = null
 
 // ── Utility Logic ─────────────────────────────────────────────
 const toFullUrl = (path) => (!path ? null : path.startsWith('http') ? path : BACKEND_URL + path)
+
+function getLocalIsoString() {
+  const date = new Date()
+  const tzOffset = date.getTimezoneOffset() * 60000
+  return new Date(date.getTime() - tzOffset).toISOString().slice(0, 19)
+}
 
 async function downloadImg(url) {
   try {
@@ -317,7 +324,8 @@ async function handleSingleSubmit() {
 
   try {
     // Call the store method with proper error handling
-    const result = await contestStore.submitAnswers(contestId, qId, answer);
+    const startedAt = questionStartTimes.value[qId]
+    const result = await contestStore.submitAnswers(contestId, qId, answer, startedAt);
     console.log("Submit Result:", result);
 
     if (result.success) {
@@ -361,6 +369,10 @@ function moveToNext() {
   
   if (activeIdx.value < questions.value.length - 1) {
     activeIdx.value++
+    const currentQ = questions.value[activeIdx.value]
+    if (currentQ && !questionStartTimes.value[currentQ.id]) {
+      questionStartTimes.value[currentQ.id] = getLocalIsoString()
+    }
     startQuestionTimer()
   } else {
     // All questions answered
@@ -383,6 +395,11 @@ onMounted(async () => {
 
     // Initialize answers object
     qs.forEach(q => answers.value[q.id] = '')
+
+    // Record start time for the first question
+    if (qs.length > 0) {
+      questionStartTimes.value[qs[0].id] = getLocalIsoString()
+    }
 
     // Start timers
     tickContest()

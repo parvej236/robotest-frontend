@@ -89,9 +89,13 @@ export const useContestStore = defineStore('contest', () => {
     return res.data || []
   }
 
-  async function submitAnswers(contestId, qId, answer) {
+  async function submitAnswers(contestId, qId, answer, questionStartedAt) {
     try {
-      const res = await api.post(`/submissions/contest/${contestId}/question/${qId}`, { answer: String(answer) })
+      const payload = { answer: String(answer) }
+      if (questionStartedAt) {
+        payload.questionStartedAt = questionStartedAt
+      }
+      const res = await api.post(`/submissions/contest/${contestId}/question/${qId}`, payload)
       console.log("API Response:", res)
       // Success response - returns ApiResponse<String>
       return {
