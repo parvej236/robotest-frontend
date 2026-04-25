@@ -241,23 +241,26 @@
 
                   <td v-for="(status, idx) in entry.questionStatuses" :key="idx" class="py-2 text-center">
                     <div v-if="status" class="inline-flex flex-col items-center gap-1">
-                      <div v-if="status.correct"
+                      <div
                         class="px-2 py-1 rounded-md bg-green-500/10 border border-green-500/30 flex flex-col items-center w-full min-w-[60px]">
-                        <span class="text-[11px] font-black text-green-400">+{{ status.score.toFixed(1) }}</span>
-                        <div v-if="status.penalty > 0" class="text-[9px] font-bold text-red-400" title="Total Penalty">
-                          (-{{ status.penalty.toFixed(1) }})
+                        <span class="text-[11px] font-black text-green-400">{{ status.score.toFixed(2) }}</span>
+                        <div v-if="status.timePenalty > 0" class="text-[10px] font-bold text-green-500" title="Time Penalty">
+                          -{{ status.timePenalty.toFixed(2) }}
+                        </div>
+                        <div v-if="status.wrongPenalty > 0" class="text-[10px] font-bold text-red-500" title="Wrong Penalty">
+                          -{{ status.wrongPenalty.toFixed(2) }} ({{ status.wrongCount }})
                         </div>
                       </div>
 
-                      <div v-else
-                        class="w-8 h-8 rounded-lg bg-red-500/10 border border-red-500/30 flex items-center justify-center">
-                        <span class="text-[10px] font-black text-red-500">-{{ status.wrongCount }}</span>
-                      </div>
+                      <!-- <div v-else
+                        class="px-2 py-1 rounded-md bg-red-500/10 border border-red-500/30 flex items-center justify-center w-full min-w-[60px]">
+                        <span class="text-[10px] whitespace-nowrap font-black text-red-500">-{{ (status.wrongPenalty || 0).toFixed(2) }} ({{ status.wrongCount }})</span>
+                      </div> -->
 
                       <!-- <span class="text-[8px] text-white/80 font-mono">{{ formatTime(status.submittedAt) }}</span> -->
 
                         <div v-if="status.timeTakenSeconds != null" class="text-[10px] mt-0.5 text-white/80 font-mono leading-tight whitespace-nowrap">
-                          {{ formatDuration(status.timeTakenSeconds) }}
+                          {{ formatDuration(status.timeTakenSeconds) }}/{{ formatDuration(status.timeLimits) }}
                         </div>
                     </div>
                     <div v-else class="w-6 h-1 bg-white/5 rounded-full mx-auto"></div>
@@ -417,6 +420,7 @@ onMounted(async () => {
       loadingLB.value = true
       try {
         leaderboard.value = await contestStore.getLeaderboard(route.params.id)
+        console.log("Leaderboard: " + leaderboard.value);
       } finally {
         loadingLB.value = false
       }
