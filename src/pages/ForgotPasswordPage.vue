@@ -19,28 +19,21 @@
       <div class="bg-white dark:bg-white/[0.03] border border-gray-200 dark:border-white/10 rounded-2xl p-8 shadow-sm">
         <div v-if="!submitted">
           <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-1">Reset link</h2>
-          <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">Enter your email and we'll send you a link to get back into your account.</p>
+          <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">Enter your email and we'll send you a link to get
+            back into your account.</p>
 
           <form @submit.prevent="handleForgot" class="space-y-4">
             <div class="space-y-1.5">
               <label for="email" class="text-[13px] font-medium text-gray-600 dark:text-gray-400">Email address</label>
-              <input
-                id="email"
-                v-model="email"
-                type="email"
-                placeholder="you@example.com"
+              <input id="email" v-model="email" type="email" placeholder="you@example.com"
                 class="w-full h-[42px] px-3 text-sm rounded-lg border bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white border-gray-200 dark:border-white/10 focus:border-blue-500 focus:outline-none transition-all"
-                required
-              />
+                required />
             </div>
 
             <p v-if="error" class="text-xs text-red-500 font-medium">{{ error }}</p>
 
-            <button
-              type="submit"
-              :disabled="loading"
-              class="w-full h-[42px] bg-gray-900 dark:bg-blue-700 text-white text-sm font-semibold rounded-lg hover:opacity-90 disabled:opacity-50 transition-opacity flex items-center justify-center"
-            >
+            <button type="submit" :disabled="loading"
+              class="w-full h-[42px] bg-gray-900 dark:bg-blue-700 text-white text-sm font-semibold rounded-lg hover:opacity-90 disabled:opacity-50 transition-opacity flex items-center justify-center">
               <span v-if="!loading">Send Reset Link</span>
               <div v-else class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
             </button>
@@ -54,7 +47,19 @@
             </svg>
           </div>
           <h2 class="text-xl font-semibold text-white mb-2">Check your email</h2>
-          <p class="text-sm text-gray-400 mb-6">We've sent a password reset link to <span class="text-white font-medium">{{ email }}</span></p>
+          <p class="text-sm text-gray-400 mb-6">We've sent a password reset link to <span
+              class="text-white font-medium">{{ email }}</span></p>
+
+          <div v-if="resetToken" class="mt-6 p-4 border border-dashed border-blue-500/30 rounded-lg bg-blue-500/5">
+            <p class="text-[10px] uppercase tracking-widest text-blue-500 mb-2 font-bold">Dev Testing Mode</p>
+            <p class="text-xs text-gray-500 mb-3 break-all font-mono">Token: {{ resetToken }}</p>
+
+            <router-link :to="`/reset-password?token=${resetToken}`"
+              class="inline-block w-full py-2 bg-blue-600 text-white text-xs font-bold rounded hover:bg-blue-500 transition-colors">
+              DEBUG: Go to Reset Page
+            </router-link>
+          </div>
+
           <button @click="submitted = false" class="text-sm text-blue-500 hover:underline">Try another email</button>
         </div>
       </div>
@@ -71,6 +76,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useAuthStore } from '@/stores/auth'
+const resetToken = ref('')
 
 const auth = useAuthStore()
 const email = ref('')
@@ -82,7 +88,8 @@ async function handleForgot() {
   loading.value = true
   error.value = ''
   try {
-    await auth.forgotPassword(email.value)
+    const response = await auth.forgotPassword(email.value)
+    resetToken.value = response.data || response.message
     submitted.value = true
   } catch (e) {
     error.value = e.message || 'Failed to send reset link.'
