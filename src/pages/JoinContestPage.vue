@@ -355,10 +355,7 @@ function startQuestionTimer() {
       saveContestState();
     }
 
-    const [datePart, timePart] = startTimeIso.split('T')
-    const [y, m, d] = datePart.split('-')
-    const [H, M, S] = timePart.split(':')
-    const startTimeMs = new Date(y, m-1, d, H, M, S).getTime()
+    const startTimeMs = new Date(startTimeIso).getTime()
     
     const elapsedSecs = Math.floor((Date.now() - startTimeMs) / 1000)
     const remaining = currentQ.timeLimit - elapsedSecs
