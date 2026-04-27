@@ -269,9 +269,9 @@ let contestTimerHandle = null
 const toFullUrl = (path) => (!path ? null : path.startsWith('http') ? path : BACKEND_URL + path)
 
 function getLocalIsoString() {
-  const date = new Date()
-  const tzOffset = date.getTimezoneOffset() * 60000
-  return new Date(date.getTime() - tzOffset).toISOString().slice(0, 19)
+  // Always return a proper UTC ISO-8601 string (e.g. "2026-04-27T16:40:16.000Z")
+  // so the backend can parse it as an Instant without timezone ambiguity.
+  return new Date().toISOString()
 }
 
 function getLocalStorageKey() {
