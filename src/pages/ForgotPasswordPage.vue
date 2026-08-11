@@ -1,72 +1,70 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center p-4 bg-transparent relative overflow-hidden font-sans">
+  <div class="min-h-screen flex items-center justify-center p-4 bg-transparent relative overflow-hidden">
+    <!-- Background glows -->
     <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
-      <div class="absolute -top-24 -left-24 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px]"></div>
+      <div class="absolute -top-24 -left-24 w-[500px] h-[500px] bg-cyan-500/10 rounded-full blur-[120px]"></div>
+      <div class="absolute -bottom-24 -right-24 w-[500px] h-[500px] bg-red-500/10 rounded-full blur-[120px]"></div>
     </div>
 
-    <div class="w-full max-w-lg z-10">
+    <div class="w-full max-w-xl z-10">
       <div class="text-center mb-10">
-        <h1 class="text-3xl md:text-5xl font-black text-white tracking-tighter uppercase italic leading-none">
-          Recover <span class="text-red-600">Access</span>
+        <h1 class="text-4xl md:text-6xl font-black text-white tracking-tighter italic leading-none">
+          Recover <span class="text-red-500">Access</span>
         </h1>
         <div class="flex items-center justify-center gap-3 mt-4">
-          <div class="h-[1px] w-8 bg-blue-500/50"></div>
-          <p class="text-blue-500 text-xs font-bold uppercase tracking-[0.4em]">Forgot Password</p>
-          <div class="h-[1px] w-8 bg-blue-500/50"></div>
+          <div class="h-[1px] w-8 bg-cyan-500/30"></div>
+          <p class="text-cyan-400 text-lg font-bold tracking-[0.4em]">Forgot Password</p>
+          <div class="h-[1px] w-8 bg-cyan-500/30"></div>
         </div>
       </div>
 
-      <div class="bg-white dark:bg-white/[0.03] border border-gray-200 dark:border-white/10 rounded-2xl p-8 shadow-sm">
+      <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 sm:p-8 shadow-2xl">
         <div v-if="!submitted">
-          <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-1">Reset link</h2>
-          <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">Enter your email and we'll send you a link to get
-            back into your account.</p>
+          <h2 class="text-3xl font-black text-white mb-1 italic">Reset Link</h2>
+          <p class="text-lg text-gray-400 mb-6">Enter your email and we'll send you a link to get back into your account.</p>
 
           <form @submit.prevent="handleForgot" class="space-y-4">
             <div class="space-y-1.5">
-              <label for="email" class="text-[13px] font-medium text-gray-600 dark:text-gray-400">Email address</label>
-              <input id="email" v-model="email" type="email" placeholder="you@example.com"
-                class="w-full h-[42px] px-3 text-sm rounded-lg border bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white border-gray-200 dark:border-white/10 focus:border-blue-500 focus:outline-none transition-all"
-                required />
+              <label for="email" class="text-lg font-bold text-gray-400 tracking-wider ml-1">Email Address</label>
+              <input
+                id="email"
+                v-model="email"
+                type="email"
+                placeholder="you@arena.com"
+                class="w-full h-[56px] px-4 text-xl rounded-xl border bg-white/5 text-white border-white/10 focus:border-red-500 focus:outline-none transition-all"
+                required
+              />
             </div>
 
-            <p v-if="error" class="text-xs text-red-500 font-medium">{{ error }}</p>
+            <p v-if="error" class="text-base text-red-400 font-bold italic ml-1">{{ error }}</p>
 
-            <button type="submit" :disabled="loading"
-              class="w-full h-[42px] bg-gray-900 dark:bg-blue-700 text-white text-sm font-semibold rounded-lg hover:opacity-90 disabled:opacity-50 transition-opacity flex items-center justify-center">
+            <button
+              type="submit"
+              :disabled="loading"
+              class="w-full h-[56px] bg-gradient-to-r from-red-500 to-cyan-500 hover:from-red-400 hover:to-cyan-400 text-xl font-black tracking-[0.2em] rounded-xl hover:opacity-90 disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-[0_4px_20px_rgba(239,68,68,0.25)] flex items-center justify-center gap-3 cursor-pointer mt-2"
+            >
               <span v-if="!loading">Send Reset Link</span>
-              <div v-else class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+              <div v-else class="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
             </button>
           </form>
         </div>
 
         <div v-else class="text-center py-4">
-          <div class="w-12 h-12 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          <div class="w-16 h-16 bg-cyan-500/15 border border-cyan-500/30 rounded-full flex items-center justify-center mx-auto mb-6 shadow-[0_0_20px_rgba(6,182,212,0.2)]">
+            <svg class="w-8 h-8 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
             </svg>
           </div>
-          <h2 class="text-xl font-semibold text-white mb-2">Check your email</h2>
-          <p class="text-sm text-gray-400 mb-6">We've sent a password reset link to <span
-              class="text-white font-medium">{{ email }}</span></p>
+          <h2 class="text-3xl font-black text-white mb-2 italic">Check your email</h2>
+          <p class="text-lg text-gray-400 mb-6">We've sent a password reset link to <span class="text-cyan-400 font-bold">{{ email }}</span></p>
 
-          <div v-if="resetToken" class="mt-6 p-4 border border-dashed border-blue-500/30 rounded-lg bg-blue-500/5">
-            <p class="text-[10px] uppercase tracking-widest text-blue-500 mb-2 font-bold">Dev Testing Mode</p>
-            <p class="text-xs text-gray-500 mb-3 break-all font-mono">Token: {{ resetToken }}</p>
-
-            <router-link :to="`/reset-password?token=${resetToken}`"
-              class="inline-block w-full py-2 bg-blue-600 text-white text-xs font-bold rounded hover:bg-blue-500 transition-colors">
-              DEBUG: Go to Reset Page
-            </router-link>
-          </div>
-
-          <button @click="submitted = false" class="text-sm text-blue-500 hover:underline">Try another email</button>
+          <button @click="submitted = false" class="text-lg text-cyan-400 hover:text-cyan-300 font-bold hover:underline transition-colors mt-6">Try another email</button>
         </div>
       </div>
 
       <div class="mt-8 text-center">
-        <router-link to="/login" class="text-gray-400 hover:text-white text-sm font-medium transition-colors">
-          ← Back to login
+        <router-link to="/login" class="text-gray-400 hover:text-white text-xl font-bold transition-colors flex items-center justify-center gap-2">
+          <span>←</span> Back to login
         </router-link>
       </div>
     </div>
@@ -76,8 +74,6 @@
 <script setup>
 import { ref } from 'vue'
 import { useAuthStore } from '@/stores/auth'
-const resetToken = ref('')
-
 const auth = useAuthStore()
 const email = ref('')
 const loading = ref(false)
@@ -88,8 +84,7 @@ async function handleForgot() {
   loading.value = true
   error.value = ''
   try {
-    const response = await auth.forgotPassword(email.value)
-    resetToken.value = response.data || response.message
+    await auth.forgotPassword(email.value)
     submitted.value = true
   } catch (e) {
     error.value = e.message || 'Failed to send reset link.'
@@ -98,3 +93,15 @@ async function handleForgot() {
   }
 }
 </script>
+
+<style scoped>
+::placeholder {
+  font-weight: 400;
+  color: #6b7280;
+}
+
+/* Glassmorphism focus effect */
+input:focus {
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.2);
+}
+</style>

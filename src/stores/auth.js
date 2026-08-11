@@ -132,6 +132,7 @@ export const useAuthStore = defineStore('auth', () => {
     // actions
     login, register, verifyEmail, resendVerification,
     forgotPassword, resetPassword, changePassword,
-    refresh, logout, fetchMe, checkUsername, checkEmail
+    refresh, logout, fetchMe, checkUsername, checkEmail,
+    saveSession
   }
 })

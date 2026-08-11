@@ -1,22 +1,5 @@
-<!-- src/pages/admin/AdminContests.vue -->
 <template>
-  <div class="min-h-screen pt-20 px-4 pb-12">
-    <div class="max-w-7xl mx-auto">
-
-      <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
-        <div class="absolute -top-48 -left-48 w-[600px] h-[600px] bg-red-600/10 rounded-full blur-[120px]"></div>
-        <div class="absolute bottom-0 right-0 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[120px]"></div>
-      </div>
-
-      <!-- Header -->
-      <div class="mb-6 space-y-4">
-        <div>
-          <div class="flex items-center gap-2 mb-1">
-            <div class="w-4 h-px bg-rose-500"></div>
-            <span class="text-xs font-display tracking-widest text-rose-300 uppercase">Admin</span>
-          </div>
-          <h1 class="font-display text-2xl font-black text-white uppercase tracking-wider">Manage Contests</h1>
-        </div>
+  <div class="space-y-6">
 
         <!-- filters management -->
         <div class="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
@@ -43,9 +26,9 @@
                 <label for="status-filter" class="sr-only">Filter by status</label>
                 <select id="status-filter" v-model="statusFilter"
                   class="w-full bg-slate-950/90 text-sm text-slate-100 outline-none appearance-none accent-sky-400 focus:text-white focus:ring-2 focus:ring-sky-500/30 focus:border-sky-500">
-                  <option class="bg-slate-950 text-slate-100" value="ALL">All Statuses</option>
+                  <option class="bg-slate-950 text-slate-100" value="ALL">All statuses</option>
                   <option class="bg-slate-950 text-slate-100" value="UPCOMING">Upcoming</option>
-                  <option class="bg-slate-950 text-slate-100" value="REGISTRATION_OPEN">Registration Open</option>
+                  <option class="bg-slate-950 text-slate-100" value="REGISTRATION_OPEN">Registration open</option>
                   <option class="bg-slate-950 text-slate-100" value="RUNNING">Running</option>
                   <option class="bg-slate-950 text-slate-100" value="FINISHED">Finished</option>
                 </select>
@@ -63,8 +46,8 @@
                   class="w-full bg-slate-950/90 text-sm text-slate-100 outline-none appearance-none accent-sky-400 focus:text-white focus:ring-2 focus:ring-sky-500/30 focus:border-sky-500">
                   <option class="bg-slate-950 text-slate-100" value="createdDesc">Created: Newest</option>
                   <option class="bg-slate-950 text-slate-100" value="createdAsc">Created: Oldest</option>
-                  <option class="bg-slate-950 text-slate-100" value="contestDesc">Contest Date: Latest</option>
-                  <option class="bg-slate-950 text-slate-100" value="contestAsc">Contest Date: Earliest</option>
+                  <option class="bg-slate-950 text-slate-100" value="contestDesc">Contest date: Latest</option>
+                  <option class="bg-slate-950 text-slate-100" value="contestAsc">Contest date: Earliest</option>
                   <option class="bg-slate-950 text-slate-100" value="registeredDesc">Registered: High to Low</option>
                 </select>
                 <div class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-slate-500">
@@ -140,7 +123,7 @@
                     <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
                     <path d="M16 3.13a4 4 0 0 1 0 7.75" />
                   </svg>
-                  <span class="text-[10px] font-display tracking-wider uppercase text-rose-200">Registered</span>
+                  <span class="text-[10px] font-display tracking-wider text-rose-300">Registered</span>
                 </div>
                 <p class="text-rose-300 font-display font-black text-2xl">{{ c.registrationCount || 0 }}</p>
               </div>
@@ -152,7 +135,7 @@
                     <path d="M12 17h.01" />
                     <path d="M21 20a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9l5 5v11z" />
                   </svg>
-                  <span class="text-[10px] font-display tracking-wider uppercase text-cyan-200">Questions</span>
+                  <span class="text-[10px] font-display tracking-wider text-cyan-300">Questions</span>
                 </div>
                 <p class="text-cyan-300 font-display font-black text-2xl">{{ c.questionCount ?? '—' }}</p>
               </div>
@@ -201,17 +184,17 @@
         <table class="w-full border-collapse">
           <thead>
             <tr class="border-b border-slate-700">
-              <th class="pb-3 text-left text-sm font-display tracking-wider text-slate-300 uppercase">Name</th>
+              <th class="pb-3 text-left text-sm font-display tracking-wider text-slate-350">Name</th>
               <th
-                class="pb-3 text-center text-sm font-display tracking-wider text-slate-300 uppercase hidden sm:table-cell">
+                class="pb-3 text-center text-sm font-display tracking-wider text-slate-350 hidden sm:table-cell">
                 Status</th>
               <th
-                class="pb-3 text-center text-sm font-display tracking-wider text-slate-300 uppercase hidden lg:table-cell">
-                Contest Date</th>
+                class="pb-3 text-center text-sm font-display tracking-wider text-slate-350 hidden lg:table-cell">
+                Contest date</th>
               <th
-                class="pb-3 text-center text-sm font-display tracking-wider text-slate-300 uppercase hidden md:table-cell">
+                class="pb-3 text-center text-sm font-display tracking-wider text-slate-350 hidden md:table-cell">
                 Registered</th>
-              <th class="pb-3 text-right text-sm font-display tracking-wider text-slate-300 uppercase">Actions</th>
+              <th class="pb-3 text-right text-sm font-display tracking-wider text-slate-350">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -258,7 +241,7 @@
         <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-end">
           <div
             class="relative flex items-center gap-2 rounded-full border border-slate-700 bg-slate-900/80 px-3 py-2 text-sm text-slate-300">
-            <span class="uppercase tracking-[0.2em] text-[10px] text-slate-500">Per page</span>
+            <span class="tracking-wider text-[10px] text-slate-400">Per page</span>
             <select v-model="itemsPerPage"
               class="bg-slate-950/90 text-slate-100 outline-none appearance-none accent-sky-400 focus:text-white focus:ring-2 focus:ring-sky-500/30 focus:border-sky-500 px-4 py-1"
               aria-label="Contests per page">
@@ -288,8 +271,6 @@
             </button>
           </div>
         </div>
-      </div>
-    </div>
 
     <!-- ── CREATE / EDIT MODAL ───────────────────────────────── -->
     <div v-if="showModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
@@ -315,7 +296,7 @@
 
           <div>
             <div class="flex items-center gap-2 mb-3">
-              <span class="text-xs font-display tracking-widest text-neon-blue uppercase">Registration Window</span>
+              <span class="text-xs font-display tracking-wider text-neon-blue">Registration window</span>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
@@ -333,7 +314,7 @@
 
           <div>
             <div class="flex items-center gap-2 mb-3">
-              <span class="text-xs font-display tracking-widest text-neon-red uppercase">Contest Window</span>
+              <span class="text-xs font-display tracking-wider text-neon-red">Contest window</span>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>

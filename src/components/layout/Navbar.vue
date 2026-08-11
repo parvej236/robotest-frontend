@@ -105,7 +105,7 @@
               <div
                 class="w-8 h-8 rounded-full border border-neon-red/50 overflow-hidden bg-dark-700 flex items-center justify-center">
                 <img v-if="avatarFullUrl" :src="avatarFullUrl" :key="avatarFullUrl"
-                  class="w-full h-full object-cover" />
+                  class="w-full h-full object-cover" referrerpolicy="no-referrer" />
                 <span v-else class="font-display text-xs text-neon-red font-bold">{{
                   auth.username?.charAt(0)?.toUpperCase() }}</span>
               </div>
@@ -192,6 +192,9 @@ const handleScroll = () => { scrolled.value = window.scrollY > 20 }
 onMounted(async () => {
   window.addEventListener('scroll', handleScroll)
   try { latestContests.value = await contestStore.fetchLatestContests() } catch { }
+  if (auth.isLoggedIn) {
+    try { await auth.fetchMe() } catch { }
+  }
 })
 
 onUnmounted(() => window.removeEventListener('scroll', handleScroll))

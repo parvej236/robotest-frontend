@@ -1,58 +1,65 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center p-4 bg-transparent relative overflow-hidden font-sans">
+  <div class="min-h-screen flex items-center justify-center p-4 bg-transparent relative overflow-hidden">
+    <!-- Background glows -->
     <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
-      <div class="absolute -bottom-24 -right-24 w-[500px] h-[500px] bg-red-600/10 rounded-full blur-[120px]"></div>
+      <div class="absolute -top-24 -left-24 w-[500px] h-[500px] bg-cyan-500/10 rounded-full blur-[120px]"></div>
+      <div class="absolute -bottom-24 -right-24 w-[500px] h-[500px] bg-red-500/10 rounded-full blur-[120px]"></div>
     </div>
 
-    <div class="w-full max-w-lg z-10">
+    <div class="w-full max-w-xl z-10">
       <div class="text-center mb-10">
-        <h1 class="text-3xl md:text-5xl font-black text-white tracking-tighter uppercase italic leading-none">
-          Reset <span class="text-blue-600">Password</span>
+        <h1 class="text-4xl md:text-6xl font-black text-white tracking-tighter italic leading-none">
+          Reset <span class="text-red-500">Password</span>
         </h1>
+        <div class="flex items-center justify-center gap-3 mt-4">
+          <div class="h-[1px] w-8 bg-cyan-500/30"></div>
+          <p class="text-cyan-400 text-lg font-bold tracking-[0.4em]">New Credentials</p>
+          <div class="h-[1px] w-8 bg-cyan-500/30"></div>
+        </div>
       </div>
 
-      <div class="bg-white dark:bg-white/[0.03] border border-gray-200 dark:border-white/10 rounded-2xl p-8 shadow-sm">
-        <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-1">Set new password</h2>
-        <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">Ensure your new password is at least 6 characters long.</p>
+      <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 sm:p-8 shadow-2xl">
+        <h2 class="text-3xl font-black text-white mb-1 italic">Set new password</h2>
+        <p class="text-lg text-gray-400 mb-6">Ensure your new password is at least 6 characters long.</p>
 
         <form @submit.prevent="handleReset" class="space-y-4">
           <div class="space-y-1.5">
-            <label class="text-[13px] font-medium text-gray-600 dark:text-gray-400">New Password</label>
+            <label class="text-lg font-bold text-gray-400 tracking-wider ml-1">New Password</label>
             <input
               v-model="form.newPassword"
               type="password"
               placeholder="••••••••"
-              class="w-full h-[42px] px-3 text-sm rounded-lg border bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white border-gray-200 dark:border-white/10 focus:border-blue-500 focus:outline-none transition-all"
+              class="w-full h-[56px] px-4 text-xl rounded-xl border bg-white/5 text-white border-white/10 focus:border-red-500 focus:outline-none transition-all"
               required
             />
-            <p v-if="passwordLengthError" class="text-[12px] text-red-500 font-medium">
+            <p v-if="passwordLengthError" class="text-base text-red-400 font-bold italic ml-1">
               {{ passwordLengthError }}
             </p>
           </div>
 
           <div class="space-y-1.5">
-            <label class="text-[13px] font-medium text-gray-600 dark:text-gray-400">Confirm Password</label>
+            <label class="text-lg font-bold text-gray-400 tracking-wider ml-1">Confirm Password</label>
             <input
               v-model="form.confirmPassword"
               type="password"
               placeholder="••••••••"
-              class="w-full h-[42px] px-3 text-sm rounded-lg border bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white border-gray-200 dark:border-white/10 focus:border-blue-500 focus:outline-none transition-all"
+              class="w-full h-[56px] px-4 text-xl rounded-xl border bg-white/5 text-white border-white/10 focus:border-red-500 focus:outline-none transition-all"
               required
             />
-            <p v-if="confirmPasswordMismatchError" class="text-[12px] text-red-500 font-medium">
+            <p v-if="confirmPasswordMismatchError" class="text-base text-red-400 font-bold italic ml-1">
               {{ confirmPasswordMismatchError }}
             </p>
           </div>
 
-          <p v-if="error" class="text-xs text-red-500 font-medium">{{ error }}</p>
+          <p v-if="error" class="text-base text-red-400 font-bold italic ml-1">{{ error }}</p>
 
           <button
             type="submit"
             :disabled="loading || !!passwordLengthError || form.newPassword !== form.confirmPassword || !form.token"
-            class="w-full h-[42px] bg-gray-900 dark:bg-gradient-to-r dark:from-blue-800 dark:to-red-900 text-white text-sm font-semibold rounded-lg hover:opacity-90 disabled:opacity-50 transition-opacity flex items-center justify-center"
+            class="w-full h-[56px] bg-gradient-to-r from-red-500 to-cyan-500 hover:from-red-400 hover:to-cyan-400 text-xl font-black tracking-[0.2em] rounded-xl hover:opacity-90 disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-[0_4px_20px_rgba(239,68,68,0.25)] flex items-center justify-center gap-3 cursor-pointer mt-2"
           >
             <span v-if="!loading">Update Password</span>
-            <div v-else class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+            <div v-else class="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
           </button>
         </form>
       </div>
@@ -144,3 +151,15 @@ async function handleReset() {
   }
 }
 </script>
+
+<style scoped>
+::placeholder {
+  font-weight: 400;
+  color: #6b7280;
+}
+
+/* Glassmorphism focus effect */
+input:focus {
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.2);
+}
+</style>

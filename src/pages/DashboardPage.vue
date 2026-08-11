@@ -110,7 +110,7 @@
             
             <div class="w-24 h-24 mx-auto rounded-3xl rotate-3 bg-gradient-to-br from-red-600 to-blue-600 p-1 mb-6 shadow-xl shadow-red-900/20">
               <div class="w-full h-full bg-[#020202] rounded-[1.4rem] overflow-hidden flex items-center justify-center">
-                <img v-if="avatarFullUrl" :src="avatarFullUrl" class="w-full h-full object-cover" />
+                <img v-if="avatarFullUrl" :src="avatarFullUrl" class="w-full h-full object-cover" referrerpolicy="no-referrer" />
                 <span v-else class="text-4xl font-black text-white">{{ auth.username?.charAt(0)?.toUpperCase() }}</span>
               </div>
             </div>
@@ -163,7 +163,7 @@ const selectedHistoryId = ref('')
 
 // ── Avatar ────────────────────────────────────────────────────
 const avatarFullUrl = computed(() => {
-  const path = auth.avatar
+  const path = profile.value?.profileImageUrl || auth.avatar
   if (!path) return null
   return path.startsWith('http') ? path : BACKEND_URL + path
 })

@@ -6,6 +6,7 @@ const routes = [
   { path: '/login', component: () => import('@/pages/LoginPage.vue'), meta: { title: 'Login', guest: true } },
   { path: '/register', component: () => import('@/pages/RegisterPage.vue'), meta: { title: 'Register', guest: true } },
   { path: '/verify-email', component: () => import('@/pages/VerifyEmailPage.vue'), meta: { title: 'Verify Email' } },
+  { path: '/oauth2/success', component: () => import('@/pages/OAuth2SuccessPage.vue'), meta: { title: 'OAuth Success', guest: true } },
   { path: '/reset-password', component: () => import('@/pages/ResetPasswordPage.vue'), meta: { title: 'Reset Password', guest: true } },
   { path: '/forgot-password', component: () => import('@/pages/ForgotPasswordPage.vue'), meta: { title: 'Forgot Password', guest: true } },
   { path: '/dashboard', component: () => import('@/pages/DashboardPage.vue'), meta: { title: 'Dashboard', auth: true } },
@@ -20,12 +21,15 @@ const routes = [
   // Admin routes
   {
     path: '/admin',
-    meta: { auth: true, admin: true },
+    component: () => import('@/pages/admin/AdminLayout.vue'),
+    meta: { auth: true, admin: true, hideNavbar: true },
     children: [
       { path: '', component: () => import('@/pages/admin/AdminDashboard.vue'), meta: { title: 'Admin Dashboard' } },
       { path: 'contests', component: () => import('@/pages/admin/AdminContests.vue'), meta: { title: 'Manage Contests' } },
       { path: 'contests/:id/questions', component: () => import('@/pages/admin/AdminQuestions.vue'), meta: { title: 'Manage Questions' } },
-      { path: 'users', component: () => import('@/pages/admin/AdminUsers.vue'), meta: { title: 'Manage Users' } }
+      { path: 'users', component: () => import('@/pages/admin/AdminUsers.vue'), meta: { title: 'Manage Users' } },
+      { path: 'users/create', component: () => import('@/pages/admin/AdminUserCreate.vue'), meta: { title: 'Create User' } },
+      { path: 'users/edit/:id', component: () => import('@/pages/admin/AdminUserEdit.vue'), meta: { title: 'Edit User' } }
     ]
   },
 

@@ -1,34 +1,24 @@
-<!-- src/pages/admin/AdminQuestions.vue -->
 <template>
-  <div class="relative min-h-screen pt-20 px-4 pb-12 bg-transparent overflow-hidden">
-    <div class="relative z-10 max-w-5xl mx-auto">
+  <div class="space-y-6">
 
-      <!-- Header -->
-      <div
-        class="mb-6 rounded-3xl border border-white/10 bg-white/5 p-5 backdrop-blur-xl shadow-[0_24px_80px_rgba(0,0,0,0.18)]">
-        <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-          <div class="min-w-0">
-            <router-link to="/admin/contests"
-              class="inline-flex items-center gap-2 rounded-full border border-slate-700 bg-slate-900/80 px-4 py-2 text-sm font-semibold tracking-[0.25em] text-slate-100 shadow-sm shadow-black/20 transition hover:bg-slate-800 hover:text-white mb-3">
-              ← Back to Contests
-            </router-link>
-            <div class="flex flex-wrap items-center gap-3 mb-3">
-              <span
-                class="rounded-full border border-sky-400/20 bg-sky-400/10 px-3 py-1 text-[10px] uppercase tracking-[0.35em] text-sky-200">
-                Admin · Questions
-              </span>
-              <span class="text-xs text-slate-400">Manage contest question weights and validation</span>
-            </div>
-            <h1 class="font-display text-3xl font-black text-white leading-tight truncate">
-              {{ contestName || 'Loading...' }}
-            </h1>
-          </div>
-          <button @click="openAdd"
-            class="inline-flex items-center justify-center rounded-full bg-sky-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-sky-500/20 transition hover:bg-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-300">
-            + Add Question
-          </button>
-        </div>
+    <!-- Header Controls -->
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div>
+        <router-link to="/admin/contests"
+          class="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors mb-2">
+          <span>←</span> Back to contests
+        </router-link>
+        <h2 class="text-xl font-bold text-white leading-none">
+          {{ contestName || 'Loading contest...' }}
+        </h2>
+        <p class="text-xs text-slate-400 mt-1">Manage contest question weights, time limits, and validation</p>
       </div>
+
+      <button @click="openAdd"
+        class="btn-primary text-xs py-2.5 px-5 font-semibold tracking-wide flex-shrink-0 w-full sm:w-auto">
+        + Add Question
+      </button>
+    </div>
 
       <div v-if="loading" class="flex justify-center py-20">
         <LoadingSpinner label="Loading questions..." />
@@ -57,7 +47,7 @@
                   {{ idx + 1 }}
                 </div>
                 <div class="min-w-0">
-                  <p class="text-[11px] uppercase tracking-[0.35em] text-slate-400">Question {{ q.orderIndex || idx + 1
+                  <p class="text-[11px] font-mono text-slate-400 tracking-wider">Question {{ q.orderIndex || idx + 1
                     }}</p>
                   <p class="truncate text-xl font-semibold text-white">{{ q.description || 'No description provided.' }}
                   </p>
@@ -65,7 +55,7 @@
               </div>
               <div class="flex flex-wrap items-center justify-end gap-2">
                 <span
-                  class="rounded-full border border-slate-700 bg-slate-900/80 px-3 py-1 text-[11px] text-slate-300 uppercase tracking-[0.3em]">
+                  class="rounded-full border border-slate-700 bg-slate-900/80 px-3 py-1 text-[11px] text-slate-350 tracking-wider">
                   Numeric · weight
                 </span>
                 <button @click="openEdit(q)"
@@ -102,7 +92,7 @@
                 No file uploaded
               </div>
               <div class="rounded-3xl border border-white/10 bg-slate-950/80 p-4">
-                <p class="text-[11px] uppercase tracking-[0.35em] text-slate-400 mb-3">Summary</p>
+                <p class="text-[11px] font-mono text-slate-400 tracking-wider mb-3">Summary</p>
                 <p class="text-base md:text-lg text-slate-100 leading-8">{{ q.description || 'No description provided.'
                   }}</p>
               </div>
@@ -110,40 +100,39 @@
 
             <div class="space-y-4">
               <div class="grid gap-3 sm:grid-cols-3">
-                <div class="rounded-3xl border border-white/10 bg-slate-950/80 p-4">
-                  <p class="text-[10px] uppercase tracking-[0.35em] text-slate-400 mb-2">Correct weight</p>
-                  <p class="text-lg font-semibold text-white">{{ q.correctAnswer != null ? q.correctAnswer + ' g' : 'Not set' }}</p>
-                </div>
-                <div class="rounded-3xl border border-white/10 bg-slate-950/80 p-4">
-                  <p class="text-[10px] uppercase tracking-[0.35em] text-slate-400 mb-2">Tolerance</p>
-                  <p class="text-lg font-semibold text-white">± {{ q.errorPercentage != null ? q.errorPercentage + '%' : '0%' }}</p>
-                </div>
-              </div>
-              <div class="grid gap-3 sm:grid-cols-2">
-                <div class="rounded-3xl border border-white/10 bg-slate-950/80 p-3">
-                  <p class="text-[10px] uppercase tracking-[0.35em] text-slate-400 mb-2">Points</p>
-                  <p class="text-lg font-semibold text-white">{{ q.points || 10 }}</p>
-                </div>
-                <div class="rounded-3xl border border-white/10 bg-slate-950/80 p-3">
-                  <p class="text-[10px] uppercase tracking-[0.35em] text-slate-400 mb-2">Order index</p>
-                  <p class="text-lg font-semibold text-white">{{ q.orderIndex || idx + 1 }}</p>
-                </div>
+              <div class="rounded-3xl border border-white/10 bg-slate-950/80 p-4">
+                <p class="text-[10px] font-mono text-slate-400 tracking-wider mb-2">Correct weight</p>
+                <p class="text-lg font-semibold text-white">{{ q.correctAnswer != null ? q.correctAnswer + ' g' : 'Not set' }}</p>
               </div>
               <div class="rounded-3xl border border-white/10 bg-slate-950/80 p-4">
-                <p class="text-[10px] uppercase tracking-[0.35em] text-slate-400 mb-2">Acceptable range</p>
-                <p class="text-base text-slate-200 font-mono">{{ q.correctAnswer != null ? `${acceptableMin(q)}g –
-                  ${acceptableMax(q)}g` : 'Not available' }}</p>
+                <p class="text-[10px] font-mono text-slate-400 tracking-wider mb-2">Tolerance</p>
+                <p class="text-lg font-semibold text-white">± {{ q.errorPercentage != null ? q.errorPercentage + '%' : '0%' }}</p>
               </div>
-
+            </div>
+            <div class="grid gap-3 sm:grid-cols-2">
               <div class="rounded-3xl border border-white/10 bg-slate-950/80 p-3">
-                <p class="text-[10px] uppercase tracking-[0.35em] text-slate-400 mb-2">Time Limit</p>
-                <p class="text-base text-slate-200 font-mono">{{ q.timeLimit }} seconds ({{ formatTimeLabel(q.timeLimit) }})</p>
+                <p class="text-[10px] font-mono text-slate-400 tracking-wider mb-2">Points</p>
+                <p class="text-lg font-semibold text-white">{{ q.points || 10 }}</p>
               </div>
+              <div class="rounded-3xl border border-white/10 bg-slate-950/80 p-3">
+                <p class="text-[10px] font-mono text-slate-400 tracking-wider mb-2">Order index</p>
+                <p class="text-lg font-semibold text-white">{{ q.orderIndex || idx + 1 }}</p>
+              </div>
+            </div>
+            <div class="rounded-3xl border border-white/10 bg-slate-950/80 p-4">
+              <p class="text-[10px] font-mono text-slate-400 tracking-wider mb-2">Acceptable range</p>
+              <p class="text-base text-slate-200 font-mono">{{ q.correctAnswer != null ? `${acceptableMin(q)}g –
+                ${acceptableMax(q)}g` : 'Not available' }}</p>
+            </div>
+
+            <div class="rounded-3xl border border-white/10 bg-slate-950/80 p-3">
+              <p class="text-[10px] font-mono text-slate-400 tracking-wider mb-2">Time Limit</p>
+              <p class="text-base text-slate-200 font-mono">{{ q.timeLimit }} seconds ({{ formatTimeLabel(q.timeLimit) }})</p>
+            </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
     <!-- ADD / EDIT MODAL -->
     <div v-if="showModal"
@@ -153,7 +142,7 @@
         class="relative w-full max-w-xl overflow-hidden rounded-[2rem] border border-white/10 bg-slate-950/95 p-8 shadow-[0_36px_120px_rgba(0,0,0,0.35)] backdrop-blur-2xl">
         <button @click="showModal = false"
           class="absolute top-4 right-4 text-white/50 hover:text-white text-xl">✕</button>
-        <h2 class="text-2xl font-black uppercase tracking-[0.2em] text-white mb-6">
+        <h2 class="text-2xl font-bold text-white mb-6">
           {{ editingId ? 'Edit Question' : 'Add Question' }}
         </h2>
 
@@ -238,7 +227,7 @@
 
           <!-- Live range preview -->
           <div v-if="qForm.correctAnswer > 0" class="glass-card p-4 border border-neon-blue/20 bg-neon-blue/5">
-            <p class="text-xs font-display tracking-widest text-neon-blue uppercase mb-2">Acceptable Range Preview</p>
+            <p class="text-xs font-display tracking-wider text-neon-blue mb-2">Acceptable range preview</p>
             <div class="flex items-center gap-3">
               <div class="text-center">
                 <p class="font-mono text-white/50 text-xs">Min</p>
@@ -306,7 +295,7 @@
           class="absolute right-4 top-4 text-white/70 hover:text-white text-2xl">✕</button>
         <div
           class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between pb-4 border-b border-white/10 mb-4">
-          <p class="text-sm uppercase tracking-[0.35em] text-slate-400">File preview</p>
+          <p class="text-sm font-mono text-slate-400 tracking-wider">File preview</p>
           <a :href="toFullUrl(imageModalUrl)" :download="downloadFileName(imageModalUrl)" target="_blank" rel="noopener"
             class="inline-flex items-center gap-2 rounded-2xl bg-sky-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-sky-400">
             ⤓ Download
