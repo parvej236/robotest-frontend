@@ -22,7 +22,7 @@
             <div
               class="w-28 h-28 rounded-full border-2 border-neon-red/50 overflow-hidden bg-dark-700 flex items-center justify-center mx-auto">
               <img v-if="displayAvatarUrl" :src="displayAvatarUrl" :key="displayAvatarUrl"
-                class="w-full h-full object-cover" alt="Avatar" @error="onImageError" />
+                class="w-full h-full object-cover" alt="Avatar" @error="onImageError" referrerpolicy="no-referrer" />
               <span v-else class="font-display text-4xl font-black text-neon-red">
                 {{ auth.username?.charAt(0)?.toUpperCase() }}
               </span>
@@ -85,7 +85,7 @@
               </div>
               <div class="sm:col-span-2">
                 <label class="label-text">University / Institution</label>
-                <input v-model="form.university" type="text" class="input-field" placeholder="Dhaka University" />
+                <input v-model="form.university" type="text" class="input-field" placeholder="University of Dhaka" />
               </div>
               <div class="sm:col-span-2">
                 <label class="label-text">Hobby</label>

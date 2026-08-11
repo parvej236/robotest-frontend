@@ -5,10 +5,18 @@ import api from '@/utils/api'
 
 export const useContestStore = defineStore('contest', () => {
 
-  const contests       = ref([])
+  const contests = ref([])
   const activeContests = ref([])
   const latestContests = ref([])
-  const loading        = ref(false)
+  const loading = ref(false)
+
+  function getCreatedTimestamp(contest) {
+    return new Date(contest?.createdAt || contest?.created_date || contest?.contestDate || '').getTime() || 0
+  }
+
+  function sortContestsByNewest(items) {
+    return [...items].sort((a, b) => getCreatedTimestamp(b) - getCreatedTimestamp(a))
+  }
 
   // ── Public Fetch All ──────────────────────────────────────
   async function fetchAllContests() {
@@ -16,7 +24,7 @@ export const useContestStore = defineStore('contest', () => {
     try {
       // Pass 'false' to allow guests
       const res = await api.get('/contests', false)
-      contests.value = res.data || []
+      contests.value = sortContestsByNewest(res.data || [])
     } finally {
       loading.value = false
     }
@@ -39,7 +47,7 @@ export const useContestStore = defineStore('contest', () => {
   // ── Public Fetch Single ───────────────────────────────────
   async function fetchContest(id) {
     const res = await api.get(`/contests/${id}`, false)
-    return res.data 
+    return res.data
   }
 
   // ── Authenticated Actions ─────────────────────────────────
@@ -49,7 +57,7 @@ export const useContestStore = defineStore('contest', () => {
 
   async function isRegistered(id) {
     const res = await api.get(`/contests/${id}/is-registered`)
-    return res.data 
+    return res.data
   }
 
   async function getMyContests() {
@@ -77,17 +85,34 @@ export const useContestStore = defineStore('contest', () => {
     // Usually leaderboards are public, but I kept default auth here
     // Change to 'false' if you want anyone to see the leaderboard
     const res = await api.get(`/leaderboard/contest/${contestId}`, false)
+    console.log("Leaderboard API Response:", res)
     return res.data || []
   }
 
-  async function getMyResult(contestId) {
-    const res = await api.get(`/leaderboard/contest/${contestId}/my-result`)
-    return res.data
-  }
-
-  async function submitAnswers(contestId, answers) {
-    const res = await api.post(`/submissions/contest/${contestId}`, { answers })
-    return res
+  async function submitAnswers(contestId, qId, answer, questionStartedAt) {
+    try {
+      const payload = { answer: String(answer) }
+      if (questionStartedAt) {
+        payload.questionStartedAt = questionStartedAt
+      }
+      const res = await api.post(`/submissions/contest/${contestId}/question/${qId}`, payload)
+      console.log("API Response:", res)
+      // Success response - returns ApiResponse<String>
+      return {
+        success: res.success,
+        message: res.message || 'Correct! Moving to next question.',
+        data: res.data
+      }
+    } catch (error) {
+      // Catch error response from backend
+      // The backend throws AppException.badRequest() for wrong answers
+      const errorMessage = error.response?.data?.message || error.message || 'An error occurred'
+      return {
+        success: false,
+        message: errorMessage,
+        error: error
+      }
+    }
   }
 
   async function getContestQuestions(contestId) {
@@ -95,11 +120,42 @@ export const useContestStore = defineStore('contest', () => {
     return res.data || []
   }
 
+  async function hasSubmittedContest(id) {
+    const res = await api.get(`/submissions/contest/${id}/exists`)
+    return res.data
+  }
+
+  async function completeContest(id) {
+    const res = await api.post(`/submissions/contest/${id}/complete`)
+    return res.data
+  }
+
+  async function getMyHistory() {
+    try {
+      // Changed from /leaderboard/my-history to /results/my-history
+      const res = await api.get('/leaderboard/my-history')
+      return res.data || []
+    } catch (error) {
+      console.error("Store Error:", error)
+      throw error;
+    }
+  }
+
+  async function sendContestAnnouncement(contestId) {
+    try {
+      const response = await api.post(`/contests/${contestId}/send-announcement`)
+      return response.data
+    } catch (error) {
+      throw error.response?.data || error
+    }
+  }
+
   return {
     contests, activeContests, latestContests, loading,
     fetchAllContests, fetchActiveContests, fetchLatestContests,
     fetchContest, registerForContest, isRegistered, getMyContests,
     createContest, updateContest, deleteContest,
-    getLeaderboard, getMyResult, submitAnswers, getContestQuestions
+    getLeaderboard, submitAnswers, getContestQuestions, hasSubmittedContest, completeContest, getMyHistory,
+    sendContestAnnouncement
   }
 })

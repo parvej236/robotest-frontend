@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.git/
+.idea/
+.vscode/
+.env.local
+.env.development
+.env.production
+.dockerignore
+Dockerfile

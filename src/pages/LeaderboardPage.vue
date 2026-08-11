@@ -109,46 +109,86 @@
 
           <!-- Full table -->
           <div class="glass-card p-6 overflow-x-auto">
+
             <table class="w-full">
               <thead>
-                <tr class="border-b border-white/5">
-                  <th class="pb-3 text-left text-xs font-display tracking-widest text-white/40 uppercase w-16">Rank</th>
-                  <th class="pb-3 text-left text-xs font-display tracking-widest text-white/40 uppercase">Contestant</th>
-                  <th class="pb-3 text-center text-xs font-display tracking-widest text-white/40 uppercase">Score</th>
-                  <th class="pb-3 text-right text-xs font-display tracking-widest text-white/40 uppercase hidden md:table-cell">Last Submit</th>
+                <tr class="text-left border-b border-white/10">
+                  <th class="text-xs font-black text-white/30 uppercase tracking-[0.3em]">Rank</th>
+                  <th class="text-xs font-black text-white/30 uppercase tracking-[0.3em]">Combatant</th>
+
+                  <th v-for="n in (leaderboard[0]?.totalQuestions || 0)" :key="n"
+                    class="text-center text-lg font-black text-white/40 uppercase tracking-widest">
+                    Q{{ n }}
+                  </th>
+
+                  <th class="text-right text-xs font-black text-white/30 uppercase tracking-[0.3em]">Score
+                  </th>
                 </tr>
               </thead>
-              <tbody class="divide-y divide-white/5">
-                <tr v-for="entry in leaderboard" :key="entry.rank"
-                    :class="['hover:bg-white/3 transition-colors', entry.rank <= 3 ? 'bg-white/2' : '']">
-                  <td class="py-3">
-                    <span v-if="entry.rank === 1" class="font-display font-black text-yellow-400">01</span>
-                    <span v-else-if="entry.rank === 2" class="font-display font-black text-gray-300">02</span>
-                    <span v-else-if="entry.rank === 3" class="font-display font-black text-amber-600">03</span>
-                    <span v-else class="font-mono text-white/30 text-xs">#{{ entry.rank }}</span>
+              <tbody class="divide-y divide-white/[0.03]">
+                <tr v-for="entry in leaderboard" :key="entry.rank" class="group hover:bg-white/[0.04] transition-all">
+                  <td class="py-1">
+                    <span v-if="entry.rank <= 3" class="text-2xl">
+                      {{ entry.rank === 1 ? '🥇' : entry.rank === 2 ? '🥈' : '🥉' }}
+                    </span>
+                    <span v-else class="font-black text-white/20 px-2">#{{ entry.rank }}</span>
                   </td>
-                  <td class="py-3">
-                    <div class="flex items-center gap-3">
-                      <div class="w-8 h-8 rounded-full bg-dark-700 border border-white/10 flex items-center justify-center text-xs font-display text-neon-red font-bold overflow-hidden flex-shrink-0">
-                        <!-- FIX: toFullUrl() converts relative path to full URL -->
-                        <img v-if="entry.profileImageUrl"
-                             :src="toFullUrl(entry.profileImageUrl)"
-                             class="w-full h-full object-cover" alt="Avatar" />
-                        <span v-else>{{ entry.username?.charAt(0)?.toUpperCase() }}</span>
+
+                  <td class="py-1">
+                    <div class="flex items-center gap-4">
+                      <div
+                        class="w-10 h-10 rounded-full bg-white/5 border border-white/10 overflow-hidden flex-shrink-0">
+                        <img v-if="entry.profileImageUrl" :src="toFullUrl(entry.profileImageUrl)"
+                          class="w-full h-full object-cover" />
+                        <div v-else
+                          class="w-full h-full flex items-center justify-center text-red-500 font-black text-lg">
+                          {{ entry.username?.charAt(0).toUpperCase() }}
+                        </div>
                       </div>
                       <div>
-                        <p class="font-display text-sm text-white font-semibold">{{ entry.username }}</p>
-                        <p class="text-xs text-white/40 font-body">{{ entry.fullName }}</p>
+                        <p class="font-black text-white group-hover:text-red-500 transition-colors">@{{ entry.username
+                          }}</p>
+                        <p class="text-[10px] text-white/40 font-bold tracking-tight">{{ entry.fullName }}</p>
                       </div>
                     </div>
                   </td>
-                  <td class="py-3 text-center">
-                    <span class="font-display font-bold text-xl text-neon-blue">{{ entry.correctCount }}</span>
-                    <span class="text-white/30 text-xs font-mono"> / {{ entry.totalQuestions }}</span>
+
+                  <td v-for="(status, idx) in entry.questionStatuses" :key="idx" class="py-2 text-center">
+                    <div v-if="status" class="inline-flex flex-col items-center gap-1">
+                      <div
+                        class="px-2 py-1 rounded-md bg-green-500/10 border border-green-500/30 flex flex-col items-center w-full min-w-[60px]">
+                        <span class="text-[11px] font-black text-green-400">{{ status.score.toFixed(2) }}</span>
+                        <div v-if="status.timePenalty > 0" class="text-[10px] font-bold text-green-500" title="Time Penalty">
+                          -{{ status.timePenalty.toFixed(2) }}
+                        </div>
+                        <div v-if="status.wrongPenalty > 0" class="text-[10px] font-bold text-red-500" title="Wrong Penalty">
+                          -{{ status.wrongPenalty.toFixed(2) }} ({{ status.wrongCount }})
+                        </div>
+                      </div>
+
+                      <!-- <div v-else
+                        class="px-2 py-1 rounded-md bg-red-500/10 border border-red-500/30 flex items-center justify-center w-full min-w-[60px]">
+                        <span class="text-[10px] whitespace-nowrap font-black text-red-500">-{{ (status.wrongPenalty || 0).toFixed(2) }} ({{ status.wrongCount }})</span>
+                      </div> -->
+
+                      <!-- <span class="text-[8px] text-white/80 font-mono">{{ formatTime(status.submittedAt) }}</span> -->
+
+                        <div v-if="status.timeTakenSeconds != null" class="text-[10px] mt-0.5 text-white/80 font-mono leading-tight whitespace-nowrap">
+                          {{ formatDuration(status.timeTakenSeconds) }}/{{ formatDuration(status.timeLimits) }}
+                        </div>
+                    </div>
+                    <div v-else class="w-6 h-1 bg-white/5 rounded-full mx-auto"></div>
                   </td>
-                  <td class="py-3 text-right hidden md:table-cell">
-                    <!-- FIX: lastSubmissionTime is ISO string from backend -->
-                    <span class="text-xs font-mono text-white/40">{{ formatTime(entry.lastSubmissionTime) }}</span>
+
+                  <td class="py-1 text-right">
+                    <div class="flex flex-col items-end">
+                      <span class="text-2xl font-black text-red-500 drop-shadow-[0_0_10px_rgba(220,38,38,0.3)]">
+                        {{ entry.totalScore.toFixed(2) }}
+                      </span>
+                      <span v-if="entry.lastSubmissionTime" class="text-[9px] font-mono text-white">
+                        Last: {{ formatTime(entry.lastSubmissionTime) }}
+                      </span>
+                    </div>
                   </td>
                 </tr>
               </tbody>
@@ -166,6 +206,17 @@ import { useContestStore } from '@/stores/contest'
 import { BACKEND_URL } from '@/config'
 import LoadingSpinner from '@/components/common/LoadingSpinner.vue'
 import { format, parseISO } from 'date-fns'
+import { useHead } from '@vueuse/head'
+
+useHead({
+  title: 'Leaderboard - RMEDU Robotics Society',
+  meta: [
+    {
+      name: 'description',
+      content: 'Check rankings of CAD contest participants in RMEDU Robotics Society.'
+    }
+  ]
+})
 
 const contestStore    = useContestStore()
 const contests        = ref([])
@@ -191,6 +242,19 @@ function formatTime(d) {
   } catch {
     return String(d)
   }
+}
+
+function formatDuration(sec) {
+  if (sec == null) return '-'
+  if (sec === 0) return '0s'
+  const h = Math.floor(sec / 3600)
+  const m = Math.floor((sec % 3600) / 60)
+  const s = sec % 60
+  let res = []
+  if (h > 0) res.push(`${h}h`)
+  if (m > 0 || h > 0) res.push(`${m}m`)
+  res.push(`${s}s`)
+  return res.join(' ')
 }
 
 // FIX: contestStore.getLeaderboard() returns res.data (the array directly)
