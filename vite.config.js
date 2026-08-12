@@ -18,6 +18,6 @@ export default defineConfig({
     },
   },
   server: {
-    allowedHosts: ['qtypist.top', 'localhost']
+    allowedHosts: true
   }
 })
